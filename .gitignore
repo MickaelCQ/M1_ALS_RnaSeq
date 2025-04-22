@@ -1,0 +1,20 @@
+# Fichiers R temporaires
+.Rhistory
+.RData
+.Rproj.user/
+
+# Fichiers générés par C++
+*.o
+*.so
+
+# Résultats intermédiaires
+results/
+data/
+
+# Fichiers Python
+__pycache__/
+
+# Fichiers logs ou temporaires
+*.log
+*.tmp
+
