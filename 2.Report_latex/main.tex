@@ -1,0 +1,17 @@
+% !TEX option = -shell-escape
+\documentclass[a4paper,12pt]{article}
+
+\input{2.Report_latex/preamble.tex}
+
+
+\begin{document}
+
+\input{2.Report_latex/sections/Introduction.tex}
+\input{2.Report_latex/sections/Methods.tex}
+\input{2.Report_latex/sections/Results.tex}
+\input{2.Report_latex/sections/Discussion.tex}
+
+
+\renewcommand{\bibname}{Bibliographie compilée} 
+\printbibliography[heading=none]  % Génère la bibliographie sans redondance du titre
+\end{document}
