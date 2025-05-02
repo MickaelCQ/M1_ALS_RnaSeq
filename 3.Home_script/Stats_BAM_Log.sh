@@ -15,11 +15,9 @@
 # - Nous aider à d'éventuelles inclusions/exclusions lors d'une analyse d'expression différentielle ultérieure.
 # - Permet d'évaluer la reproductibilité des run RNASeq (pour notre cas d'étude). 
 
-##################	
-# Programme      : 
-##################
-
-# La première partie du script, fait des vérifications d'usage sur la conformité des fichiers, et génère le fichier tabulé csv avec les en-têtes d'intérêts, structure du log : 
+##############
+# Input Star: 
+##############
 
 #                             Started job on |       Apr 28 10:35:
 #                         Started mapping on |       Apr 28 10:38:
@@ -64,30 +62,35 @@
 #                        % of chimeric reads |       0.00% 
 
 
+##################	
+# Programme      : 
+##################
+
+# La première partie du script fait des vérifications d'usage,  et génère le fichier tabulé csv avec les en-têtes d'intérêts ;
+
 SBL="Stats_Log_Final.csv";
 
-# Ecrire l'en-tête du fichier CSV si je ne l'ai pas déja généré: 
-
+# En-tête de l'output CSV si non générée: 
 if [ ! -f "$SBL" ]; then
-    echo "Echantillon,Date_Mapping,Total_reads,Unique_reads,Unique_pct,Multi_reads,Multi_pct,No_map_reads,No_map_pct" > "$SBL";
+    echo Sample,Date_Mapping,Total_reads,Unique_reads,Unique_pct,Multi_reads,Multi_pct,No_map_reads,No_map_pct > "$SBL";
 fi
 
 # Fonction pour extraire le 2ᵉ champ et enlever les espaces
 Extract() { cut -d '|' -f2 | tr -d ' '; }
 
 # Pour chaque fichier du répertoire courant et des sous-répertoires :
-for bam in Align_*_Log.final.out;
+for bam in *.Log.final.out;
 do
     # ─── 1. ID ──────────────────────────────────────────────
     
-    Echantillon=$(echo "$bam" | sed -E "s/.*Align_(.*)_Log.final.out/\1/")
+    Sample=$(echo "$bam" | sed -E "s/.*Align_(.*)_Log.final.out/\1/")
     Date_Mapping=$(grep "Finished on" "$bam" | Extract)
 
     # ─── 2. UNIQUE READS ────────────────────────────────────
     
-    Total_reads=$(grep "Number of input reads" "$bam" | Extract)
+    Total_reads=$(grep "Number of input reads" "$bam" | Extract)	
     Unique_reads=$(grep "Uniquely mapped reads number" "$bam" | Extract)
-    Unique_pct=$(grep "Uniquely mapped reads %" "$bam" | Extract)
+    Unique_pct=$(grep "Uniquely mapped reads %" "$bam" | Extract | tr -d '%')
 
     # ─── 3. MULTI-MAPPING READS ─────────────────────────────
     
@@ -95,19 +98,24 @@ do
     Multi_pct=$(grep "% of reads mapped to multiple loci" "$bam" | Extract)
 
     # ─── 4. UNMAPPED READS ──────────────────────────────────
-    
-    No_map_reads=$(( 
-      $(grep "Number of reads unmapped: too many mismatches" "$bam" | Extract) + 
-      $(grep "Number of reads unmapped: too short" "$bam" | Extract) + 
-      $(grep "Number of reads unmapped: other" "$bam" | Extract) 
-    ))
 
-    No_map_pct=$(echo "$(grep "% of reads unmapped: too many mismatches" "$bam" | Extract | tr -d '%') + 
-                     $(grep "% of reads unmapped: too short" "$bam" | Extract | tr -d '%') + 
-                     $(grep "% of reads unmapped: other" "$bam" | Extract | tr -d '%')" | bc)
- 	    # ─── 5. Écriture dans le CSV :
-    
-    echo "${Echantillon}, ${Date_Mapping}, ${Total_reads}, ${Unique_reads}, ${Unique_pct}, ${Multi_reads}, ${Multi_pct}, ${No_map_reads}, ${No_map_pct}" >> "$SBL"
+	# Extraction des valeurs numériques 
+    No_map_pct_mismatch=$(grep "% of reads unmapped: too many mismatches" "$bam" | Extract | tr -d '%' || echo "0")
+    No_map_pct_tooshort=$(grep "% of reads unmapped: too short" "$bam" | Extract | tr -d '%' || echo "0")
+    No_map_pct_other=$(grep "% of reads unmapped: other" "$bam" | Extract | tr -d '%' || echo "0")
+
+	# Somme des pourcentages avec bc (résultat avec 2 décimales)
+    No_map_pct_sum=$(echo "scale=2; $No_map_pct_mismatch + $No_map_pct_tooshort + $No_map_pct_other" | bc)
+
+	# Nombre total de lectures non mappées
+     No_map_reads=$(( 
+  	$(grep "Number of reads unmapped: too many mismatches" "$bam" | Extract || echo 0) + 
+  	$(grep "Number of reads unmapped: too short" "$bam" | Extract || echo 0) + 
+  	$(grep "Number of reads unmapped: other" "$bam" | Extract || echo 0)
+	))
+
+     # ─── 5. Écriture dans le CSV :
+    echo "${Sample},${Date_Mapping},${Total_reads},${Unique_reads},${Unique_pct},${Multi_reads},${Multi_pct},${No_map_reads},${No_map_pct_sum},${No_map_pct_mismatch},${No_map_pct_tooshort},${No_map_pct_other}" >> "$SBL"
+
 
 done
-
