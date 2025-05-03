@@ -1,66 +1,92 @@
 #!/bin/bash
 
-################################################################################## Mickael -- le 27/12/2024 - ####################################################################################
-#                                                                                   TWD : Time Work DevOps                                                                                       #
-##################################################################################################################################################################################################
+##################################################################################
+# Auteur   : Mickael Coquerelle
+# Date     : 03/05/2025
+# Projet   : TWD - Time Work DevOps --  Version : 1.2.0
+# Licence : CC BY 4.0 (Creative Commons Attribution 4.0 International)
+#
+# Ce script est libre d’utilisation, de modification et de redistribution
+# à condition de créditer l’auteur original.
+# Pour en savoir plus : https://creativecommons.org/licenses/by/4.0/
+#
+# Objectif du script :
+#   - Quantifier le temps de travail de manière flexible et précise pour un projet donné.
+#   - Produire un tableau du travail réellement fourni, utile pour l’auto-évaluation.
+#   - Qualifier le volume horaire pour chaque tâche et identifier des axes d’amélioration.
+#
+# Utilisation :
+#   ./TWD.sh <Nom_du_projet> <Nom_du_fichier_CSV> <Tache(s)> [Commentaire] [Langage]
+#
+#   $1 : Nom du projet (sera stocké dans la colonne "Projet")
+#   $2 : Nom du fichier CSV de log (doit exister préalablement)
+#   $3 : Description de la tâche ou activité en cours
+#   $4 : (optionnel) Commentaire libre (ex: "Sprint 1", "Fix bug X"…)
+#   $5 : (optionnel) Langage utilisé (ex: BASH, R, C++, PYTHON, LATEX, RMARKDOWN…)
+##################################################################################
 
-# L'objectif de ce script est de quantifier mon temps de travail de manière flexible et précise pour un projet donné, cette idée de quantification à émerger des nombreuses remarques du
-# Professeur Alban Mancheron concernant le temps théorique à alloué pour légitimer l'octroi des ECTS (nos fameux crédits européens), ce petit script en plus de nourrir ma curiosité, me permet de :
-    #    Quantifier de manière quantitative et autonome mon temps afin d'avoir un tableau du travail réellement fournit.
-    #    Quantifier de manière qualititative mon temps , ce script peux me permettre d'améliorer ma manière de travailler, en identifiant une incohérence du volume horaire pour une tache.
-    #    Fournir au Prof un indicateur qui se veut (qui essaye) d'être au plus juste sur mon investissement réel dans sa matière (et mon intérêt pour la bio informatique).
-    #    Ma permis de m'exercer dans bash et donc d'apprendre de nouveaux trucs.
+# Nom du fichier de log principal (structure standard si utilisé sans $2)
+TWD="Log_DevOps.csv"
 
-# L'utilisateur fournit les arguments suivants :
-# $1 : Nom du projet (sera stocké dans une colonne "Projet" du CSV).
-# $2 : Nom du fichier CSV à utiliser (doit exister, pas d'auto-création).
-# $3 : Commentaire décrivant la session (par ex., "Début", "Fin du job journalier", etc.).
+# Création de l'en-tête si le fichier principal n'existe pas
+if [ ! -f "$TWD" ]; then
+    echo "Debut_de_la_session,Fin_de_la_session,Duree,Projet,Tache(s),Langage(s),Commentaire(s)," > "$TWD"
+fi
 
-# Vérification des arguments
+# Vérification des arguments obligatoires
 if [ "$#" -lt 3 ]; then
-    echo "Trois arguments sont attendus à la suite de l'appel de TWD.sh <Nom_du_projet> <Nom_du_fichier_CSV> <Commentaire>"
+    echo "Erreur : Trois arguments minimum sont requis."
+    echo "Syntaxe : ./TWD.sh <Nom_du_projet> <Nom_du_fichier_CSV> <Tache(s)> [Langage] [Commentaire] "
     exit 1
 fi
 
-# Définition des variables
+# Attribution des variables à partir des arguments
 nom_projet="$1"
 fichier_csv="$2"
-commentaire="$3"
+tache="$3"
+commentaire="${5:-Aucun}"
+langage="${4:-NA}"
 
-# Vérification d'usage .... 
+# Vérification de l’existence du fichier CSV donné en argument
 if [ ! -f "$fichier_csv" ]; then
-    echo "Erreur : Le fichier CSV  renseigné en argument '$fichier_csv' n'existe pas. Veuillez le créer avant d'exécuter ce script."
+    echo "Erreur : Le fichier CSV '$fichier_csv' n'existe pas. Veuillez le créer manuellement."
     exit 2
 fi
 
-
-
-# Récupération de ma dernière ligne correspondant au projet en cours
+# Récupération de la dernière ligne correspondant au projet
 derniere_ligne=$(grep "$nom_projet" "$fichier_csv" | tail -n 1)
 
-# Extraction des données de la dernière ligne
+# Extraction des heures de début et de fin
 heure_debut=$(echo "$derniere_ligne" | cut -d ',' -f 1 | xargs)
 heure_fin=$(echo "$derniere_ligne" | cut -d ',' -f 2 | xargs)
 
+# Cas 1 : Nouvelle session (pas de session ouverte ou déjà clôturée)
 if [ -z "$heure_debut" ] || [ -n "$heure_fin" ]; then
-    # Si aucune session en cours ou si la dernière session est déjà clôturée
     heure_debut=$(date "+%Y-%m-%d %H:%M:%S")
-    echo "$heure_debut, , , $nom_projet, \"$commentaire\"" >> "$fichier_csv"
+    echo "$heure_debut,,,$nom_projet,\"$tache\",\"$langage\",\"$commentaire\"" >> "$fichier_csv"
     echo "Nouvelle session de travail commencée pour le projet '$nom_projet'."
 else
-    # Si une session en cours
+    # Cas 2 : Clôture d'une session existante
     heure_fin=$(date "+%Y-%m-%d %H:%M:%S")
-    # Calcul du delta en secondes
+
+    # Calcul de la durée en secondes
     secondes_debut=$(date -d "$heure_debut" +%s)
     secondes_fin=$(date -d "$heure_fin" +%s)
     duree_en_secondes=$((secondes_fin - secondes_debut))
 
-    # Conversion en heures et minutes
+    # Conversion de la durée en format HH:MM
     heures=$((duree_en_secondes / 3600))
     minutes=$(((duree_en_secondes % 3600) / 60))
     duree=$(printf "%02d:%02d" $heures $minutes)
 
-    # Mise à jour de la dernière ligne avec l'heure de fin et la durée
-    sed -i "s|^$heure_debut, , , $nom_projet, .*|$heure_debut, $heure_fin, $duree, $nom_projet, \"$commentaire\"|" "$fichier_csv"
+    # Sécurisation des champs à insérer dans la ligne mise à jour pour exploiter les caractères spéciaux. 
+    escaped_commentaire=$(printf "%s" "$commentaire" | sed 's/[&/\]/\\&/g')
+    escaped_tache=$(printf "%s" "$tache" | sed 's/[&/\]/\\&/g')
+    escaped_langage=$(printf "%s" "$langage" | sed 's/[&/\]/\\&/g')
+
+    # Mise à jour de la ligne dans le fichier CSV avec sed
+    sed -i "s|^$heure_debut,,,$nom_projet.*|$heure_debut,$heure_fin,$duree,$nom_projet,\"$escaped_tache\",\"$escaped_langage\",\"$escaped_commentaire\",|" "$fichier_csv"
+
     echo "Session de travail clôturée pour le projet '$nom_projet'. Temps total : $duree."
 fi
+
