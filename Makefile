@@ -68,7 +68,7 @@ SAMPLES = $(shell \
 CRAC_SAMS = $(addprefix output/crac/bam/, $(addsuffix .sam, $(SAMPLES)))
 
 # Cible principale
-crac: $(CRAC_SAMS)
+Crac_Paire: $(CRAC_SAMS)
 
 # Règle pour chaque .sam
 output/crac/bam/%.sam: $(FASTQ_DIR)/%_1.fastq.gz $(FASTQ_DIR)/%_2.fastq.gz
@@ -91,13 +91,8 @@ output/crac/bam/%.sam: $(FASTQ_DIR)/%_1.fastq.gz $(FASTQ_DIR)/%_2.fastq.gz
 SAM_FILES := $(basename $(notdir $(wildcard output/crac/bam/*.sam)))
 
 # Règle principale pour convertir tous les SAM en BAM+BAI
-all_bam: $(addprefix output/crac/bam/, $(addsuffix .bam, $(SAM_FILES)))
+Convert_bam_sam: $(addprefix output/crac/bam/, $(addsuffix .bam, $(SAM_FILES)))
 
-# Règle pour chaque .bam généré à partir d’un .sam
-# Conversion (view), en binaire (-b), avec une entrée SAM (-S)
-# Puis tri du BAM en position génomique (sort)
-# Enfin, indexation du BAM (index)
-# Optionnel : suppression du fichier .sam d'origine
 output/crac/bam/%.bam: output/crac/bam/%.sam
 	@echo "Conversion SAM -> BAM pour l’échantillon : $*"
 	#Conversion (view), en binaire (-b), avec une entrée SAM (-S) ET et trie du BAM en position génomique (sort) :
@@ -126,6 +121,7 @@ $(OUTBAM_STAR)/%.bam:
 	     --outFileNamePrefix $(TMPDIR)/$*/ 
 	@mv $(TMPDIR)/$*/Aligned.sortedByCoord.out.bam $(OUTBAM_STAR)/$*.bam
 	@mv $(TMPDIR)/$*/Log.final.out $(OUTLOG_STAR)/$*.Log.final.out
+	
 	
 #############################################################################################################################################################
 # 							REGLE DE COMPILATION documentation Doxygen
