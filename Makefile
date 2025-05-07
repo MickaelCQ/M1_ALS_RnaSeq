@@ -3,7 +3,7 @@
 # ##########################################################################################################################################################################
 # Fichier Makefile COUTEAU-SUISSE : Copyright (c) [2025] [COQUERELLE Mickael]
 # ##########################################################################################################################################################################
-# Permission est accordée, gratuitement, à toute personne obtenant une copie de ce logiciel et des fichiers associés (le "Logiciel"), de traiter le Logiciel sans restriction,
+# Permission est accordée, gratuitement, à toute personne obtenant une copie de ce programme  et des fichiers associés (le "Logiciel"), de traiter le Logiciel sans restriction,
 # y compris sans limitation les droits d'utilisation, de copie, de modification, de fusion, de publication, de distribution, de sous-licence et/ou de vente de copies du Logiciel,
 # et de permettre à d'autres personnes à qui le Logiciel est fourni de le faire, sous les conditions suivantes :
 # L'avis de droit d'auteur ci-dessus et cet avis de permission doivent être inclus dans toutes les copies ou portions substantielles du Logiciel.
@@ -31,7 +31,8 @@ BUILDLATEX = 2.Report_latex/PDF
 #    VARIABLES ALIGNEMENT
 # ##############################
 THREADS = 16
-REF_STAR = /data/indexes/STAR/2.7.8a/GRCh37
+REF_STAR = /data/indexes/STAR/2.7.8a/GRCh37/ 
+REF_CRAC = /data/indexes/crac/GRCh37/GRCh37newIndexSansMito
 
 DATE = $(shell date +%d%m%Y)
 
@@ -40,17 +41,15 @@ OUTLOG_STAR = LOGS_STAR_$(DATE)
 TMPDIR = TMP_STAR_$(DATE)
 
 
-REF_CRAC = /data/indexes/crac/GRCh37
+#REF_CRAC = /data/indexes/crac/GRCh37/GRCh37newIndexSansMito	
+REF_CRAC = /data/indexes/crac/GRCh37_with_MT/GRCh37newIndexAvecMito
+
 OUTBAM_CRAC = BAM_CRAC_$(DATE)
 OUTSAM_CRAC = SAM_CRAC_$(DATE)
-OUTLOG_CRAC = LOGS_CRAC_$(DATE)
-OUTERR_CRAC = ERR_CRAC_$(DATE)
 TMPDIR_CRAC = TMP_CRAC_$(DATE)
 KMER_CRAC= 22
+UNZIP_FASTQ = fastq_unzipped
 
-################################
-#       REPERTOIRE FASTQ       
-################################
 FASTQ_DIR ?= fastq
 
 SAMPLES = $(shell \
@@ -60,48 +59,52 @@ SAMPLES = $(shell \
             basename $$R1 _1.fastq.gz; \
         fi; \
     done)
-
+    
 #############################################################################################################################################################
 # 					Lancement de CRAC en paire-end sur le format de fastq fourni
 #############################################################################################################################################################
 
-#Trame :  --summary output/crac/summary/202304-1409241167-SLA.summary --nb-threads 16 -r fastq/202304-1409241167-SLA_1.fastq.gz -o - fastq/202304-1409241167-SLA_2.fastq.gz
-# Détection des échantillons par présence des fichiers _1 et _2
-BAMS_CRAC = $(addprefix $(OUTBAM_CRAC)/, $(addsuffix .bam, $(SAMPLES)))
+# Cibles finales souhaitées
+CRAC_SAMS = $(addprefix output/crac/bam/, $(addsuffix .sam, $(SAMPLES)))
 
+# Cible principale
+crac: $(CRAC_SAMS)
 
-#Voila la cible initial que je te parler il faut garder au maximum le nom des variables d'environnement :
+# Règle pour chaque .sam
+output/crac/bam/%.sam: $(FASTQ_DIR)/%_1.fastq.gz $(FASTQ_DIR)/%_2.fastq.gz
+	@echo "Lancement de l'alignement de l'échantillon : $* avec Crac "
+	@mkdir -p output/crac/summary output/crac/log output/crac/bam
+	@gunzip -c $(FASTQ_DIR)/$*_1.fastq.gz > $(FASTQ_DIR)/$*_1.fastq
+	@gunzip -c $(FASTQ_DIR)/$*_2.fastq.gz > $(FASTQ_DIR)/$*_2.fastq
+	crac --nb-tags-info-stored 10000 --bam --stranded \
+	-i $(REF_CRAC) -k $(KMER_CRAC) \
+	--summary output/crac/summary/$*.summary \
+	--nb-threads $(THREADS) \
+	-r $(FASTQ_DIR)/$*_1.fastq $(FASTQ_DIR)/$*_2.fastq \
+	-o output/crac/bam/$*.sam \
+	2> output/crac/log/$*_crac.log
 	
-# Cible principale pour l'alignement CRAC
-Crac_Paire: $(BAMS_CRAC)
+#############################################################################################################################################################
+# 					Lancement de CRAC en paire-end sur le format de fastq fourni
+#############################################################################################################################################################	
+# Génère une liste des fichiers SAM sans extension
+SAM_FILES := $(basename $(notdir $(wildcard output/crac/bam/*.sam)))
 
-$(OUTBAM_CRAC)/%.bam:
-	@echo "Nettoyage des sorties eventuelles précédentes : "
-	@rm -rf BAM_CRAC* ERR_CRAC* LOGS_CRAC* TMP_CRAC* OUT
-	
-	@mkdir -p $(OUTSAM_CRAC) $(OUTBAM_CRAC) $(OUTLOG_CRAC)/$* $(OUTERR_CRAC)/$* $(TMPDIR_CRAC)/$*
-	@echo ">> Alignement de l'échantillon $* avec CRAC"
-	crac --sam --stranded --rf \
-	     -i $(REF_CRAC) \
-	     -k $(KMER_CRAC) \
-	     --summary $(OUTLOG_CRAC)/$*/Log.final.out \
-	     --nb-threads $(THREADS) \
-	     -r $(FASTQ_DIR)/$*_1.fastq.gz $(FASTQ_DIR)/$*_2.fastq.gz \
-	     > $(OUTSAM_CRAC)/$*.sam \
-	     2> $(OUTERR_CRAC)/$*/crac.ERR.log
-	@mv $(TMPDIR_CRAC)/$*/Log.final.out $(OUTLOG_CRAC)/Log.final.out
-	
-	# Conversion du SAM en BAM avec SAMTOOLS
-	@echo ">> Conversion du SAM en BAM avec Samtools : "
-	samtools sort $(OUTSAM_CRAC)/$*.sam -@ $(THREADS) -o $(OUTBAM_CRAC)/$*.bam
-	
-	# Indexaction du fichier bam : 
-	@echo ">> Indexation du fichier BAM : "
-	samtools index $(OUTBAM_CRAC)/$*.bam $(OUTBAM_CRAC)/$*.bam.bai
-	
-	# Nettoyage après conversion en BAM
-	rm -rf $(OUTSAM_CRAC)/$*.sam
-	
+# Règle principale pour convertir tous les SAM en BAM+BAI
+all_bam: $(addprefix output/crac/bam/, $(addsuffix .bam, $(SAM_FILES)))
+
+# Règle pour chaque .bam généré à partir d’un .sam
+# Conversion (view), en binaire (-b), avec une entrée SAM (-S)
+# Puis tri du BAM en position génomique (sort)
+# Enfin, indexation du BAM (index)
+# Optionnel : suppression du fichier .sam d'origine
+output/crac/bam/%.bam: output/crac/bam/%.sam
+	@echo "Conversion SAM -> BAM pour l’échantillon : $*"
+	#Conversion (view), en binaire (-b), avec une entrée SAM (-S) ET et trie du BAM en position génomique (sort) :
+	samtools view -@ $(THREADS) -bS $< | samtools sort -@ $(THREADS) -o $@
+	samtools index $@
+	@rm -f $<
+
 #############################################################################################################################################################
 # 					Lancement de STAR en paire-end sur le format de fastq fourni
 #############################################################################################################################################################
@@ -114,7 +117,7 @@ Star_Paire: $(BAMS_STAR)
 
 $(OUTBAM_STAR)/%.bam:
 	@mkdir -p $(OUTBAM_STAR) $(OUTLOG_STAR) $(TMPDIR)/$* 
-	@echo ">> Alignement de l'échantillon $* avec STAR"
+	@echo ">>Lancement de l'alignement de l'échantillon $* avec STAR"
 	STAR --runThreadN $(THREADS) \
 	     --genomeDir $(REF_STAR) \
 	     --readFilesIn $(FASTQ_DIR)/$*_1.fastq.gz $(FASTQ_DIR)/$*_2.fastq.gz \
