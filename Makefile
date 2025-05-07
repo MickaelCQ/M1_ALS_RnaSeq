@@ -36,8 +36,8 @@ REF_CRAC = /data/indexes/crac/GRCh37/GRCh37newIndexSansMito
 
 DATE = $(shell date +%d%m%Y)
 
-OUTBAM_STAR = BAM_STAR_$(DATE)
 OUTLOG_STAR = LOGS_STAR_$(DATE)
+OUTBAM_STAR = BAM_STAR_$(DATE)
 TMPDIR = TMP_STAR_$(DATE)
 
 
@@ -59,7 +59,6 @@ SAMPLES = $(shell \
             basename $$R1 _1.fastq.gz; \
         fi; \
     done)
-    
 #############################################################################################################################################################
 # 					Lancement de CRAC en paire-end sur le format de fastq fourni
 #############################################################################################################################################################
@@ -72,20 +71,26 @@ Crac_Paire: $(CRAC_SAMS)
 
 # Règle pour chaque .sam
 output/crac/bam/%.sam: $(FASTQ_DIR)/%_1.fastq.gz $(FASTQ_DIR)/%_2.fastq.gz
-	@echo "Lancement de l'alignement de l'échantillon : $* avec Crac "
-	@mkdir -p output/crac/summary output/crac/log output/crac/bam
-	@gunzip -c $(FASTQ_DIR)/$*_1.fastq.gz > $(FASTQ_DIR)/$*_1.fastq
-	@gunzip -c $(FASTQ_DIR)/$*_2.fastq.gz > $(FASTQ_DIR)/$*_2.fastq
-	crac --nb-tags-info-stored 10000 --bam --stranded \
-	-i $(REF_CRAC) -k $(KMER_CRAC) \
-	--summary output/crac/summary/$*.summary \
-	--nb-threads $(THREADS) \
-	-r $(FASTQ_DIR)/$*_1.fastq $(FASTQ_DIR)/$*_2.fastq \
-	-o output/crac/bam/$*.sam \
-	2> output/crac/log/$*_crac.log
+	@echo "Vérification de l'échantillon : $*"
+	@if [ ! -f output/crac/bam/$*.bam ]; then \
+	    echo "Lancement de l'alignement de l'échantillon : $* avec Crac"; \
+	    mkdir -p output/crac/summary output/crac/log output/crac/bam; \
+	    gunzip -c $(FASTQ_DIR)/$*_1.fastq.gz > $(FASTQ_DIR)/$*_1.fastq; \
+	    gunzip -c $(FASTQ_DIR)/$*_2.fastq.gz > $(FASTQ_DIR)/$*_2.fastq; \
+	    crac --nb-tags-info-stored 10000 --bam --stranded \
+	         -i $(REF_CRAC) -k $(KMER_CRAC) \
+	         --summary output/crac/summary/$*.summary \
+	         --nb-threads $(THREADS) \
+	         -r $(FASTQ_DIR)/$*_1.fastq $(FASTQ_DIR)/$*_2.fastq \
+	         -o output/crac/bam/$*.sam \
+	         2> output/crac/log/$*_crac.log; \
+	    rm -f $(FASTQ_DIR)/$*_1.fastq $(FASTQ_DIR)/$*_2.fastq; \
+	else \
+	    echo "Fichier déjà aligné : $@"; \
+	fi
 	
 #############################################################################################################################################################
-# 					Lancement de CRAC en paire-end sur le format de fastq fourni
+#							Compression des BAM en SAM et indexation des BAM 
 #############################################################################################################################################################	
 # Génère une liste des fichiers SAM sans extension
 SAM_FILES := $(basename $(notdir $(wildcard output/crac/bam/*.sam)))
