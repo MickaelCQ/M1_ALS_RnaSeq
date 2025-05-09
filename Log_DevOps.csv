@@ -8,3 +8,4 @@ Début_de_la_session,Fin_de_la_session,Duree,Projet,Tache(s),Langage(s),Commentai
 2025-05-06 09:58:04,2025-05-06 13:00:55,03:02,BAM_Log,Documentation crac/cible crac finaliser pour generer les sam et cible de conversion bam avec sam tools,BASH,Aucun
 2025-05-06 13:44:12,2025-05-06 18:17:12,04:33,BAM_Log,"Lancement en série du makefile sur tous les fastq SLA/contro avec crac : décompression, gen SAM puis BAM",BASH,Aucun
 2025-05-07 08:46:39,2025-05-07 17:48:41,09:02,BAM_Log,"Fin cible crac, generation des summary et des sam bam, dev script bash pour extraire les data des summary",BASH,Aucun
+2025-05-09 14:42:28,2025-05-09 17:48:26,03:05,BAM_Log,"collectes et structurations  metadonnenes","CSV","Aucun",
