@@ -1,11 +1,12 @@
 Début_de_la_session,Fin_de_la_session,Duree,Projet,Tache(s),Langage(s),Commentaire(s)
-2025-05-02 21:49:45,2025-05-03 02:01:44,04:11,Bam_Log,script Dataframe,BASH,Aucun
+2025-05-02 21:49:45,2025-05-03 02:01:44,04:11,Bam_Log,Documentation script Dataframe,BASH,Aucun
 2025-05-03 08:52:54,2025-05-03 11:08:04,02:15,Bam_Log,script Dataframe,BASH,Aucun
-2025-05-03 14:08:49,2025-05-03 16:11:50,02:04,BAM_Log,Analyse ggplot2,R,Aucun
-2025-05-03 19:52:31,2025-05-03 22:41:11,02:49,BAM_Log,qualité de l'alignement par patient,R,Aucun
-2025-05-04 21:56:42,2025-05-04 22:49:10,00:53,BAM_Log,Reprise du script R qualitÃ© du mapping par Run,R,Aucun
-2025-05-05 09:23:15,2025-05-05 17:34:35,08:11,BAM_Log,"Documentation crac/debut montage cible makefile, soucis avec l'index",BASH,Aucun
-2025-05-06 09:58:04,2025-05-06 13:00:55,03:02,BAM_Log,Documentation crac/cible crac finaliser pour generer les sam et cible de conversion bam avec sam tools,BASH,Aucun
-2025-05-06 13:44:12,2025-05-06 18:17:12,04:33,BAM_Log,"Lancement en série du makefile sur tous les fastq SLA/contro avec crac : décompression, gen SAM puis BAM",BASH,Aucun
+2025-05-03 14:08:49,2025-05-03 16:11:50,02:04,BAM_Log,Documentation R et analyse ggplot2 pour les données d'alignement STAR,R,Aucun
+2025-05-03 19:52:31,2025-05-03 22:41:11,02:49,BAM_Log,Montage d'un nouveau script R : qualité de l'alignement par patient,R,Aucun
+2025-05-04 21:56:42,2025-05-04 22:49:10,00:53,BAM_Log,Reprise du script R qualité du mapping par Run,R,Aucun
+2025-05-05 09:23:15,2025-05-05 17:34:35,08:11,BAM_Log,"Documentation crac/debut montage cible makefile, soucis avec l'index ? Grosse galère ?",BASH,Aucun
+2025-05-06 09:58:04,2025-05-06 13:00:55,03:02,BAM_Log,Documentation crac/cible crac finaliser pour génerer les sam et cible de conversion bam avec sam tools,BASH,Aucun
+2025-05-06 13:44:12,2025-05-06 18:17:12,04:33,BAM_Log,"Montage des cibles, lancement en série du makefile sur tous les fastq SLA/contro avec crac : décompression, gen SAM puis BAM",BASH,Aucun
 2025-05-07 08:46:39,2025-05-07 17:48:41,09:02,BAM_Log,"Fin cible crac, generation des summary et des sam bam, dev script bash pour extraire les data des summary",BASH,Aucun
-2025-05-09 14:42:28,2025-05-09 17:48:26,03:05,BAM_Log,"collectes et structurations  metadonnenes","CSV","Aucun",
+2025-05-09 14:42:28,2025-05-09 17:48:26,03:05,BAM_Log,Collectes et structurations  metadonnees techniques pour tenter de corréler la variabilité ,CSV,Aucun
+2025-05-10 08:01:21,2025-05-10 11:08:41,03:06,BAM_Log,"Collectes et structurations  metadonnees 2 au labo de Nimes (Dates prelevement, extraction, congelation, librairie, lancement, Rapports acide nucléiques. ",CSV,Aucun
