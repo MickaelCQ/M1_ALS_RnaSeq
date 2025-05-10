@@ -178,5 +178,26 @@ cleanLatex:
 	rm -rf ./_minted-$(MAIN)
 
 # ############################ #
-.PHONY: pdfLatex cleanLatex ReadLatex GenLatex CleanDoc ReadDoc GenDoc Star_Paire Crac_Paire
+#  SYSTEME  CONFIGURATION
+# ############################ #
+
+Update_swap:
+	@if [ -z "$(size)" ]; then \
+		echo "Soucis dans la valeur du swap :fournir une valeur comme :  make update_swap size=16)"; \
+		exit 1; \
+	fi; \
+	sudo swapoff -a && sudo rm -f /swapfile; 
+	# Nouveau fichier swap avec la taille donnée
+	sudo fallocate -l $(size)G /swapfile && sudo chmod 600 /swapfile; \
+	# Initialisation du fichier swap
+	sudo mkswap /swapfile && sudo swapon /swapfile; \
+	# Vérification du fichier /etc/fstab pour le rendre persistant
+	if ! grep -q "/swapfile" /etc/fstab; then \
+		echo "/swapfile none swap sw 0 0" | sudo tee -a /etc/fstab; \
+	fi; \
+	# Vérification de l'espace swap
+	free -h && echo "Le swap a été mis à jour avec une taille de $(size) Go"
+	
+# ############################ #
+.PHONY: Update_swap pdfLatex cleanLatex ReadLatex GenLatex CleanDoc ReadDoc GenDoc Star_Paire Crac_Paire
 
