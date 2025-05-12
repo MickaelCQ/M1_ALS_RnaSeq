@@ -37,12 +37,16 @@
 
 
 # Demande du répertoire des logs STAR
-echo "Entrez le répertoire contenant les logs STAR à traiter (Log.final.out) au format : ~/Dir1/Dir2/..."
-read STAR_DIR
+#echo "Entrez le répertoire contenant les logs STAR à traiter (Log.final.out) au format : ~/Dir1/Dir2/..."
+#read STAR_DIR
 
 # Demande du répertoire des fichiers summary CRAC
-echo "Entrez le répertoire contenant les fichiers summary CRAC (.summary) : ~/Dir1/Dir2/...."
-read CRAC_DIR
+#echo "Entrez le répertoire contenant les fichiers summary CRAC (.summary) : ~/Dir1/Dir2/...."
+#read CRAC_DIR
+
+STAR_DIR="/home/mickael/M1_Stage/M1_ALS_RnaSeq/4.LOG_STAR_01052025_HG37";
+CRAC_DIR="/home/mickael/M1_Stage/M1_ALS_RnaSeq/output/crac/summary";
+
 
 ###########################################################	
 # ETAPE 1 : Extraction des fichiers de Log finaux STAR    : 
@@ -50,7 +54,7 @@ read CRAC_DIR
 
 SBL="Stats_Log_star.csv";
 SBC="Stats_Log_crac.csv";
-SBF="Stats_Log_final.csv";
+SBF="Stats_Log_merge.csv";
 
 
 # Nettoyage des anciens LOGS
@@ -225,25 +229,14 @@ if [[ -f "$SBL" && -f "$SBC" ]]; then
     echo "Fusion des résultats STAR et CRAC en un seul fichier : $SBF"
 
 if [[ $(( $(wc -l < "$SBL") - 1 )) -ne $(( $(wc -l < "$SBC") - 1 )) ]]; then
-    echo "Erreur : $SBL et $SBC ont un nombre de lignes différents."
-    exit 1
+    echo "Attention $SBL et $SBC ont un nombre de lignes différents."
 fi
-
     # Fusion des en-têtes
     paste -d ',' <(head -n 1 "$SBL") <(head -n 1 "$SBC") > "$SBF"
     # Fusion des contenus
     paste -d ',' <(tail -n +2 "$SBL") <(tail -n +2 "$SBC") >> "$SBF"
 
-    echo "Fusion terminée. Résultat final : $SBF"
+    echo "Fusion terminée. Résultat final : $SBF";
 else
-    echo "Erreur : l'un des fichiers $SBL ou $SBC est manquant."
+    echo "Erreur : l'un des fichiers $SBL ou $SBC est manquant.";
 fi
-
-   #.... en cours 
-   
-
-
-
-
-
-
