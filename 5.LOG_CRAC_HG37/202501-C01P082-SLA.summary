@@ -1,0 +1,31 @@
+for a strand specific library.
+
+Time to index all reads: 0 s
+Time to classify all reads: 205.864 s
+
+----------------------------------
+           Some STATISTICS            
+
+----------------------------------
+Total number of reads analyzed: 4863870
+
+Single: 4431606 (91.1128%)
+Multiple: 157039 (3.22868%)
+None: 65219 (1.34089%)
+Duplication: 210006 (4.31767%)
+
+----------------------------------
+Explainable: 4765852 (97.9848%)
+
+Repetition: 67157 (1.38073%)
+Normal: 4231 (0.0869883%)
+Almost-Normal: 0 (0%)
+Sequence-Errors: 1540051 (31.6631%)
+SNV: 531803 (10.9337%)
+Short-Indel: 14304 (0.294087%)
+Splice: 1174087 (24.1389%)
+Weak-Splice: 1067 (0.0219373%)
+Chimera: 43291 (0.890053%)
+Paired-end Chimera: 196904 (4.0483%)
+Bio-Undetermined: 3852849 (79.2137%)
+Undetermined: 100036 (2.05672%)

@@ -1,0 +1,1 @@
+/home/mickael/M1_Stage/M1_ALS_RnaSeq/3.Home_script/Stat_BAM_crac.sh
