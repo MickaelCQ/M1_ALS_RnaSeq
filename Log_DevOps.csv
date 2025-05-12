@@ -11,3 +11,5 @@ Début_de_la_session,Fin_de_la_session,Duree,Projet,Tache(s),Langage(s),Commentai
 2025-05-09 14:42:28,2025-05-09 17:48:26,03:05,BAM_Log,Collectes et structurations  metadonnees techniques pour tenter de corréler la variabilité ,CSV,Aucun
 2025-05-10 08:01:21,2025-05-10 11:08:41,03:06,BAM_Log,"Collectes et structurations  metadonnees 2 au labo de Nimes (Dates prelevement, extraction, congelation, librairie, lancement, Rapports acide nucléiques. ",CSV,Aucun
 2025-05-12 08:27:18,2025-05-12 12:45:29,04:18,BAM_Log,Correction et partie fusion des data des deux approches d'alignement,BASH,Aucun
+2025-05-12 13:40:35,2025-05-12 16:49:44,04:09,BAM_Log,"Début transformation du script R ggplot2, pour ajouter les données de mapping Crac et comparé les outils sur les datas SLA",R,Aucun
+2025-05-12 21:51:11,2025-05-12 23:09:44,01:18,BAM_Log,"Transformation du script R ggplot2 suite","R","Aucun",
