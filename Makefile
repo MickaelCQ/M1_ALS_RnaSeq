@@ -113,7 +113,7 @@ output/crac/bam/%.bam: output/crac/bam/%.sam
 BAMS_STAR = $(addprefix $(OUTBAM_STAR)/, $(addsuffix .bam, $(SAMPLES)))
 
 # Cible principale
-Star_Paire: $(BAMS_STAR)
+Star_Paire_All: $(BAMS_STAR)
 
 $(OUTBAM_STAR)/%.bam:
 	@mkdir -p $(OUTBAM_STAR) $(OUTLOG_STAR) $(TMPDIR)/$* 
@@ -126,7 +126,21 @@ $(OUTBAM_STAR)/%.bam:
 	     --outFileNamePrefix $(TMPDIR)/$*/ 
 	@mv $(TMPDIR)/$*/Aligned.sortedByCoord.out.bam $(OUTBAM_STAR)/$*.bam
 	@mv $(TMPDIR)/$*/Log.final.out $(OUTLOG_STAR)/$*.Log.final.out
-	
+
+Star_Paire_Alone:
+
+	@if [ -z "$(FQ1)" ] || [ -z "$(FQ2)" ] || [ -z "$(OUT)" ]; then \
+		echo "Utilisation : make Star_Paire_Alone FQ1=... FQ2=... OUT=SampleName" && exit 1; \
+	fi
+	@echo ">> Lancement de l'alignement de $(OUT) avec les fichiers :"
+	@echo "   - $(FQ1)"
+	@echo "   - $(FQ2)"
+	STAR --runThreadN $(THREADS) \
+	     --genomeDir $(REF_STAR) \
+	     --readFilesIn $(FQ1) $(FQ2) \
+	     --readFilesCommand zcat \
+	     --outSAMtype BAM SortedByCoordinate \
+	     --outFileNamePrefix $(TMPDIR)/$(OUT)/
 	
 #############################################################################################################################################################
 # 							REGLE DE COMPILATION documentation Doxygen
@@ -199,5 +213,5 @@ Update_swap:
 	free -h && echo "Le swap a été mis à jour avec une taille de $(size) Go"
 	
 # ############################ #
-.PHONY: Update_swap pdfLatex cleanLatex ReadLatex GenLatex CleanDoc ReadDoc GenDoc Star_Paire Crac_Paire
-
+.PHONY: Update_swap pdfLatex cleanLatex ReadLatex GenLatex CleanDoc ReadDoc GenDoc Star_Paire_All Star_Paire_Alone Crac_Paire
+Alone
