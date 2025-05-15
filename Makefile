@@ -1,3 +1,4 @@
+
 # ##########################################################################################################################################################################
 # Ce fichier est sous la licence MIT (Massachusetts Institute of Technology):
 # ##########################################################################################################################################################################
@@ -15,17 +16,10 @@
 # ##############################
 #    VARIABLES PRINCIPALES
 # ##############################
+.DEFAULT_GOAL := template
+
 MSQ = @
 MAIN = main
-
-
-# Paramètres pour latex et LA documentation doxygen :
-TEXFILE = 2.Report_latex/$(MAIN).tex
-PDF = $(MAIN).pdf
-LATEX = $(MSQ)pdflatex -interaction=nonstopmode -shell-escape
-BIB = biber
-Doxy = 1.Documentation/Doxygen
-BUILDLATEX = 2.Report_latex/PDF
 
 # ##############################
 #    VARIABLES ALIGNEMENT
@@ -59,11 +53,76 @@ SAMPLES = $(shell \
             basename $$R1 _1.fastq.gz; \
         fi; \
     done)
+#Ctrl + Shift + u 2500, puis Entrée ou Espace : ─
+# ─	U+2500	Ctrl+Shift+u
+# │	U+2502	Ctrl+Shift+u
+# ┌	U+250C	Ctrl+Shift+u
+# ┐	U+2510	Ctrl+Shift+u
+# └	U+2514	Ctrl+Shift+u
+# ┘	U+2518	Ctrl+Shift+u
+# ├	U+251C	Ctrl+Shift+u
+# ┤	U+2524	Ctrl+Shift+u
+# ┬	U+252C	Ctrl+Shift+u
+# ┴	U+2534	Ctrl+Shift+u
+# ┼	U+253C	Ctrl+Shift+u
+
+
+
+template:
+	@clear
+	@echo " "
+	@echo "                                      Fichier Makefile COUTEAU-SUISSE : Copyright (c) [2025] COQUERELLE Mickael"
+	@echo "       ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────"
+	@echo "                                  Consigne  Utiliser 'make <cible> [arguments]' pour exécuter une tâche spécifique.                                  "
+	@echo " "                                                                                                                                                    
+	@echo "┌────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐"
+	@echo "│                                                        Configuration du système, Rapports et Documentation                                         │"
+	@echo "└────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘"
+	@echo " N°      Cible               │     Arguments obligatoires                        │                Explications                       "
+	@echo "[1] Update_swap              │ size=XX                                           │ Met à jour la taille du swap à XX Go."
+	@echo "[2] pdfLatex                 │ DIR=chemin_du_projet_LaTeX                        │ Compile le main.tex dans le dossier DIR et ouvre le PDF."
+	@echo "[3] cleanLatex               │ (aucun)                                           │ Nettoie les fichiers temporaires de compilation LaTeX."
+	@echo "[4] ReadLatex                │ (aucun)                                           │ Ouvre le PDF compilé LaTeX avec Evince." 
+	@echo "[5] GenDoxy                  │ (aucun)                                           │ Compile la documentation Doxygen au format PDF."
+	@echo "[6] CleanDoc                 │ (aucun)                                           │ Nettoie les fichiers générés par Doxygen."
+	@echo " "
+	@echo "┌────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐"
+	@echo "│                                                                        Outils d'alignement                                                         │"
+	@echo "└────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘"
+	@echo "[7] Star_Paire_All           │ (aucun)                                           │ Lance STAR sur tous les échantillons du répertoire courant."
+	@echo "[8] Star_Paire_Alone         │ FQ1=... FQ2=... OUT=NomEchantillon                │ Lance STAR sur un seul échantillon."
+	@echo "[9] Crac_Paire               │ (aucun)                                           │ Lance CRAC sur tous les échantillons du répertoire courant."
+	@echo " "
+	@echo "┌────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐"
+	@echo "│                                                                        Outils Samtools                                                             │"
+	@echo "└────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘"
+	@echo "[10] Convert_bam_sam         │ (aucun)                                           │ Convertit les SAM CRAC en BAM triés et indexés." 
+
+
+Update_swap:
+	@if [ -z "$(size)" ]; then \
+ 		echo "Soucis dans la valeur du swap :fournir une valeur comme :  make update_swap size=16)"; \
+ 		exit 1; \
+ 	fi; \
+ 	sudo swapoff -a && sudo rm -f /swapfile; 
+ 	# Nouveau fichier swap avec la taille donnée
+	sudo fallocate -l $(size)G /swapfile && sudo chmod 600 /swapfile; \
+ 	# Initialisation du fichier swap
+	sudo mkswap /swapfile && sudo swapon /swapfile; \
+ 	# Vérification du fichier /etc/fstab pour le rendre persistant
+	if ! grep -q "/swapfile" /etc/fstab; then \
+ 		echo "/swapfile none swap sw 0 0" | sudo tee -a /etc/fstab; \
+ 	fi; \
+ 	# Vérification de l'espace swap
+	free -h && echo "Le swap a été mis à jour avec une taille de $(size) Go"
+1: Update_swap
+
 #############################################################################################################################################################
 # 					Lancement de CRAC en paire-end sur le format de fastq fourni
 #############################################################################################################################################################
 
 # Cibles finales souhaitées
+CRAC_SAMS = $(addprefix output/crac/bam/, $(addsuffix .sam, $(SAMPLES)))
 CRAC_SAMS = $(addprefix output/crac/bam/, $(addsuffix .sam, $(SAMPLES)))
 
 # Cible principale
@@ -88,6 +147,7 @@ output/crac/bam/%.sam: $(FASTQ_DIR)/%_1.fastq.gz $(FASTQ_DIR)/%_2.fastq.gz
 	else \
 	    echo "Fichier déjà aligné : $@"; \
 	fi
+9: Crac_Paire
 	
 #############################################################################################################################################################
 #							Compression des BAM en SAM et indexation des BAM 
@@ -104,7 +164,8 @@ output/crac/bam/%.bam: output/crac/bam/%.sam
 	samtools view -@ $(THREADS) -bS $< | samtools sort -@ $(THREADS) -o $@
 	samtools index $@
 	@rm -f $<
-
+	
+10: Convert_bam_sam
 #############################################################################################################################################################
 # 					Lancement de STAR en paire-end sur le format de fastq fourni
 #############################################################################################################################################################
@@ -116,6 +177,7 @@ BAMS_STAR = $(addprefix $(OUTBAM_STAR)/, $(addsuffix .bam, $(SAMPLES)))
 Star_Paire_All: $(BAMS_STAR)
 
 $(OUTBAM_STAR)/%.bam:
+	@echo ">> Cible à lancer en présence d'un repertoire fastq par défaut ou renseigner en argument "
 	@mkdir -p $(OUTBAM_STAR) $(OUTLOG_STAR) $(TMPDIR)/$* 
 	@echo ">>Lancement de l'alignement de l'échantillon $* avec STAR"
 	STAR --runThreadN $(THREADS) \
@@ -126,6 +188,7 @@ $(OUTBAM_STAR)/%.bam:
 	     --outFileNamePrefix $(TMPDIR)/$*/ 
 	@mv $(TMPDIR)/$*/Aligned.sortedByCoord.out.bam $(OUTBAM_STAR)/$*.bam
 	@mv $(TMPDIR)/$*/Log.final.out $(OUTLOG_STAR)/$*.Log.final.out
+7: Star_Paire_All
 
 Star_Paire_Alone:
 
@@ -141,27 +204,48 @@ Star_Paire_Alone:
 	     --readFilesCommand zcat \
 	     --outSAMtype BAM SortedByCoordinate \
 	     --outFileNamePrefix $(TMPDIR)/$(OUT)/
+8: Star_Paire_Alone
+#############################################################################################################################################################
+# 							REGLE DE COMPILATION Rapports Latex
+#############################################################################################################################################################	     
 	
+# Paramètres pour latex :
+TEXFILE = $(DIR)/main.tex
+MAIN = main
+PDF = $(MAIN).pdf
+LATEX = pdflatex -interaction=nonstopmode -shell-escape
+BIB = biber
+
+pdfLatex:
+	@if [ -z "$(DIR)" ] || [ ! -d "$(DIR)" ]; then \
+		echo "[ERREUR] Il faut spécifier un répertoire valide avec DIR=chemin/vers/dossier"; \
+		exit 1; \
+	fi; \
+	echo "[INFO] Compilation LaTeX de $(DIR)/main.tex..."; \
+	cd $(DIR) && $(LATEX) main.tex && $(BIB) main && $(LATEX) main.tex && $(LATEX) main.tex ; \
+	evince ./main.pdf > /dev/null 2>&1 &
+
+
+cleanLatex:
+	find $(BUILDLATEX) -type f -name "$(MAIN).*" ! -name "$(MAIN).pdf" -delete
+	rm -rf ./_minted-$(MAIN)
+
 #############################################################################################################################################################
 # 							REGLE DE COMPILATION documentation Doxygen
 #############################################################################################################################################################
+Doxy = 1.Documentation/Doxygen
 
 GenDoc:
 	$(MSG) "Génération de la documentation avec Doxygen..."
 	$(MSQ)doxygen 2.Documentation/Doxygen/Doxyfile -output $(Doxy)
 	$(MSG) "Documentation générée avec succès dans $(Doxy)"
 
-ReadDoc:
-	$(MSG) "Ouverture de la documentation dans Firefox..."
-	$(MSQ)firefox ./html/index.html &
-	$(MSG) "Documentation ouverte dans Firefox."
-
 CleanDoc:
 	$(MSG) "Suppression des fichiers de documentation..."
 	$(RM) "$(Doxy)/html" "$(Doxy)/latex"
 	$(MSG) "Nettoyage de la documentation terminé."
 
-GenLatex:
+GenDoxy:
 	$(MAKE) $(Doxy)/latex/refman.pdf
 
 $(Doxy)/latex/refman.pdf: GenDoc
@@ -172,46 +256,6 @@ $(Doxy)/latex/refman.pdf: GenDoc
 ReadLatex: $(Doxy)/latex/refman.pdf
 	$(MSG) "Ouverture du PDF avec Evince..."
 	$(MSQ)evince $(Doxy)/latex/refman.pdf &
-
+		
 # ############################ #
-# REGLES COMPILATION LATEX
-# ############################ #
-
-pdfLatex:
-	mkdir -p $(BUILDLATEX)
-	$(LATEX) -output-directory=$(BUILDLATEX) $(TEXFILE)
-	$(BIB) $(BUILDLATEX)/$(MAIN)
-	$(LATEX) -output-directory=$(BUILDLATEX) $(TEXFILE)
-	$(LATEX) -output-directory=$(BUILDLATEX) $(TEXFILE)
-	find $(BUILDLATEX) -type f -name "$(MAIN).*" ! -name "$(MAIN).pdf" -delete
-	rm -rf ./_minted-$(MAIN)
-	xdg-open $(BUILDLATEX)/$(MAIN).pdf > /dev/null 2>&1 &
-
-cleanLatex:
-	find $(BUILDLATEX) -type f -name "$(MAIN).*" ! -name "$(MAIN).pdf" -delete
-	rm -rf ./_minted-$(MAIN)
-
-# ############################ #
-#  SYSTEME  CONFIGURATION
-# ############################ #
-
-Update_swap:
-	@if [ -z "$(size)" ]; then \
-		echo "Soucis dans la valeur du swap :fournir une valeur comme :  make update_swap size=16)"; \
-		exit 1; \
-	fi; \
-	sudo swapoff -a && sudo rm -f /swapfile; 
-	# Nouveau fichier swap avec la taille donnée
-	sudo fallocate -l $(size)G /swapfile && sudo chmod 600 /swapfile; \
-	# Initialisation du fichier swap
-	sudo mkswap /swapfile && sudo swapon /swapfile; \
-	# Vérification du fichier /etc/fstab pour le rendre persistant
-	if ! grep -q "/swapfile" /etc/fstab; then \
-		echo "/swapfile none swap sw 0 0" | sudo tee -a /etc/fstab; \
-	fi; \
-	# Vérification de l'espace swap
-	free -h && echo "Le swap a été mis à jour avec une taille de $(size) Go"
-	
-# ############################ #
-.PHONY: Update_swap pdfLatex cleanLatex ReadLatex GenLatex CleanDoc ReadDoc GenDoc Star_Paire_All Star_Paire_Alone Crac_Paire
-Alone
+.PHONY: Update_swap pdfLatex cleanLatex ReadLatex GenLatex CleanDoc ReadDoc GenDoc Star_Paire_All Star_Paire_Alone Crac_Paire_Alone
