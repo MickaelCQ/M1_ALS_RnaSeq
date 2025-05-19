@@ -19,6 +19,72 @@
 
 \refsection{0}
   \datalist[entry]{nty/global//global/global}
+    \entry{abrams_protocol_2019}{article}{}
+      \name{author}{5}{}{%
+        {{hash=85e63a7994e54f4d05f9ffbd8aabe7bc}{%
+           family={Abrams},
+           familyi={A\bibinitperiod},
+           given={Zachary\bibnamedelima B.},
+           giveni={Z\bibinitperiod\bibinitdelim B\bibinitperiod}}}%
+        {{hash=16bf9dea8da4c1d5167ea5362ecc2cbb}{%
+           family={Johnson},
+           familyi={J\bibinitperiod},
+           given={Travis\bibnamedelima S.},
+           giveni={T\bibinitperiod\bibinitdelim S\bibinitperiod}}}%
+        {{hash=d00246b1153ed058a9db188c365474ca}{%
+           family={Huang},
+           familyi={H\bibinitperiod},
+           given={Kun},
+           giveni={K\bibinitperiod}}}%
+        {{hash=23b7cab0f0e181368b40d767914b8ccc}{%
+           family={Payne},
+           familyi={P\bibinitperiod},
+           given={Philip\bibnamedelimb R.\bibnamedelimi O.},
+           giveni={P\bibinitperiod\bibinitdelim R\bibinitperiod\bibinitdelim O\bibinitperiod}}}%
+        {{hash=8b3d7aee806e158b143a7a803aac26d4}{%
+           family={Coombes},
+           familyi={C\bibinitperiod},
+           given={Kevin},
+           giveni={K\bibinitperiod}}}%
+      }
+      \strng{namehash}{54686eb5e83ec72fe8bac7a7a355182c}
+      \strng{fullhash}{76cde9cedc9edbc205f25b4f120e7330}
+      \strng{bibnamehash}{54686eb5e83ec72fe8bac7a7a355182c}
+      \strng{authorbibnamehash}{54686eb5e83ec72fe8bac7a7a355182c}
+      \strng{authornamehash}{54686eb5e83ec72fe8bac7a7a355182c}
+      \strng{authorfullhash}{76cde9cedc9edbc205f25b4f120e7330}
+      \field{sortinit}{A}
+      \field{sortinithash}{2f401846e2029bad6b3ecc16d50031e2}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{RNA sequencing technologies have allowed researchers to gain a better understanding of how the transcriptome affects disease. However, sequencing technologies often unintentionally introduce experimental error into RNA sequencing data. To counteract this, normalization methods are standardly applied with the intent of reducing the non-biologically derived variability inherent in transcriptomic measurements. However, the comparative efficacy of the various normalization techniques has not been tested in a standardized manner. Here we propose tests that evaluate numerous normalization techniques and applied them to a large-scale standard data set. These tests comprise a protocol that allows researchers to measure the amount of non-biological variability which is present in any data set after normalization has been performed, a crucial step to assessing the biological validity of data following normalization.}
+      \field{issn}{1471-2105}
+      \field{journaltitle}{BMC Bioinformatics}
+      \field{month}{12}
+      \field{number}{24}
+      \field{title}{A protocol to evaluate {RNA} sequencing normalization methods}
+      \field{urlday}{16}
+      \field{urlmonth}{8}
+      \field{urlyear}{2024}
+      \field{volume}{20}
+      \field{year}{2019}
+      \field{urldateera}{ce}
+      \field{pages}{679}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.1186/s12859-019-3247-x
+      \endverb
+      \verb{file}
+      \verb Full Text PDF:/home/mickael/Zotero/storage/4UKP8WDI/Abrams et al. - 2019 - A protocol to evaluate RNA sequencing normalization methods.pdf:application/pdf;Snapshot:/home/mickael/Zotero/storage/V5SRQZQT/s12859-019-3247-x.html:text/html
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.1186/s12859-019-3247-x
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1186/s12859-019-3247-x
+      \endverb
+      \keyw{Normalisation,RNASeq,Variabilité biologique}
+    \endentry
     \entry{c_wolfson_et_al_global_2023}{article}{}
       \name{author}{1}{}{%
         {{hash=6131c315fef64bd1348ada4fa0bd369f}{%
@@ -106,6 +172,147 @@
       \verb https://www.has-sante.fr/upload/docs/application/pdf/2021-12/pnds_argumentaire_sla_genetique_2020.final.pdf
       \endverb
     \endentry
+    \entry{dillies_comprehensive_2013}{article}{}
+      \name{author}{20}{}{%
+        {{hash=ea6bd1f57d93923d4e9d3896cfd0fc4b}{%
+           family={Dillies},
+           familyi={D\bibinitperiod},
+           given={M.-A.},
+           giveni={M\bibinithyphendelim A\bibinitperiod}}}%
+        {{hash=54c48da17756778eb1585df893c2d1b7}{%
+           family={Rau},
+           familyi={R\bibinitperiod},
+           given={A.},
+           giveni={A\bibinitperiod}}}%
+        {{hash=4e063f9f4a2257c7f54b900536e564ec}{%
+           family={Aubert},
+           familyi={A\bibinitperiod},
+           given={J.},
+           giveni={J\bibinitperiod}}}%
+        {{hash=091ec2aeff174a0205e3da11e353d270}{%
+           family={Hennequet-Antier},
+           familyi={H\bibinithyphendelim A\bibinitperiod},
+           given={C.},
+           giveni={C\bibinitperiod}}}%
+        {{hash=8265ce93415dda0e41f1198ab71db60d}{%
+           family={Jeanmougin},
+           familyi={J\bibinitperiod},
+           given={M.},
+           giveni={M\bibinitperiod}}}%
+        {{hash=aa40c45fff0821be8471c43e4494f4bf}{%
+           family={Servant},
+           familyi={S\bibinitperiod},
+           given={N.},
+           giveni={N\bibinitperiod}}}%
+        {{hash=842f8df715484eb426b90d4b0fd4215a}{%
+           family={Keime},
+           familyi={K\bibinitperiod},
+           given={C.},
+           giveni={C\bibinitperiod}}}%
+        {{hash=1dcc666540d36c63790726fb6163318f}{%
+           family={Marot},
+           familyi={M\bibinitperiod},
+           given={G.},
+           giveni={G\bibinitperiod}}}%
+        {{hash=452204ef7d0af7c217a2add8740a253c}{%
+           family={Castel},
+           familyi={C\bibinitperiod},
+           given={D.},
+           giveni={D\bibinitperiod}}}%
+        {{hash=7788dea817d811ee40d99a7787f27b6b}{%
+           family={Estelle},
+           familyi={E\bibinitperiod},
+           given={J.},
+           giveni={J\bibinitperiod}}}%
+        {{hash=789c03621162786076134fefec8c2422}{%
+           family={Guernec},
+           familyi={G\bibinitperiod},
+           given={G.},
+           giveni={G\bibinitperiod}}}%
+        {{hash=b5ff1c3bffda134c706816553702cc26}{%
+           family={Jagla},
+           familyi={J\bibinitperiod},
+           given={B.},
+           giveni={B\bibinitperiod}}}%
+        {{hash=407d1b6543a4827dfc5bd11f27f78cb3}{%
+           family={Jouneau},
+           familyi={J\bibinitperiod},
+           given={L.},
+           giveni={L\bibinitperiod}}}%
+        {{hash=e2c247b5121632f4ad9d9fc0dcb77d59}{%
+           family={Laloe},
+           familyi={L\bibinitperiod},
+           given={D.},
+           giveni={D\bibinitperiod}}}%
+        {{hash=3506f6c71931f13925dabf4043069da6}{%
+           family={Le\bibnamedelima Gall},
+           familyi={L\bibinitperiod\bibinitdelim G\bibinitperiod},
+           given={C.},
+           giveni={C\bibinitperiod}}}%
+        {{hash=81dc230c8849695b4244688fae9bc683}{%
+           family={Schaeffer},
+           familyi={S\bibinitperiod},
+           given={B.},
+           giveni={B\bibinitperiod}}}%
+        {{hash=847f9a7cf627fdfcc998c188d362b348}{%
+           family={Le\bibnamedelima Crom},
+           familyi={L\bibinitperiod\bibinitdelim C\bibinitperiod},
+           given={S.},
+           giveni={S\bibinitperiod}}}%
+        {{hash=92f7d97202523cc7cd7bd9ab3a680a2d}{%
+           family={Guedj},
+           familyi={G\bibinitperiod},
+           given={M.},
+           giveni={M\bibinitperiod}}}%
+        {{hash=d9ed592d582bfce44c2013b60c9e5468}{%
+           family={Jaffrezic},
+           familyi={J\bibinitperiod},
+           given={F.},
+           giveni={F\bibinitperiod}}}%
+        {{hash=00231719cf0073230752087cdf8a54e9}{%
+           family={{on behalf of The French StatOmique Consortium}},
+           familyi={o\bibinitperiod}}}%
+      }
+      \list{language}{1}{%
+        {en}%
+      }
+      \strng{namehash}{30303bb8fd876c01e1bfdc01c8321dd9}
+      \strng{fullhash}{ccfebbe372e31853fc515576fc5a6eb3}
+      \strng{bibnamehash}{30303bb8fd876c01e1bfdc01c8321dd9}
+      \strng{authorbibnamehash}{30303bb8fd876c01e1bfdc01c8321dd9}
+      \strng{authornamehash}{30303bb8fd876c01e1bfdc01c8321dd9}
+      \strng{authorfullhash}{ccfebbe372e31853fc515576fc5a6eb3}
+      \field{sortinit}{D}
+      \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{During the last 3 years, a number of approaches for the normalization of RNA sequencing data have emerged in the literature, differing both in the type of bias adjustment and in the statistical strategy adopted. However, as data continue to accumulate, there has been no clear consensus on the appropriate normalization method to be used or the impact of a chosen method on the downstream analysis. In this work, we focus on a comprehensive comparison of seven recently proposed normalization methods for the differential analysis of RNA-seq data, with an emphasis on the use of varied real and simulated datasets involving different species and experimental designs to represent data characteristics commonly observed in practice. Based on this comparison study, we propose practical recommendations on the appropriate normalization method to be used and its impact on the differential analysis of RNA-seq data.}
+      \field{issn}{1467-5463, 1477-4054}
+      \field{journaltitle}{Briefings in Bioinformatics}
+      \field{month}{11}
+      \field{number}{6}
+      \field{title}{A comprehensive evaluation of normalization methods for {Illumina} high-throughput {RNA} sequencing data analysis}
+      \field{urlday}{16}
+      \field{urlmonth}{8}
+      \field{urlyear}{2024}
+      \field{volume}{14}
+      \field{year}{2013}
+      \field{urldateera}{ce}
+      \field{pages}{671\bibrangedash 683}
+      \range{pages}{13}
+      \verb{doi}
+      \verb 10.1093/bib/bbs046
+      \endverb
+      \verb{file}
+      \verb PDF:/home/mickael/Zotero/storage/CKX896SH/Dillies et al. - 2013 - A comprehensive evaluation of normalization methods for Illumina high-throughput RNA sequencing data.pdf:application/pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://academic.oup.com/bib/article-lookup/doi/10.1093/bib/bbs046
+      \endverb
+      \verb{url}
+      \verb https://academic.oup.com/bib/article-lookup/doi/10.1093/bib/bbs046
+      \endverb
+    \endentry
     \entry{orphanet_prevalence_2023}{report}{}
       \name{author}{1}{}{%
         {{hash=58eabb83b2fd14450964c06e174d62fc}{%
@@ -144,6 +351,9 @@
       \endverb
     \endentry
   \enddatalist
+  \missing{anders_differential_2010}
+  \missing{robinson_scaling_2010}
+  \missing{zhao_tpm_2021}
 \endrefsection
 \endinput
 
