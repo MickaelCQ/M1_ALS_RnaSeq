@@ -12,4 +12,10 @@ Début_de_la_session,Fin_de_la_session,Duree,Projet,Tache(s),Langage(s),Commentai
 2025-05-10 08:01:21,2025-05-10 11:08:41,03:06,BAM_Log,"Collectes et structurations  metadonnees 2 au labo de Nimes (Dates prelevement, extraction, congelation, librairie, lancement, Rapports acide nucléiques. ",CSV,Aucun
 2025-05-12 08:27:18,2025-05-12 12:45:29,04:18,BAM_Log,Correction et partie fusion des data des deux approches d'alignement,BASH,Aucun
 2025-05-12 13:40:35,2025-05-12 16:49:44,04:09,BAM_Log,"Début transformation du script R ggplot2, pour ajouter les données de mapping Crac et comparé les outils sur les datas SLA",R,Aucun
-2025-05-12 21:51:11,2025-05-12 23:09:44,01:18,BAM_Log,"Transformation du script R ggplot2 suite","R","Aucun",
+2025-05-12 21:51:11,2025-05-12 23:09:44,01:18,BAM_Log,Transformation du script R ggplot2 suite,R,Aucun
+2025-05-13 07:46:35,2025-05-13 08:19:56,00:33,BAM_Log,Transformation du script R ggplot2 suite,R,Aucun
+2025-05-15 08:54:27,2025-05-15 16:22:01,07:33,BAM_Log,"Test de significativité(Normalité, shapiro, student ) sur la  responsabilité de l'alignement dans le prct de mapping unique",R,Aucun
+2025-05-16 08:28:04,2025-05-16 17:44:04,07:33,BAM_Log,"Bibliographie Kmerexplore, Kmerator, documentation fonctionnement, début rédaction rapport",R,Aucun
+2025-05-16 20:45:40,2025-05-16 23:46:54,03:01,Rapport,"Montage du template, modification cible de compilation début introduction/et Matériels et méthodes",LateX,Aucun
+2025-05-19 09:08:14,2025-05-19 11:56:58,02:48,Rapport,"Structuration rapport LateX, partie introduction, contexte biologique",LateX,Aucun
+2025-05-19 13:13:45,2025-05-19 18:17:47,05:04,Rapport,"Rapport Partie introduction, biais biologique, problÃ©matique et normalisation",LateX,Aucun
