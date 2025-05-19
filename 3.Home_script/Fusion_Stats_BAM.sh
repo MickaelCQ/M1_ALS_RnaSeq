@@ -19,7 +19,7 @@
 # - La qualité de l'échantillon (un ARN de mauvaise qualité).
 # - D'éventuels effets de batch (qui peuvent s'identifier avec de mauvais taux de mapping).
 # - Nous aider à d'éventuelles inclusions/exclusions lors d'une analyse d'expression différentielle ultérieure.
-# - Répondre à l'hypothèse de dispersion des données entre nos runs RNASeq en corrélany les informations d'alignements et les données expérimentales.
+# - Répondre à l'hypothèse de dispersion des données entre nos runs RNASeq en corrélant les informations d'alignements et les données expérimentales.
 # - Permet d'évaluer la reproductibilité des run RNASeq (pour notre cas d'étude). 
 
 #############################################################################################################################################
@@ -62,7 +62,7 @@ if [ -f "$SBL" ] || [ -f "$SBC" ] || [ -f "$SBF" ] ; then
     rm "$SBL" "$SBC" "$SBF"
 fi
     
-echo STAR_Run,STAR_Patient,STAR_Type,STAR_Date_Mapping,STAR_Total_reads,\
+echo Run,Patient,Type,STAR_Date_Mapping,STAR_Total_reads,\
 STAR_Unique_reads,STAR_Unique_pct,\
 STAR_Multi_reads,STAR_Multi_pct,\
 STAR_No_map_reads,STAR_No_map_pct_sum,STAR_No_map_pct_mismatch,STAR_No_map_pct_tooshort,STAR_No_map_pct_other,\
@@ -95,9 +95,9 @@ for STAR_bam in "$STAR_DIR"/*.Log.final.out;
     #  1. ID :
     STAR_BaseName=$(basename "$STAR_bam")
     STAR_Sample=$(echo "$STAR_BaseName" | sed -E "s/.*Align_(.*)_Log.final.out/\1/")
-    STAR_Run=$(echo "$STAR_Sample" | cut -d '-' -f1)
-    STAR_Patient=$(echo "$STAR_Sample" | cut -d '-' -f2)
-    STAR_Type=$(echo "$STAR_Sample" | cut -d '-' -f3 | cut -d '.' -f1)
+    Run=$(echo "$STAR_Sample" | cut -d '-' -f1)
+    Patient=$(echo "$STAR_Sample" | cut -d '-' -f2)
+    Type=$(echo "$STAR_Sample" | cut -d '-' -f3 | cut -d '.' -f1)
 
     STAR_Date_Mapping=$(grep "Finished on" "$STAR_bam" | Ext_STAR);
 
@@ -143,7 +143,7 @@ for STAR_bam in "$STAR_DIR"/*.Log.final.out;
     STAR_Chimeric_reads_pct=$(grep "% of chimeric reads" "$STAR_bam" | Ext_STAR | tr -d '%');
   
     #9. Écriture dans le tabulé :
-    echo "${STAR_Run},${STAR_Patient},${STAR_Type},${STAR_Date_Mapping},${STAR_Total_reads},${STAR_Unique_reads},${STAR_Unique_pct},${STAR_Multi_reads},${STAR_Multi_pct},${STAR_No_map_reads},${STAR_No_map_pct_sum},${STAR_No_map_pct_mismatch},${STAR_No_map_pct_tooshort},${STAR_No_map_pct_other},${STAR_Avg_read_len},${STAR_Avg_read_map_len},${STAR_Splices_total},${STAR_Splices_GTAG},${STAR_Splices_GCAG},${STAR_Splices_ATAC},${STAR_Splices_Noncanonical},${STAR_Mismatch_rate},${STAR_Deletion_rate},${STAR_Insertion_rate},${STAR_Chimeric_reads},${STAR_Chimeric_reads_pct}" >> "$SBL";
+    echo "${Run},${Patient},${Type},${STAR_Date_Mapping},${STAR_Total_reads},${STAR_Unique_reads},${STAR_Unique_pct},${STAR_Multi_reads},${STAR_Multi_pct},${STAR_No_map_reads},${STAR_No_map_pct_sum},${STAR_No_map_pct_mismatch},${STAR_No_map_pct_tooshort},${STAR_No_map_pct_other},${STAR_Avg_read_len},${STAR_Avg_read_map_len},${STAR_Splices_total},${STAR_Splices_GTAG},${STAR_Splices_GCAG},${STAR_Splices_ATAC},${STAR_Splices_Noncanonical},${STAR_Mismatch_rate},${STAR_Deletion_rate},${STAR_Insertion_rate},${STAR_Chimeric_reads},${STAR_Chimeric_reads_pct}" >> "$SBL";
 
 done
 
