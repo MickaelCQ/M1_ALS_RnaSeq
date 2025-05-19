@@ -1,0 +1,149 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.2 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{nty/global//global/global}
+    \entry{c_wolfson_et_al_global_2023}{article}{}
+      \name{author}{1}{}{%
+        {{hash=6131c315fef64bd1348ada4fa0bd369f}{%
+           family={{C. Wolfson et al.}},
+           familyi={C\bibinitperiod}}}%
+      }
+      \list{language}{1}{%
+        {en}%
+      }
+      \strng{namehash}{6131c315fef64bd1348ada4fa0bd369f}
+      \strng{fullhash}{6131c315fef64bd1348ada4fa0bd369f}
+      \strng{bibnamehash}{6131c315fef64bd1348ada4fa0bd369f}
+      \strng{authorbibnamehash}{6131c315fef64bd1348ada4fa0bd369f}
+      \strng{authornamehash}{6131c315fef64bd1348ada4fa0bd369f}
+      \strng{authorfullhash}{6131c315fef64bd1348ada4fa0bd369f}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{abstract}{Background and Objectives Amyotrophic lateral sclerosis (ALS) is a rare neurodegenerative disorder aﬀecting upper and lower motor neurons. Due to its rarity and rapidly progressive nature, studying the epidemiology of ALS is challenging, and a comprehensive picture of the global burden of this disease is lacking. The objective of this systematic review was to describe the global incidence and prevalence of ALS.}
+      \field{issn}{0028-3878, 1526-632X}
+      \field{journaltitle}{Neurology}
+      \field{month}{8}
+      \field{number}{6}
+      \field{shorttitle}{Global {Prevalence} and {Incidence} of {Amyotrophic} {Lateral} {Sclerosis}}
+      \field{title}{Global {Prevalence} and {Incidence} of {Amyotrophic} {Lateral} {Sclerosis}: {A} {Systematic} {Review}}
+      \field{urlday}{13}
+      \field{urlmonth}{11}
+      \field{urlyear}{2024}
+      \field{volume}{101}
+      \field{year}{2023}
+      \field{urldateera}{ce}
+      \verb{doi}
+      \verb 10.1212/WNL.0000000000207474
+      \endverb
+      \verb{file}
+      \verb PDF:/home/mickael/Zotero/storage/HQ5M3PCK/Wolfson et al. - 2023 - Global Prevalence and Incidence of Amyotrophic Lateral Sclerosis A Systematic Review.pdf:application/pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://www.neurology.org/doi/10.1212/WNL.0000000000207474
+      \endverb
+      \verb{url}
+      \verb https://www.neurology.org/doi/10.1212/WNL.0000000000207474
+      \endverb
+    \endentry
+    \entry{centre_constitutif_sla_de_tours_protocole_2020}{report}{}
+      \name{author}{1}{}{%
+        {{hash=782c7a7799aea3bb6ef9c7432c9836fc}{%
+           family={{Centre Constitutif SLA de Tours}},
+           familyi={C\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {Centre de référence SLA TOURS}%
+      }
+      \list{location}{1}{%
+        {TOURS}%
+      }
+      \strng{namehash}{782c7a7799aea3bb6ef9c7432c9836fc}
+      \strng{fullhash}{782c7a7799aea3bb6ef9c7432c9836fc}
+      \strng{bibnamehash}{782c7a7799aea3bb6ef9c7432c9836fc}
+      \strng{authorbibnamehash}{782c7a7799aea3bb6ef9c7432c9836fc}
+      \strng{authornamehash}{782c7a7799aea3bb6ef9c7432c9836fc}
+      \strng{authorfullhash}{782c7a7799aea3bb6ef9c7432c9836fc}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{11}
+      \field{title}{Protocole {National} de {Diagnostic} de et de {Soins} ({PNDS}) {Filière} {FILSLAN}}
+      \field{type}{Argumentaire scientifique}
+      \field{urlday}{28}
+      \field{urlmonth}{3}
+      \field{urlyear}{2024}
+      \field{year}{2020}
+      \field{urldateera}{ce}
+      \field{pages}{6}
+      \range{pages}{1}
+      \verb{file}
+      \verb pnds_argumentaire_sla_genetique_2020.final.pdf:/home/mickael/Zotero/storage/CKW2GPLF/pnds_argumentaire_sla_genetique_2020.final.pdf:application/pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://www.has-sante.fr/upload/docs/application/pdf/2021-12/pnds_argumentaire_sla_genetique_2020.final.pdf
+      \endverb
+      \verb{url}
+      \verb https://www.has-sante.fr/upload/docs/application/pdf/2021-12/pnds_argumentaire_sla_genetique_2020.final.pdf
+      \endverb
+    \endentry
+    \entry{orphanet_prevalence_2023}{report}{}
+      \name{author}{1}{}{%
+        {{hash=58eabb83b2fd14450964c06e174d62fc}{%
+           family={{Orphanet}},
+           familyi={O\bibinitperiod}}}%
+      }
+      \strng{namehash}{58eabb83b2fd14450964c06e174d62fc}
+      \strng{fullhash}{58eabb83b2fd14450964c06e174d62fc}
+      \strng{bibnamehash}{58eabb83b2fd14450964c06e174d62fc}
+      \strng{authorbibnamehash}{58eabb83b2fd14450964c06e174d62fc}
+      \strng{authornamehash}{58eabb83b2fd14450964c06e174d62fc}
+      \strng{authorfullhash}{58eabb83b2fd14450964c06e174d62fc}
+      \field{sortinit}{O}
+      \field{sortinithash}{2cd7140a07aea5341f9e2771efe90aae}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{11}
+      \field{number}{2}
+      \field{title}{Prévalence des maladies rares : {Données} bibliographiques}
+      \field{type}{techreport}
+      \field{urlday}{28}
+      \field{urlmonth}{3}
+      \field{urlyear}{2024}
+      \field{year}{2023}
+      \field{urldateera}{ce}
+      \field{pages}{14}
+      \range{pages}{1}
+      \verb{file}
+      \verb Prevalence_des_maladies_rares_par_prevalence_decroissante_ou_cas.pdf:/home/mickael/Zotero/storage/M86C2WFG/Prevalence_des_maladies_rares_par_prevalence_decroissante_ou_cas.pdf:application/pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://www.orpha.net/pdfs/orphacom/cahiers/docs/FR/Prevalence_des_maladies_rares_par_prevalence_decroissante_ou_cas.pdf
+      \endverb
+      \verb{url}
+      \verb https://www.orpha.net/pdfs/orphacom/cahiers/docs/FR/Prevalence_des_maladies_rares_par_prevalence_decroissante_ou_cas.pdf
+      \endverb
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

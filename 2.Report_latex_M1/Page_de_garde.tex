@@ -1,0 +1,67 @@
+%___________________________ Montage de la page de garde ______________________________
+\begin{titlepage}
+% Bande large et claire en arrière-plan
+
+% Image de fond avec réglage de l'opacité et de l'échelle
+\begin{minipage}{0.35\textwidth}
+\vspace{15mm}
+    \centering
+    \includegraphics[height=2.5cm]{logo_FDS_rond.png} % Ajuste la hauteur
+\vspace{5mm}
+\end{minipage}
+\begin{minipage}{0.3\textwidth}
+\vspace{15mm}
+    \centering
+    \includegraphics[height=2.5cm]{Logo_Bioinfo.png} % Ajuste la hauteur
+    \vspace{5mm}
+\end{minipage}%
+\begin{minipage}{0.3\textwidth}
+    \vspace{15mm}
+    \centering
+    \includegraphics[height=2.4cm]{Logo_UM.png} % Ajuste la hauteur
+    \vspace{5mm}
+\end{minipage}
+\vspace{5mm}
+
+% Cadre autour de la 
+\begin{tikzpicture}[remember picture, overlay]
+    \draw [line width=0.5mm] ($(current page.north west) + (1cm,-1cm)$) rectangle ($(current page.south east) + (-1cm,1cm)$);
+\end{tikzpicture}
+
+\centering % Centraliser le contenu
+% Utilisation de minipage pour les logos
+
+{\scshape\LARGE Master Bioinformatique \\ Université de Montpellier\par} % Nom de l'université
+    \vspace{8mm}
+{\scshape\Large HAU803I : Rapport de stage de M1  \par} % Sous-titre
+\vspace{1cm}
+\rule{\linewidth}{0.5 mm} \\[0.5 cm]
+{\huge\bfseries Titre à choisir \par} \
+\rule{\linewidth}{0.5 mm} \\[1.5 cm]
+
+\begin{minipage}{0.5\textwidth} % Minipage pour faire deux colonnes
+    \begin{flushleft} \large % Envoyer à gauche
+    \emph{\textbf{Etudiant :}}\\ % Titre au-dessus des noms à gauche
+    Mickael Coquerelle \\ % Remplacer pour chacun
+    \end{flushleft}
+\end{minipage}
+~
+\begin{minipage}{0.4\textwidth}
+    \begin{flushright} \large
+    \emph{\textbf{Professeur :}} \\
+     Anthony Boureux \\
+    \end{flushright}
+\end{minipage}\\
+
+\vspace{2cm}
+
+\begin{quote}
+    \itshape
+\end{quote}
+\vspace{1cm}
+\begin{flushright}
+    \itshape
+\end{flushright}
+\vspace{5mm}
+
+\end{titlepage}

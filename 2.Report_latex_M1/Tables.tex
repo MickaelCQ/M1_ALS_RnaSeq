@@ -1,0 +1,97 @@
+%-------------------------------------------------------------------------------------------------
+%                                    TABLE DES ABBREVIATIONS ET DES SYMBOLES
+%-------------------------------------------------------------------------------------------------x
+\setlength{\nomitemsep}{-2pt} % Réduit l'espacement entre les items de nomenclature
+% Table des symboles
+%\nomenclature{{\large \textbf{$R_e$}}}{Lectures alignés sur l'échantillon \(e\)}
+%\nomenclature{{\large \textbf{$F_e$}}}{Fragments alignés pour l'échantillon \(e\)}
+%\nomenclature{{\large \textbf{$L_g$}}}{Longueur du gène d'intérêt \(g\)}
+%\nomenclature{{\large \textbf{$\lambda_{x}$}}}{Facteur d'échelle de l'élément x}
+%\nomenclature{{\large \textbf{$M_{g,e}$}}}{M-value pour le gène \(g\) dans l'échantillon \(e\)}
+%\nomenclature{{\large \textbf{$A_{g,e}$}}}{A-value pour le gène \(g\) dans l'échantillon \(e\)}
+%\nomenclature{{\large \textbf{$w_{g,e}$}}}{Poids basé sur la variance des M-values pour le gène \(g\) dans l'échantillon \(e\)}
+%\nomenclature{{\large \textbf{$NR_{x}$}}}{Lectures Normalisées de l'élément x }
+%\nomenclature{{\large \textbf{$\Pi$}}}{Produit}
+%\nomenclature{{\large \textbf{$\sum$}}}{Somme}
+%\nomenclature{{\large \textbf{$M_{g}$}}}{Moyenne géométrique du gène \(g\)}
+%\nomenclature{{\large \textbf{$Q3_{g}$}}}{Troisième quartile des valeurs d'expression du gène \(g\)}
+%\nomenclature{{\large \textbf{$Med_{x}$}}}{Médiane de l'élément x}
+%\nomenclature{{\large \textbf{$k$}}}{Référence}
+\printnomenclature
+
+
+\section*{Liste des abréviations}
+
+\begin{paracol}{2} % Création de 2 colonnes
+    % Première colonne : Liste des abréviations
+    \begin{center}
+    \textbf{Acronymes}
+    \end{center}
+\begin{tabbing}
+    \hspace{2cm} \= \kill % Pour définir la première colonne
+    \textbf{\textsc{ADN}} \> Acide DésoxyRiboNucléique \\
+    \textbf{\textsc{DGE}} \> Analyse d'Expression Différentielle\\
+    \textbf{\textsc{ARN}} \> Acide RiboNucléique \\
+    \textbf{\textsc{API}} \> Application Programming Interface \\
+    \textbf{\textsc{CVS}} \> Concurrent Versions System \\
+    \textbf{\textsc{FP}} \> Faux Positifs \\
+    \textbf{\textsc{FN}} \> Faux Négatifs \\
+    \textbf{\textsc{KB}} \> KiloBase \\
+    \textbf{\textsc{SLA}} \> Sclérose Latérale Amyotrophique \\
+    \textbf{\textsc{RCS}} \> Révision Control System \\
+    \textbf{\textsc{SHD}} \> Séquençage Haut Débit \\
+    \textbf{\textsc{SNP}} \> Polymorphisme nucléotidique unique \\
+    \textbf{\textsc{SIF}} \> Singularity Image Format \\
+    \textbf{\textsc{UML}} \> Language de modélisation unifié\\
+    \textbf{\textsc{VP}} \> Vrai Positifs \\
+    \textbf{\textsc{VN}} \> Vrai Négatifs \\
+ 
+\end{tabbing}
+    \hspace{5mm}
+    \switchcolumn % Passe à la deuxième colonne
+    % Deuxième colonne : Liste des symboles mathématiques
+\begin{center}
+    \textbf{Symboles}
+\end{center}
+\begin{tabbing}
+    \hspace{1.5cm}  \= \kill
+    $\mathcal{A}_{\text{x}}$ \> Alphabet de x \\
+    $\Sigma_{\text{x}}$ \> Somme de x \\
+    $Q_{P}$ \> Score de qualité Phred\\
+    $Q_{A}$ \> Score de qualité Phred encodé en ASCII\\
+    $S$ \> Séquence biologique\\
+    $P$ \> Motif recherché \\
+    $S_e$ \> Sensibilité \\
+    $S_p$ \> Spécificité\\
+    $\mathcal{T}$ \> Texte \\
+    $w$ \> Mot\\
+    $\mathcal{O}()$ \> Notation de Landau\\
+    $\mathcal{SA}_{x}$ \> Table des suffixes de x\\
+\end{tabbing}
+
+\end{paracol}
+
+
+\addcontentsline{toc}{section}{Liste des abréviations et symboles}
+
+%-------------------------------------------------------------------------------------------------
+%                                    TABLE DES FIGURES, TABLEAUX ET CODES
+%-------------------------------------------------------------------------------------------------
+\selectlanguage{french}
+%____________________  Montage de la table des figures et des tableaux _______________
+
+% Définir un nouvel environnement de flottant pour minted
+\newfloat{listing}{htbp}{lop}
+\floatname{listing}{Code}
+
+% Redéfinir le titre de la liste des listings
+\renewcommand{\lstlistlistingname}{Liste des codes}
+\newpage
+
+%-------------------------------------------------------------------------------------------------
+%                                            TABLE DES MATIERES
+%-------------------------------------------------------------------------------------------------
+
+\tableofcontents
+\vspace{10mm}
+\newpage

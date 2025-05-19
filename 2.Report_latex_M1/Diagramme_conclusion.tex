@@ -1,0 +1,50 @@
+%---------------------------Diagramme de conclusion ----------------------------------------
+
+% Styles spécifiques avec effet 3D simulé pour le schéma biais technique.
+\tikzstyle{startstop2} = [nodebase, fill=red!30, draw=red!50, thick,,drop shadow]
+\tikzstyle{process2} = [nodebase, fill=orange!30, draw=orange!50, thick, drop shadow]
+\tikzstyle{techbias} = [nodebase, fill=green!30, draw=green!50, thick, drop shadow]
+\tikzstyle{biobias} = [nodebase, fill=blue!30, draw=blue!50, thick, drop shadow]
+\tikzstyle{highlightbox} = [rectangle, draw=blue!80, thick, rounded corners, minimum width=5cm, minimum height=1.5cm, drop shadow]
+
+% Styles spécifiques avec effet 3D simulé pour l'organigramme normalisation
+\tikzstyle{startstop} = [rectangle, rounded corners, minimum width=2.8cm, minimum height=1.2cm, text centered, draw=blue!40, thick, fill=blue!20, drop shadow]
+\tikzstyle{process} = [rectangle, rounded corners, minimum width=3cm, minimum height=1cm, text centered, draw=orange!40, thick, fill=orange!20, drop shadow]
+\tikzstyle{smallbubble} = [rectangle, rounded corners, minimum width=2.5cm, minimum height=1cm, text centered, draw=red!40, thick, fill=red!20, drop shadow]
+\tikzstyle{decision} = [rectangle, rounded corners, minimum width=3cm, minimum height=1cm, text centered, draw=green!40, thick, fill=green!20, drop shadow]
+\tikzstyle{formula} = [rectangle, rounded corners, minimum width=2.5cm, minimum height=0.8cm, text centered, draw=blue!30, thick, fill=blue!10, drop shadow]
+
+\tikzstyle{arrow} = [
+    ultra thick,       % Augmente l'épaisseur de la flèche
+    ->,               % Pointe directionnelle
+    >=Stealth,       % Style de pointe structuré (Triangle)
+    draw=black!80,    % Couleur noire légèrement atténuée
+    line cap=round,   % Extrémités des lignes arrondies pour un aspect lisse
+    shorten >=1pt,    % Réduit l'espace avant la pointe
+    shorten <=1pt     % Réduit l'espace après le trait
+]
+
+% Définition de "double copy shadow" pour effet 3D
+\tikzset{
+  double copy shadow/.style={
+    preaction={
+      draw=#1, line width=2pt, double distance=1pt, opacity=0.5
+    },
+  }
+}
+\tikzset{
+        Avant/.style={
+            rectangle, rounded corners=10pt,
+            draw=green!700, fill=green!10, % Contours épais vert foncé et fond vert clair
+            thick,
+            minimum width=5.5cm, minimum height=2cm,
+            text centered,
+        },
+        Inconv/.style={
+            rectangle, rounded corners=10pt,
+            draw=red!700, fill=red!10, % Contours épais rouge foncé et fond rouge clair
+            thick,
+            minimum width=5.5cm, minimum height=2cm,
+            text centered,
+        }
+    }

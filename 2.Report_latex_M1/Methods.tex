@@ -1,0 +1,52 @@
+\section{Matériels \& Méthodes}
+\subsection{Génération des fichiers d’alignement}
+    Stratégie de génération automatisée des fichiers BAM à partir des paires FASTQ (1 \& 2).
+    
+    Structure de traitement par run (batch de 8 échantillons).
+
+    Mise en place d’un pipeline reproductible.
+\subsection{Analyse de la variabilité expérimentale}
+
+    Statistiques descriptives sur la profondeur de lecture, par run et par échantillon.
+
+    Mise en évidence de la non-reproductibilité : inter-run vs. intra-run.
+
+    Visualisations pour illustrer la disparité de couverture.
+
+\subsection{Alignement : levée d’ambiguïté sur la variabilité}
+
+    Présentation de STAR et CRAC :
+
+        Méthodologie, hypothèses sous-jacentes, différences de traitement.
+
+    Alignement des mêmes échantillons avec les deux outils.
+
+    Comparaison des métriques de mapping : taux d’alignement unique/multiple/non-aligné.
+
+    Conclusion : validation que l’étape d’alignement n’est pas responsable de la variabilité observée.
+
+\subsection{Vers une approche alternative de quantification}
+
+    Justification du besoin de s’affranchir des biais d’alignement.
+
+    Introduction à la quantification par k-mer : promesse de neutralité méthodologique.
+
+    Transition vers une stratégie plus robuste de détection différentielle.
+
+\subsubsection{Qualité et spécificité de l'alignement}
+
+L'étape de \og \textit{mapping} \fg dans un processus d'analyse est une étape charnière et pour notre cas d'étude on peut raisonnablement penser que cette étape peut biaiser le signal biologique réel, 
+
+Pour évaluer si les deux outils d’alignement, STAR et CRAC, diffèrent significativement dans leur capacité à aligner les lectures uniques,
+ j’ai réalisé une analyse statistique sur les proportions relatives des lectures uniques par patient.J’ai d’abord effectué un test de normalité de Shapiro-Wilk sur les données 
+ de proportions de lectures uniques pour chaque outil afin de vérifier l’hypothèse de normalité nécessaire pour utiliser un test paramétrique. 
+ Les résultats ont validé cette hypothèse, j’ai donc pu appliquer un test t de Student apparié pour comparer les moyennes des proportions de lectures uniques entre STAR et CRAC. 
+ Le test t n’a pas montré de différence statistiquement significative (p > 0.05) entre les deux outils, ce qui suggère que, globalement,
+  leur capacité à aligner des lectures uniques est comparable dans mon jeu de données.
+
+Cependant, je tiens à souligner que ces résultats quantitatifs ne reflètent pas nécessairement les différences qualitatives dans les approches d’alignement de STAR et CRAC.
+ En effet, ces deux outils reposent sur des algorithmes différents, avec des stratégies distinctes pour gérer les lectures multiples, les lectures chimériques, et les jonctions d’épissage. 
+ Ces différences peuvent influencer la localisation précise des alignements, la sensibilité à certains types de variants, ainsi que la qualité globale des données alignées.
+Par conséquent, même si la proportion de lectures uniques est comparable, j’interprète ces résultats avec prudence. Pour les analyses de quantification ultérieures,
+ je recommande d’intégrer une étude plus approfondie des alignements, incluant une inspection visuelle des lectures alignées et une analyse des différences dans les catégories de lectures multiples 
+ et chimériques. Cela me permettra de m’assurer que la variabilité introduite par les différences d’algorithmes n’impacte pas les conclusions biologiques que je tirerai des données.

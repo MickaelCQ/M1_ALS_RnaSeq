@@ -1,0 +1,17 @@
+\acswitchoff 
+\babel@toc {english}{}\relax 
+\babel@toc {french}{}\relax 
+\contentsline {section}{Liste des abréviations et symboles}{2}{Doc-Start}%
+\babel@toc {french}{}\relax 
+\contentsline {section}{\numberline {1}Introduction}{4}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Positionnement du stage}{4}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}Contexte biologique}{4}{subsection.1.2}%
+\contentsline {subsection}{\numberline {1.3}Contexte expérimental et contraintes}{6}{subsection.1.3}%
+\contentsline {section}{\numberline {2}Matériels \& Méthodes}{6}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Génération des fichiers d’alignement}{6}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Analyse de la variabilité expérimentale}{6}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}Alignement : levée d’ambiguïté sur la variabilité}{6}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.4}Vers une approche alternative de quantification}{6}{subsection.2.4}%
+\contentsline {subsubsection}{\numberline {2.4.1}Qualité et spécificité de l'alignement}{6}{subsubsection.2.4.1}%
+\contentsline {section}{\numberline {3}Resultats}{7}{section.3}%
+\contentsline {section}{\numberline {4}Discussion}{7}{section.4}%
