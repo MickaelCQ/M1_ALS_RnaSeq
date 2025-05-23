@@ -1,22 +1,25 @@
-% --- Langue et encodage ---
+%________________________  Langue et encodage ____________________
 \usepackage[french,english]{babel} % Langue du document
 \usepackage[T1]{fontenc} % Codage des caractères pour la gestion des accents
 \usepackage[utf8]{inputenc} % Encodage UTF-8
 \usepackage{paracol}
 \usepackage{wasysym}
-% --- Mise en page ---
+
+%____________________________ Mise en page _______________________ 
 \usepackage[left=1.5cm,right=1.5cm,top=2cm,bottom=2cm]{geometry} % Gestion des marges
 \usepackage{setspace} % Gestion des espaces interlignes
 \usepackage{titlesec} % Personnalisation des titres de sections
 \usepackage{titling} % Personnalisation du titre
 \usepackage{fancyhdr} % Personnalisation des en-têtes et pieds de page
 \usepackage{lastpage} 
-% --- Mathématiques ---
+
+
+%__________________________ Mathématiques ________________________
 \usepackage{mathtools} % Paquet pour des équations et symboles mathématiques
 \usepackage{siunitx} % Écriture avec la notation scientifique
 \usepackage{pgfplots}
 
-% --- Flottants et images ---
+%________________________ Flottants et images ____________________
 \usepackage[section]{placeins} % Forcer les flottants à rester dans les sections
 \usepackage{graphicx} % Insérer des images
 \usepackage[justification=centering]{caption} % Légendes centralisées
@@ -24,30 +27,46 @@
 \usepackage{wallpaper} % Utiliser des fonds ou des images de fond
 \usepackage{wrapfig} % Mise en page personnalisée pour les images
 
-% --- Tableaux ---
+%______________________________ Tableaux ___________________________
 \usepackage{array,multirow,makecell} % Personnalisation avancée des tableaux
 \usepackage{booktabs} % Amélioration des tables (lignes fines, moyennes, épaisses)
 \usepackage{colortbl} % Coloration des cellules de tableaux
 \usepackage{diagbox} % Pour créer des cellules en diagonale
 \usepackage{longtable} % Tables sur plusieurs pages
 
-% --- Code source ---
+%_____________________________ Code source _________________________
 \usepackage{minted} % Mise en forme de code source avec coloration syntaxique
 \usepackage{listings} % Insertion et mise en forme du code source
 
-% --- graphie et références ---
+%______________________ graphie et références ______________________
 \usepackage[backend=biber]{biblatex} % Gestion de la bibliographie
 \addbibresource{./references.bib}
 
 \usepackage{csquotes} % Gestion des guillemets typographiques
-\usepackage{hyperref} % Liens hypertexte sans surlignage
+\usepackage[colorlinks=true, linkcolor=darkblue, urlcolor=darkblue]{hyperref}
 \usepackage{cleveref} % Références intelligentes
 
 % --- Textes et acronymes ---
-\usepackage{lipsum} % Générer du texte de remplissage
 \usepackage{acro} % Gestion des acronymes
 \usepackage{nomencl} % Création d'une nomenclature (glossaire)
 \makenomenclature % Commande pour générer la nomenclature
+
+% --- Glossaires ---
+\usepackage{glossaries}
+\makeglossaries
+
+\newcommand{\glossaryhref}[2]{\texorpdfstring{\href{#1}{\textcolor{black}{#2}}}{#2}}
+
+% ----- Compteur pour les exposants glossaire ----------
+\newcounter{glsref}
+\renewcommand*{\theglsref}{\textsuperscript{\arabic{glsref}}}
+% Sauvegarde de la commande originale 
+\let\oldgls\gls
+% Redéfinition de \gls pour ajouter l'exposant auto-incrémenté
+\renewcommand{\gls}[1]{%
+  \stepcounter{glsref}%
+  \oldgls{#1}\theglsref%
+}
 
 % --- Dessins et graphiques ---
 \usepackage{tikz} % Nécessaire pour smartdiagram
@@ -73,15 +92,16 @@
 
 % Formatage des sections
 \titleformat{\section}[block]
-  {\normalfont\Large\bfseries\rmfamily\color{darkblue}} % Police, taille, graisse et couleur
-  {\thesection}{1em}{}[\titlerule] % Numérotation et ligne sous le titre
-\titlespacing{\section}{5pt}{10pt}{10pt} % Espacement avant et après
+  {\normalfont\Large\bfseries\rmfamily\color{darkblue}}  % Police, taille, graisse et couleur
+  {\thesection}{1em}{}[\titlerule]                       % Numérotation et ligne sous le titre
+\titlespacing{\section}{5pt}{10pt}{10pt}                 % Espacement avant et après
 \renewcommand{\labelitemi}{\textemdash}
+
 % Formatage des sous-sections
 \titleformat{\subsection}[block]
-  {\normalfont\large\bfseries\rmfamily\color{darkblue}} % Police, taille, graisse et couleur
-  {\thesubsection}{1em}{} % Numérotation
-\titlespacing{\subsection}{5pt}{8pt}{5pt} % Espacement avant et après
+  {\normalfont\large\bfseries\rmfamily\color{darkblue}}  % Police, taille, graisse et couleur
+  {\thesubsection}{1em}{}                                % Numérotation
+\titlespacing{\subsection}{5pt}{8pt}{5pt}                % Espacement avant et après
 
 % Formatage des sous-sous-sections
 \titleformat{\subsubsection}[block]
@@ -90,48 +110,17 @@
 \titlespacing{\subsubsection}{5pt}{8pt}{5pt} % Espacement avant et après
 
 % Appliquer les liens en bleu et soulignés uniquement dans la bibliographie
-\AtEndPreamble{
-    \hypersetup{
-        colorlinks=true,  % Active les liens colorés
-        linkcolor=black,   % Lien dans le texte
-        urlcolor=darkblue,    % Lien URL dans le texte
-        filecolor=black    % Lien vers les fichiers
-    }
-}
-% Redéfinir ma commande \bibliography pour personnaliser les liens
+\AtEndPreamble{\hypersetup{ colorlinks=true, linkcolor=black, urlcolor=darkblue,filecolor=black }}
+
+% Redéfinir ma commande \bibliography pour personn
+liser les liens
 \usepackage{etoolbox}
-\pretocmd{\bibliography}{%
-  \hypersetup{
-    colorlinks=true,  % Active les liens colorés
-    linkcolor=black,   % Lien dans le texte
-    urlcolor=black,    % Lien URL dans la bibliographie
-    filecolor=black    % Lien vers les fichiers
-  }%
-}{}{}
-\hypersetup{
-    citecolor=darkblue,  % Couleur des références dans le texte
-}
+\pretocmd{\bibliography}{ \hypersetup{ colorlinks=true,linkcolor=black, urlcolor=black, filecolor=black}}{}{}
+\hypersetup{citecolor=darkblue,}
 
-%_________________________ Montage du contour ____________________
-
-\AtBeginShipout{
-    \begin{tikzpicture}[remember picture, overlay]
-        \draw [line width=0.1mm,lightgray] 
-            ($(current page.north west) + (0.5cm,-0.5cm)$) 
-            rectangle 
-            ($(current page.south east) + (-0.5cm,0.5cm)$);
-    \end{tikzpicture}
-}
 %---------------------------Diagramme de conclusion ----------------------------------------
 
 % Définition de la mise en forme listing (pour l'intégration des codes et pseudoCode)
-\definecolor{background}{HTML}{F1F1F0}
-\definecolor{string}{HTML}{DD1144}
-\definecolor{keyword}{HTML}{0077AA}
-\definecolor{comment}{HTML}{44AA99}
-\definecolor{identifier}{HTML}{000000}
-\definecolor{framecolor}{HTML}{CCCCCC}
-
 \definecolor{background}{HTML}{F1F1F0}
 \definecolor{string}{HTML}{DD1144}
 \definecolor{keyword}{HTML}{0077AA}
@@ -192,36 +181,40 @@
   frame=single,                           % Encadrement du listing
   rulesepcolor=\color{gray}               % Couleur de la ligne d'encadrement
 }
-% Définir une couleur pour le code Makefile
-\definecolor{makefilecolor}{rgb}{0.13, 0.13, 0.13}
+% Palette scientifique sobre
+\definecolor{makefileText}{rgb}{0.12, 0.12, 0.12}             % Noir doux, plus élégant que pur noir
+\definecolor{makefileBackground}{RGB}{245, 247, 250}          % Gris bleuté très clair
+\definecolor{makefileKeyword}{rgb}{0.0, 0.28, 0.67}           % Bleu académique
+\definecolor{makefileComment}{rgb}{0.0, 0.5, 0.0}             % Vert foncé, proche du LaTeX original
+\definecolor{makefileString}{rgb}{0.55, 0.0, 0.0}             % Bordeaux sobre
+\definecolor{makefileFrame}{gray}{0.65}                       % Gris neutre pour les bordures
+\definecolor{makefileNumbers}{gray}{0.45}                     % Gris discret pour numéros de ligne
 
-
-% Définir une couleur de fond sobre et élégante
-\definecolor{makefileBackground}{rgb}{0.95, 0.95, 1}  % Gris très clair
-\definecolor{makefileKeyword}{rgb}{0.2, 0.2, 0.6}  % Bleu profond pour les mots-clés
-\definecolor{makefileComment}{rgb}{0.2, 0.6, 0.2}  % Vert pour les commentaires
-\definecolor{makefileString}{rgb}{0.7, 0.1, 0.1}  % Rouge foncé pour les chaînes de caractères
-
-% Définir un style de code élégant et lisible pour Makefile
+% Style Makefile haut niveau
 \lstdefinestyle{makefileStyle}{
-  language=sh,  % Langage shell pour Makefile
-  basicstyle=\ttfamily\small,  % Police monospace, taille réduite pour les articles scientifiques
-  backgroundcolor=\color{makefileBackground},  % Fond clair et discret
-  keywordstyle=\color{makefileKeyword}\bfseries,  % Style pour les mots-clés (en bleu et gras)
-  commentstyle=\color{makefileComment}\itshape,  % Style pour les commentaires (en vert et italique)
-  stringstyle=\color{makefileString},  % Style pour les chaînes de caractères (en rouge)
-  breaklines=true,  % Gestion automatique du retour à la ligne
-  frame=single,  % Bordure autour du code
-  rulesepcolor=\color{black},  % Séparateur noir pour les lignes de cadre
-  columns=fullflexible,  % Colonnes flexibles pour un alignement parfait
-  morekeywords={$(MSG), $(MSQ), $(RM), $(Doxy), doxygen, pdflatex, firefox, evince},  % Mots-clés spécifiques à Makefile
-  xleftmargin=2em,  % Marge gauche pour une meilleure lisibilité
-  numberstyle=\tiny\color{gray},  % Style des numéros de ligne
-  numbers=left,  % Numéros de ligne à gauche
-  stepnumber=1,  % Incrément des numéros de ligne
-  numbersep=5pt,  % Espacement entre les numéros de ligne et le code
-  showstringspaces=false,  % Ne pas afficher d'espace pour les chaînes
-  moredelim=**[is][\color{magenta}]{@}{@}  % Ajouter un délimiteur spécifique si nécessaire
+  language=sh,
+  basicstyle=\ttfamily\footnotesize\color{makefileText},     % Police monospace et couleur douce
+  backgroundcolor=\color{makefileBackground},                % Fond discret
+  keywordstyle=\bfseries\color{makefileKeyword},             % Mots-clés bien visibles
+  commentstyle=\itshape\color{makefileComment},              % Commentaires discrets mais lisibles
+  stringstyle=\color{makefileString},                        % Chaînes de caractères bien différenciées
+  frame=single,
+  rulecolor=\color{makefileFrame},
+  rulesepcolor=\color{makefileFrame},
+  numbers=left,
+  numberstyle=\tiny\color{makefileNumbers},
+  numbersep=8pt,
+  stepnumber=1,
+  showstringspaces=false,
+  breaklines=true,
+  breakatwhitespace=true,
+  columns=flexible,
+  tabsize=2,
+  xleftmargin=2em,
+  xrightmargin=1em,
+  aboveskip=1em,
+  belowskip=1em,
+  morekeywords={@mv,doxygen, for,done, fi, if, then, pdflatex, firefox, evince, mkdir, -p, @,mv, zcat, STAR, crac,gunzip, > , >> ,echo}     
 }
 % Définition du caption lstlisting
 \renewcommand{\lstlistingname}{Code}
@@ -230,8 +223,6 @@
 \lstnewenvironment{makefile}[1][]{
   \lstset{style=makefileStyle, #1}
 }{}
-
-\usepackage{amsmath, amssymb}
 %_________________________ Définition de la bibliographie ____________________
 \title{Rapport DevOPS M1} %Titre du fichier
 
@@ -245,8 +236,6 @@
 \setlength{\arrayrulewidth}{0.5mm}
 \setlength{\tabcolsep}{10pt} % Ajuste l'espace entre les colonnes
 \renewcommand{\arraystretch}{0.9} % Ajuste l'espacement des lignes
-%_________________________ Montage du Smartdiagram  ____________________
-
 
 %-------------------------------------------------------------------------------------------------
 %                              DEFINITIONS DU GLOSSAIRE 
@@ -284,6 +273,7 @@
 
 \onehalfspacing
 
+\DeclareUnicodeCharacter{202F}{\,}
 
 %-----------------------------Algorithmes -------------------------
 \usepackage[linesnumbered, ruled, vlined]{algorithm2e}
@@ -332,9 +322,17 @@
 \newcommand{\CxPoly}{\hspace{5mm}{\textcolor{gray}{O(n^k)}}} % polynomiale
 \newcommand{\CxExp}{\hspace{5mm}{\textcolor{gray}{O(2^n)}}} % exponentielle
 \newcommand{\CxFact}{\hspace{5mm}{\textcolor{gray}{O(n!)}}} % factorielle
-\newcommand{\CxLogLin}{\hspace{5mm}{\textcolor{gray}{O(n $\log$ n)}}} % n log n
-%-----------------------------FIN Algorithmes -------------------------
+\newcommand{\CxLogLin}{\hspace{5mm}{\textcolor{gray}{O(n $\log$ n)}}} % n log
 
+%_________________________ Montage du contour ____________________
+\AtBeginShipout{
+    \begin{tikzpicture}[remember picture, overlay]
+        \draw [line width=0.1mm,gray!50!gray] 
+            ($(current page.north west) + (0.5cm,-0.5cm)$) 
+            rectangle 
+            ($(current page.south east) + (-0.5cm,0.5cm)$);
+    \end{tikzpicture}}
+    
 
 % Couleurs élégantes pour le code
 \definecolor{bgcolor}{rgb}{0.95,0.95,0.95}   % Fond gris clair
@@ -375,9 +373,16 @@
     font=small % Taille du texte des captions
 }
 
-% Définition des styles
-\tikzstyle{nodebase} = [rectangle, rounded corners, minimum width=6cm, minimum height=1cm, text centered, draw=black, thick]
-\tikzstyle{localrepo} = [nodebase, fill=blue!20, draw=white!60, thick, drop shadow]
-\tikzstyle{remoterepo} = [nodebase, fill=red!20, draw=white!60, thick, drop shadow]
-\tikzstyle{commit} = [circle, minimum size=0.8cm, draw=black, fill=gray!30, thick, drop shadow]
-\tikzstyle{arrow} = [ultra thick, ->, >=Stealth, draw=black!80, line cap=round, shorten >=1pt, shorten <=1pt]
+\definecolor{processblue}{RGB}{102,153,204}   % doux bleu
+\definecolor{techgray}{RGB}{169,169,169}      % gris pour les biais techniques
+\definecolor{lightgray}{RGB}{240,240,240}     % fond léger
+\definecolor{myborder}{RGB}{100,100,100}      % bordures sobres
+
+\tikzstyle{startstop} = [ rectangle, rounded corners, minimum width=3cm, minimum height=1cm, text centered, draw=myborder, fill=lightgray, drop shadow]
+\tikzstyle{process} = [rectangle, rounded corners, minimum width=3cm, minimum height=1cm,text centered, draw=myborder, fill=processblue!20, drop shadow]
+\tikzstyle{techbias} = [rectangle, rounded corners, minimum width=3cm, minimum height=1cm, text centered, draw=myborder, fill=techgray!40, drop shadow]
+\tikzstyle{arrow} = [thick,->,>=stealth]
+\tikzstyle{smallbubble} = [ellipse,draw=blue!50!black,fill=blue!20,thick,align=center,minimum width=2.7cm,minimum height=1.2cm,text centered]
+\tikzstyle{decision} = [diamond,draw=orange!80!black,fill=orange!20,thick,aspect=2.5,text centered,inner sep=1pt]
+\tikzstyle{process} = [rectangle,draw=green!50!black,fill=green!20,thick,minimum width=2.5cm,minimum height=1cm,text centered]
+\tikzstyle{formula} = [ rectangle,draw=purple!80!black,fill=purple!10,thick,text centered,rounded corners,minimum width=4.5cm,minimum height=0.9cm]

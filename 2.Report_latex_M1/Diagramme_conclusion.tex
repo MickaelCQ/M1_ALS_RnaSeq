@@ -7,13 +7,6 @@
 \tikzstyle{biobias} = [nodebase, fill=blue!30, draw=blue!50, thick, drop shadow]
 \tikzstyle{highlightbox} = [rectangle, draw=blue!80, thick, rounded corners, minimum width=5cm, minimum height=1.5cm, drop shadow]
 
-% Styles spécifiques avec effet 3D simulé pour l'organigramme normalisation
-\tikzstyle{startstop} = [rectangle, rounded corners, minimum width=2.8cm, minimum height=1.2cm, text centered, draw=blue!40, thick, fill=blue!20, drop shadow]
-\tikzstyle{process} = [rectangle, rounded corners, minimum width=3cm, minimum height=1cm, text centered, draw=orange!40, thick, fill=orange!20, drop shadow]
-\tikzstyle{smallbubble} = [rectangle, rounded corners, minimum width=2.5cm, minimum height=1cm, text centered, draw=red!40, thick, fill=red!20, drop shadow]
-\tikzstyle{decision} = [rectangle, rounded corners, minimum width=3cm, minimum height=1cm, text centered, draw=green!40, thick, fill=green!20, drop shadow]
-\tikzstyle{formula} = [rectangle, rounded corners, minimum width=2.5cm, minimum height=0.8cm, text centered, draw=blue!30, thick, fill=blue!10, drop shadow]
-
 \tikzstyle{arrow} = [
     ultra thick,       % Augmente l'épaisseur de la flèche
     ->,               % Pointe directionnelle
@@ -48,3 +41,34 @@
             text centered,
         }
     }
+
+% Définition des couleurs sobres
+\definecolor{processblue}{RGB}{102,153,204}
+\definecolor{techgray}{RGB}{190,190,190}
+\definecolor{lightgray}{RGB}{245,245,245}
+\definecolor{myborder}{RGB}{80,80,80}
+
+% Styles avec coins arrondis et ombres
+\tikzstyle{startstop} = [
+  rectangle, rounded corners, minimum width=3cm, minimum height=1cm,
+  text centered, draw=myborder, fill=lightgray, drop shadow
+]
+\tikzstyle{process} = [
+  rectangle, rounded corners, minimum width=3cm, minimum height=1cm,
+  text centered, draw=myborder, fill=processblue!20, drop shadow
+]
+\tikzstyle{techbias} = [
+  rectangle, rounded corners, minimum width=3cm, minimum height=1cm,
+  text centered, draw=myborder, fill=techgray!40, drop shadow
+]
+
+\tikzstyle{smallbubble} = [rectangle, rounded corners, minimum width=3cm, minimum height=1cm,
+   text centered, draw=myborder, fill=lightgray, drop shadow
+]
+
+\tikzstyle{decision} = [rectangle, rounded corners, minimum width=3cm, minimum height=1cm,
+ text centered, draw=myborder, fill=green!20, drop shadow
+ ]
+\tikzstyle{formula} = [rectangle, rounded corners, minimum width=3cm, minimum height=1cm,
+ text centered, draw=myborder, fill=blue!10, drop shadow
+ ]

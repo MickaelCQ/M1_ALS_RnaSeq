@@ -3,9 +3,12 @@
 
 \input{./preamble.tex}
 \input{./Diagramme_conclusion.tex}
+\input{./Glossaire.tex}
+
 \begin{document}
 
 \printnomenclature
+
 \input{./Page_de_garde.tex}
 \input{./Resume.tex}
 \input{./Tables.tex}
@@ -13,7 +16,11 @@
 \input{./Methods.tex}
 \input{./Results.tex}
 \input{./Discussion.tex}
+
+\printglossary[title=Glossaire]
+
 \section{Bibliographie compilée}
 \renewcommand{\bibname}{Bibliographie compilée}
-\printbibliography[heading=none]  % Génère la bibliographie sans redondance du titre
+\printbibliography[heading=none]  
+
 \end{document}

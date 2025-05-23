@@ -2348,23 +2348,9 @@
     <bcf:citekey order="2">orphanet_prevalence_2023</bcf:citekey>
     <bcf:citekey order="3">c_wolfson_et_al_global_2023</bcf:citekey>
     <bcf:citekey order="4">centre_constitutif_sla_de_tours_protocole_2020</bcf:citekey>
-    <bcf:citekey order="5">dillies_comprehensive_2013</bcf:citekey>
-    <bcf:citekey order="6">robinson_scaling_2010</bcf:citekey>
-    <bcf:citekey order="7">anders_differential_2010</bcf:citekey>
-    <bcf:citekey order="8">zhao_tpm_2021</bcf:citekey>
-    <bcf:citekey order="9">dillies_comprehensive_2013</bcf:citekey>
-    <bcf:citekey order="10">robinson_scaling_2010</bcf:citekey>
-    <bcf:citekey order="11">robinson_scaling_2010</bcf:citekey>
-    <bcf:citekey order="12">dillies_comprehensive_2013</bcf:citekey>
-    <bcf:citekey order="13">abrams_protocol_2019</bcf:citekey>
-    <bcf:citekey order="14">centre_constitutif_sla_de_tours_protocole_2020</bcf:citekey>
-    <bcf:citekey order="15">orphanet_prevalence_2023</bcf:citekey>
-    <bcf:citekey order="16">c_wolfson_et_al_global_2023</bcf:citekey>
-    <bcf:citekey order="17">dillies_comprehensive_2013</bcf:citekey>
-    <bcf:citekey order="18">robinson_scaling_2010</bcf:citekey>
-    <bcf:citekey order="19">anders_differential_2010</bcf:citekey>
-    <bcf:citekey order="20">zhao_tpm_2021</bcf:citekey>
-    <bcf:citekey order="21">abrams_protocol_2019</bcf:citekey>
+    <bcf:citekey order="5">centre_constitutif_sla_de_tours_protocole_2020</bcf:citekey>
+    <bcf:citekey order="6">orphanet_prevalence_2023</bcf:citekey>
+    <bcf:citekey order="7">c_wolfson_et_al_global_2023</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="nty">

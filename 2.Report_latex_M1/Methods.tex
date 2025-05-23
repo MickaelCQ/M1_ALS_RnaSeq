@@ -1,41 +1,98 @@
 \section{Matériels \& Méthodes}
-\subsection{Génération des fichiers d’alignement}
-    Stratégie de génération automatisée des fichiers BAM à partir des paires FASTQ (1 \& 2).
-    
+
+Le \og \textit{mapping} \fg{} dans un pipeline bioinformatique est une étape charnière, et dans notre cas d'étude, on peut raisonnablement penser que cette étape est susceptible de biaiser le signal biologique réel.  
+Pour évaluer la phase d'alignement, j'ai sélectionné deux outils que je vous présente ici : \texttt{STAR} et \texttt{CRAC}.
+
+\subsection{Présentation conceptuelle de STAR et CRAC}
+
+
+\textbf{Ajouter explication BWT, SA, et approche par k-mer ..}
+
+Ainsi, j'ai cherché à évaluer l’impact de cette étape en générant les fichiers \texttt{BAM} pour l'intégralité des patients concernés à l’aide de deux outils distincts : \texttt{STAR} et \texttt{CRAC}, 
+fondés sur des stratégies algorithmiques différentes. La majeure partie des commandes, ainsi que leurs paramètres, sont consultables dans un \texttt{Makefile} disponible sur le \texttt{Git}.  
+Comme évoqué dans la partie introductive, nous travaillons ici sur un jeu de données limité à 72 patients.  
+La génération des fichiers \texttt{BAM} s’effectue à partir de deux fichiers \texttt{FASTQ}, obtenus via la technologie Illumina\texttrademark~,
+ puisque les données ont été produites en mode \gls{paired-end}.
+
+\subsection{Génération des fichiers d’alignement au format BAM}
+
+Dans l’absolu, ce qui nous intéresse, c’est le fichier consignant les métriques d’alignement générées durant l’exécution de l’outil, et non directement le fichier \texttt{BAM} lui-même.  
+(Il s’agit d’un fichier de \og log \fg{} pour \texttt{STAR} et d’un fichier \og summary \fg{} pour \texttt{CRAC}.)  
+J’ai mis en place un pipeline reproductible à cette fin.  
+Pour chaque outil, j’ai conçu quelques cibles en \texttt{Bash} permettant de lancer les alignements en série à partir des paires de fichiers \texttt{FASTQ}.
+
+\begin{lstlisting}[style=makefileStyle, label={lst:FASTQGen}, caption={\underline{Construction de la variable \texttt{SAMPLES} pour traiter séquentiellement les \texttt{fastq}}}]
+SAMPLES = $(shell \
+    for R1 in $(FASTQ_DIR)/*_1.fastq.gz; do \
+        R2= echo $$R1 | sed 's/_1.fastq.gz/_2.fastq.gz/'; \
+        if [ -f $$R2 ]; then \
+            basename $$R1 _1.fastq.gz; \
+        fi; \
+    done)
+\end{lstlisting}
+
+Dans les différents codes que je vous présente ci-dessous, je cherche à stocker les parties sujettes à changement dans des variables, afin de rendre l’exécution la plus générique possible. 
+En effet, le répertoire de stockage des dépendances (comme l’index, par exemple) ainsi que celui des fichiers de sortie dépendent de l’organisation propre à l’utilisateur sur sa machine d’exécution.
+
+\begin{lstlisting}[style=makefileStyle, label={lst:STARAlign}, caption={\underline{Cible \texttt{Star\_Paire} pour générer les \texttt{BAM} avec STAR}}]
+# Détection des échantillons par présence des fichiers fastq _1 et _2
+BAMS_STAR = $(addprefix $(OUTBAM_STAR)/, $(addsuffix .bam, $(SAMPLES)))
+
+Star_Paire: $(BAMS_STAR)
+$(OUTBAM_STAR)/%.bam:
+	@mkdir -p $(OUTBAM_STAR) $(OUTLOG_STAR) $(TMPDIR)/$*;
+	@echo ">>Lancement de l'alignement de l'échantillon $* avec STAR";
+	STAR --runThreadN $(THREADS)  
+		--genomeDir $(REF_STAR)  
+		 --readFilesIn $(FASTQ_DIR)/$*_1.fastq.gz $(FASTQ_DIR)/$*_2.fastq.gz 
+		 --readFilesCommand zcat --outSAMtype BAM SortedByCoordinate 
+		 --outFileNamePrefix $(TMPDIR)/$*/;
+	@mv $(TMPDIR)/$*/Aligned.sortedByCoord.out.bam $(OUTBAM_STAR)/$*.bam;
+	@mv $(TMPDIR)/$*/Log.final.out $(OUTLOG_STAR)/$*.Log.final.out;
+\end{lstlisting}
+
+Concernant l'utilisation de CRAC, une étape supplémentaire est nécessaire, car l'aligneur génère nativement une sortie au format \texttt{SAM}.  
+J'ai rédigé une cible supplémentaire pour convertir les fichiers \texttt{SAM} en \texttt{BAM} grâce à l'utilitaire \texttt{Samtools}.  
+On peut également ajouter une condition pour s'assurer que la sortie n'est pas déja présente,  
+afin de ne relancer le traitement que pour les fichiers \texttt{fastq} dont le \texttt{SAM} n'a pas été généré.
+
+\begin{lstlisting}[style=makefileStyle, label={lst:CRACAlign}, caption={\underline{Cible \texttt{Crac\_Paire} pour générer les \texttt{BAM} avec CRAC}}]
+CRAC_SAMS = $(addprefix output/crac/bam/, $(addsuffix .sam, $(SAMPLES)))
+Crac_Paire: $(CRAC_SAMS)
+
+# Règle pour chaque .sam
+output/crac/bam/%.sam: $(FASTQ_DIR)/%_1.fastq.gz $(FASTQ_DIR)/%_2.fastq.gz
+	@echo "Vérification de l'échantillon : $*"
+	@if [ ! -f output/crac/bam/$*.bam ]; then 
+	    echo "Lancement de l'alignement de l'échantillon : $* avec Crac"; 
+	    mkdir -p output/crac/summary output/crac/log output/crac/bam; \
+	    gunzip -c $(FASTQ_DIR)/$*_1.fastq.gz > $(FASTQ_DIR)/$*_1.fastq;\ 
+	    gunzip -c $(FASTQ_DIR)/$*_2.fastq.gz > $(FASTQ_DIR)/$*_2.fastq; \
+	    crac --nb-tags-info-stored 10000 --bam --stranded -i $(REF_CRAC) -k $(KMER_CRAC) 
+	    	 --summary output/crac/summary/$*.summary
+	         --nb-threads $(THREADS) -r $(FASTQ_DIR)/$*_1.fastq $(FASTQ_DIR)/$*_2.fastq -o output/crac/bam/$*.sam
+	         2> output/crac/log/$*_crac.log;
+	else 
+	    echo "Fichier déjà aligné : $@"; 
+	fi
+\end{lstlisting}
+
     Structure de traitement par run (batch de 8 échantillons).
-
+    
     Mise en place d’un pipeline reproductible.
-\subsection{Analyse de la variabilité expérimentale}
+    
+\subsubsection{Analyse de la variabilité expérimental et levée d'ambiguité sur l'alignement}
+\begin{figure}[H]
+\begin{center}
+\resizebox{1.05\textwidth}{!}{  
+    \includegraphics[width=1\linewidth]{Mapping_P_Relative_Vtex.pdf}}
+    \caption{\underline{Comparaison des profils d'alignement entre STAR et CRAC}}
+    \label{fig:mappingp}
+\end{center}
+\end{figure}
 
-    Statistiques descriptives sur la profondeur de lecture, par run et par échantillon.
-
-    Mise en évidence de la non-reproductibilité : inter-run vs. intra-run.
-
-    Visualisations pour illustrer la disparité de couverture.
-
-\subsection{Alignement : levée d’ambiguïté sur la variabilité}
-
-    Présentation de STAR et CRAC :
-
-        Méthodologie, hypothèses sous-jacentes, différences de traitement.
-
-    Alignement des mêmes échantillons avec les deux outils.
-
-    Comparaison des métriques de mapping : taux d’alignement unique/multiple/non-aligné.
-
-    Conclusion : validation que l’étape d’alignement n’est pas responsable de la variabilité observée.
-
-\subsection{Vers une approche alternative de quantification}
-
-    Justification du besoin de s’affranchir des biais d’alignement.
-
-    Introduction à la quantification par k-mer : promesse de neutralité méthodologique.
-
-    Transition vers une stratégie plus robuste de détection différentielle.
-
-\subsubsection{Qualité et spécificité de l'alignement}
-
-L'étape de \og \textit{mapping} \fg dans un processus d'analyse est une étape charnière et pour notre cas d'étude on peut raisonnablement penser que cette étape peut biaiser le signal biologique réel, 
+.... explications des deux approches algorithmiques a rajouter.
+ 
 
 Pour évaluer si les deux outils d’alignement, STAR et CRAC, diffèrent significativement dans leur capacité à aligner les lectures uniques,
  j’ai réalisé une analyse statistique sur les proportions relatives des lectures uniques par patient.J’ai d’abord effectué un test de normalité de Shapiro-Wilk sur les données 
@@ -50,3 +107,44 @@ Cependant, je tiens à souligner que ces résultats quantitatifs ne reflètent p
 Par conséquent, même si la proportion de lectures uniques est comparable, j’interprète ces résultats avec prudence. Pour les analyses de quantification ultérieures,
  je recommande d’intégrer une étude plus approfondie des alignements, incluant une inspection visuelle des lectures alignées et une analyse des différences dans les catégories de lectures multiples 
  et chimériques. Cela me permettra de m’assurer que la variabilité introduite par les différences d’algorithmes n’impacte pas les conclusions biologiques que je tirerai des données.
+
+
+Afin de comparer les performances respectives des deux outils d’alignement (STAR et CRAC) en termes de profondeur de lecture totale par patient,
+ nous avons tout d’abord extrait les totaux de lectures alignées pour chacun d’eux.
+Une étape préalable essentielle consiste à évaluer la normalité des distributions de ces profondeurs d’alignement à l’aide du test de Shapiro-Wilk.
+ Dans les deux cas (STAR et CRAC), les p-values obtenues sont inférieures à 0,05, ce qui indique un écart significatif à la normalité. 
+ Dès lors, l’hypothèse d’une distribution gaussienne est rejetée, ce qui justifie le recours à un test non paramétrique.
+
+Nous avons donc utilisé le test de Wilcoxon pour données appariées afin de comparer les profondeurs d’alignement entre STAR et CRAC
+ pour un même ensemble de patients. Ce test est particulièrement adapté dans ce contexte, car il ne repose pas sur l’hypothèse de normalité des données,
+  et il tient compte de la structure appariée des échantillons (comparaison patient par patient).
+
+
+Le test de Wilcoxon a retourné une p-value extrêmement faible $(p = 3,637 × 10^{-13})$, ce qui indique une différence significative entre les profondeurs d’alignement fournies par STAR et CRAC. Autrement dit, l’outil CRAC génère de manière systématique un nombre de lectures alignées significativement plus élevé que STAR pour les mêmes échantillons, ce qui suggère une sensibilité accrue ou une stratégie d’alignement plus permissive.
+
+    Statistiques descriptives sur la profondeur de lecture, par run et par échantillon.
+
+    Mise en évidence de la non-reproductibilité : inter-run vs. intra-run.
+
+    Visualisations pour illustrer la disparité de couverture.
+
+
+    Présentation de STAR et CRAC :
+
+        Méthodologie, hypothèses sous-jacentes, différences de traitement.
+
+    Alignement des mêmes échantillons avec les deux outils.
+
+    Comparaison des métriques de mapping : taux d’alignement unique/multiple/non-aligné.
+
+    Conclusion : validation que l’étape d’alignement n’est pas responsable de la variabilité observée.
+
+\subsubsection{Vers une approche alternative de quantification}
+
+    Justification du besoin de s’affranchir des biais d’alignement.
+
+    Introduction à la quantification par k-mer : promesse de neutralité méthodologique.
+
+    Transition vers une stratégie plus robuste de détection différentielle.
+
+\subsubsection{Qualité et spécificité de l'alignement}

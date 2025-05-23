@@ -1,118 +1,121 @@
 \section{Introduction}
-%\begin{wrapfigure}{r}{0.5\textwidth} % Ajuste la largeur selon le besoin
- %   \vspace{-0.5cm} % Ajustement vertical
-  %  \centering
-   % \resizebox{0.5\textwidth}{!}{ % Réduire la taille
-    %    \begin{tikzpicture}[scale=1, every node/.style={scale=0.9, anchor=east}]
-
-	
-    %}
-   % \caption{\underline{Construction de $\mathcal{SA}_{T}$}}
-   % \vspace{-0.5cm} % Ajuster l'espace sous la figure
-%\end{wrapfigure}
-
 \subsection{Environnement du stage}
 
-Ce travail est la synthèse de mon stage de première année de Master, durant lequel j'ai intégré l'équipe de la professeure Thérèse Commes du laboratoire Bio2M,
- rattaché à l’Institut national de la santé et de la recherche médicale (INSERM). J'ai eu la chance d'être accompagné dans mon apprentissage par Anthony Boureux, enseignant-chercheur.
-L'équipe est en collaboration étroite avec des services cliniques et des plateformes hospitalières, ce qui favorise évidemment l’innovation et la résolution de questions liées au champ médical.
-Ainsi, j'ai eu l’occasion de contribuer à un projet de recherche translationnelle que Bio2M mène avec le CHU de Nîmes.  Ce travail est en lien direct avec des enjeux diagnostiques, puisqu’il concerne une maladie neurodégénérative : la sclérose latérale amyotrophique (SLA).
-Les différentes missions qui m'ont étaient demandées s’inscrivent dans le champ de la transcriptomique, et tout particulièrement dans le cadre de l’analyse d’expression génique appliquée à la SLA, 
-l’idée étant d’initier, proposé, une stratégie pour détecter une expression différentielle à l’échelle de certains gènes d’intérêt dans la SLA , avec des contraintes à la fois technique et biologiques,
- nous le verrons.
+Ce travail est la synthèse de mon stage de première année de Master, durant lequel j’ai intégré l’équipe de la professeure Thérèse Commes du laboratoire Bio2M,  
+rattaché à l’Institut national de la santé et de la recherche médicale (INSERM). J’ai eu la chance d’être accompagné dans mon apprentissage par Anthony Boureux, enseignant-chercheur.  
+L’équipe collabore  avec des services cliniques et des plateformes hospitalières, ce qui favorise la résolution de problématiques liées au champ médical.  
+Ainsi, j’ai eu l’occasion de contribuer à un projet de recherche translationnelle que Bio2M mène en partenariat avec le CHU de Nîmes. Ce travail est en lien direct avec des enjeux diagnostiques,
+ puisqu’il concerne une maladie neurodégénérative : la sclérose latérale amyotrophique (SLA).  
+Les différentes missions qui m’ont été confiées s’inscrivent dans le champ de la transcriptomique, et plus particulièrement dans le cadre de l’analyse d’expression génique appliquée à la SLA,  
+l’idée étant d’initier une stratégie permettant de détecter une expression différentielle à l’échelle de certains gènes d’intérêt dans la SLA, avec des contraintes à la fois techniques et biologiques,  
+pour \textit{in fine} tenter d’identifier la causalité génétique chez les patients.
 
 \subsection{Contexte biologique}
 
 \begin{wrapfigure}{r}{0.50\textwidth} 
     \centering
     \includegraphics[width=1\linewidth]{Cortex_Spinal.jpg}
-    \caption{\scriptsize{\textit{\underline{Atteinte neuronale dans la SLA(P.Wicks, 2024)}}}}
+    \caption{\underline{Atteinte neuronale dans la SLA(P.Wicks, 2024)}}
     \label{fig:Cortex}
 \end{wrapfigure}
 
-Une maladie rare se définit par une \hyperref[def:prevalence]{prévalence} de 0{,}05,\% dans la population générale.
- Quatre-vingts pour cent de ces maladies sont d’origine génétique~\textsuperscript{\cite{centre_constitutif_sla_de_tours_protocole_2020}},
- et la SLA en fait partie : elle touche un individu sur 20,000 en Europe~\textsuperscript{\cite{orphanet_prevalence_2023}},
-  et sa prévalence mondiale varie de 1{,}57 à 11{,}8 pour 100,000 selon les pays, de l’Iran aux États-Unis~\textsuperscript{\cite{c_wolfson_et_al_global_2023}}.
-C’est une maladie neurodégénérative causée par une atteinte du motoneurone central au niveau du cortex cérébral \textbf{(figure \ref{fig:Cortex})},
- et par une dégénérescence progressive des fonctions musculaires. Cette pathologie est très handicapante, tant sur le plan physique que social.
-  En raison de sa gravité et des conséquences dévastatrices pour les patients et leur entourage, elle constitue un domaine de recherche de premier plan pour les généticiens. 
-  C’est pourquoi il est pertinent d’intégrer une approche transcriptomique afin d’augmenter le rendement diagnostique des formes génétiques de la maladie et de mieux en comprendre les mécanismes.
-Notons que les gènes responsables de la SLA sont globalement bien documentés. À ce jour, une quarantaine de gènes ont été identifiés et associés à la maladie. Dans 90\%
- des cas, leur implication est directe dans les formes familiales. Dans les 10\% restants, correspondant aux formes sporadiques, l’implication est plus indirecte, 
- via des perturbations de processus cellulaires clés tels que l’homéostasie de l’ARN, le transport axonal ou l’autophagie.
-Enfin, on observe une forte hétérogénéité génétique, perceptible à travers l’implication de gènes aux fonctions parfois très différentes.,
- mais qui convergent toujours vers une dégénérescence neuronale. Les plus fréquemment impliqués sont  SOD1, TARDBP, FUS et C9ORF72~\textsuperscript{\cite{centre_constitutif_sla_de_tours_protocole_2020}},
-  majoritaires dans la maladie ils constituent le socle des recherches génétiques pour tenter la mise au point de thérapies ciblées.
+Une maladie rare se définit par une \gls{prevalence} de 0,05~\% dans la population générale.  
+Quatre-vingts pour cent de ces maladies sont d’origine génétique~\textsuperscript{\cite{centre_constitutif_sla_de_tours_protocole_2020}},  
+et la SLA en fait partie : elle touche un individu sur 20\,000 en Europe~\textsuperscript{\cite{orphanet_prevalence_2023}},  
+et sa prevalence mondiale varie de 1{,}57 à 11{,}8 pour 100\,000 selon les pays, de l’Iran aux États-Unis~\textsuperscript{\cite{c_wolfson_et_al_global_2023}}.  
+C’est une maladie neurodégénérative causée par une atteinte du motoneurone central au niveau du cortex cérébral \textbf{(figure~\ref{fig:Cortex})},  
+conduisant à une dégénérescence progressive des fonctions musculaires. Cette pathologie est très handicapante, tant sur le plan physique que social.  
+En raison de sa gravité et des conséquences dévastatrices pour les patients et leur entourage, elle constitue un domaine de recherche de premier plan pour les généticiens cliniques.  
+C’est pourquoi il est pertinent d’intégrer une approche transcriptomique afin d’augmenter le rendement diagnostique des formes génétiques de la maladie et de mieux en comprendre les mécanismes.
+Notons que les gènes responsables de la SLA sont globalement bien documentés. À ce jour, une quarantaine de gènes ont été identifiés et associés à la maladie.  
+Dans 90~\% des cas, leur implication est directe dans les formes familiales. Dans les 10~\% restants, on observe des formes dites sporadiques,  
+où la causalité génétique est cette fois indirecte, via des perturbations de processus cellulaires clés tels que l’\gls{homeostasie} de l’ARN, le \gls{transport axonal} ou l’\gls{autophagie}.    
+On observe également une forte hétérogénéité génétique dans cette maladie, perceptible à travers l’implication de gènes aux fonctions parfois très différentes,  
+mais qui convergent toujours vers une dégénérescence neuronale. Les gènes les plus fréquemment impliqués sont \textit{SOD1}, \textit{TARDBP}, \textit{FUS} et \textit{C9ORF72}~\textsuperscript{\cite{centre_constitutif_sla_de_tours_protocole_2020}}.  
+Majoritaires dans la maladie, ils constituent le socle des recherches génétiques pour tenter la mise au point de thérapies ciblées et faire progresser la compréhension ainsi que le diagnostic de cette pathologie.
 
-\subsection{Modéliser le signal biologique en données exploitables}
+\subsection{L’apport du RNA-Seq ciblé dans le périmètre de notre analyse}
 
-Supposons maintenant que l’on cherche à établir un profil d’expression génique pour notre quarantaine de gènes. 
-Il faut alors s’interroger sur le support de lecture, c’est-à-dire le nombre de fois qu’une région d’ADN a été lue (ou comptée) au cours du séquençage.
-On s'attend logiquement à avoir une densité de distribution de ces lectures, qui peut être intuitivement interprétée comme un reflet du niveau d’expression de chaque gène étudié.
-En pratique, toutefois, un certain nombre de variables \textemdash ~ d’origine biologique ou expérimentale \textemdash ~ influencent cette expression théorique, introduisant une dispersion dans les données brutes.
-A travers le schéma ci-dessous je présente un nombre non exhaustif de biais qui peuvent faussées l'expression génétique : 
+D’un point de vue biologique, \textit{stricto sensu}, on sait que l’étape de transcription est fondatrice de la diversité protéomique ;  
+elle constitue, de ce fait, une source majeure d’anomalies génétiques. À l’issue de ce mécanisme, un gène peut exprimer plusieurs isoformes, dont certaines peuvent avoir un impact pathologique.  
+Tout l’objet de ce travail est de proposer une méthode pertinente pour détecter des différences d’expression de tel ou tel gènes, susceptibles d’aider le biologiste à établir un lien avec la maladie,  
+notamment à travers une \gls{haploinsuffisance} ou, au contraire, une surexpression.\\
+ 
+ \begin{wrapfigure}{l}{0.6\textwidth}
+ 
+ \centering
+ \vspace{-5mm}
+ \scalebox{0.7}{ 
+ \begin{tikzpicture}[node distance=1.5cm and 1cm]
+     % Étapes principales
+     \node (start) [startstop] {Prélèvement des échantillons : répétabilité biologique ?};
+     \node (step1) [process, below of=start, text width=5cm, align=center] {Extraction de l'ARN total};
+     \node (step2) [process, below of=step1, text width=5cm, align=center] {Enrichissement de l'ARNm};
+     \node (step3) [process, below of=step2, text width=5cm, align=center] {Fragmentation de l'ARN};
+     \node (step4) [process, below of=step3, text width=5cm, align=center] {Synthèse de l'ADNc};
+     \node (step5) [process, below of=step4, text width=5cm, align=center] {Préparation de la librairie};
+     \node (step6) [process, below of=step5, text width=5cm, align=center] {Quantification de la librairie};
+     \node (step7) [process, below of=step6, text width=5cm, align=center] {Séquençage};
+ 
+     % Biais techniques associés
+     \node (note1) [techbias, right=1cm of step1, text width=5cm, align=center] {Pureté et concentration extraites};
+     \node (note2) [techbias, right=1cm of step2, text width=5cm, align=center] {Perte d'ARNm non poly-A};
+     \node (note3) [techbias, right=1cm of step3, text width=5cm, align=center] {Fragmentation imparfaite};
+     \node (note4) [techbias, right=1cm of step4, text width=5cm, align=center] {Efficacité de la reverse transcription};
+     \node (note5) [techbias, right=1cm of step5, text width=5cm, align=center] {Thermocycleur, variabilité inter-runs};
+     \node (note6) [techbias, right=1cm of step6, text width=5cm, align=center] {Variabilité au dosage (Qubit, Bioanalyzer)};
+     \node (note7) [techbias, right=1cm of step7, text width=5cm, align=center] {Erreurs liées au séquençage (Illumina, \textit{index hopping})};
+     
+     % Flèches principales
+     \draw [arrow] (start) -- (step1);
+     \draw [arrow] (step1) -- (step2);
+     \draw [arrow] (step2) -- (step3);
+     \draw [arrow] (step3) -- (step4);
+     \draw [arrow] (step4) -- (step5);
+     \draw [arrow] (step5) -- (step6);
+     \draw [arrow] (step6) -- (step7);
+ 
+     % Flèches vers les biais
+     \draw [arrow] (step1) -- (note1);
+     \draw [arrow] (step2) -- (note2);
+     \draw [arrow] (step3) -- (note3);
+     \draw [arrow] (step4) -- (note4);
+     \draw [arrow] (step5) -- (note5);
+     \draw [arrow] (step6) -- (note6);
+     \draw [arrow] (step7) -- (note7);
+ 
+     % Légende verticale à gauche
+     \node[rectangle, rounded corners, draw=white, fill=gray!10,
+           minimum width=10cm, minimum height=2cm,
+           text width=2cm, align=center, anchor=north, rotate=90] 
+           at ([xshift=-5.4cm, yshift=-6cm]) {\textbf{Processus technique}};
+ 
+ \end{tikzpicture}
+ }
+ %\hspace{10cm}
+ \caption{\underline{Processus expérimental du RNA-Seq et biais potentiels}}
+ \label{fig:biaisRNA}
+ \end{wrapfigure}
 
-\begin{figure}[ht]
-    \centering
-    \resizebox{0.8\textwidth}{!}{ 
-    \begin{tikzpicture}[node distance=1.5cm and 1cm]
-
-    \node (start) [startstop] {Prélèvement des échantillons : répétatibilité biologique ?};
-    \node (step1) [process, below of=start, text width=6cm, align=center] {Extraction de l'ARN total};
-    \node (step2) [process, below of=step1, text width=6cm, align=center] {Enrichissement de l'ARNm};
-    \node (step3) [process, below of=step2, text width=6cm, align=center] {Fragmentation de l'ARN};
-    \node (step4) [process, below of=step3, text width=6cm, align=center] {Synthèse de l'ADNc};
-    \node (step5) [process, below of=step4, text width=6cm, align=center] {Préparation de la librairie};
-    \node (step6) [process, below of=step5, text width=6cm, align=center] {Quantification de la librairie};
-    \node (step7) [process, below of=step6, text width=6cm, align=center] {Séquençage};
-
-    \node (note1) [techbias, right=3cm of step1, text width=6cm, align=center] {Pureté et Concentration extraite};
-    \node (note2) [techbias, right=3cm of step2, text width=6cm, align=center] {Perte d'ARNm non poly-A};
-    \node (note3) [techbias, right=3cm of step3, text width=6cm, align=center] {Fragmentation imparfaite};
-    \node (note4) [techbias, right=3cm of step4, text width=6cm, align=center] {Efficacité reverse transcription};
-    \node (note5) [techbias, right=3cm of step5, text width=6cm, align=center] {Thermocycleur, répétabilité};
-    \node (note6) [techbias, right=3cm of step6, text width=6cm, align=center] {Variabilité de la quantification};
-    \node (note7) [techbias, right=3cm of step7, text width=6cm, align=center] {Erreurs dues au séquençage};
-
-    \draw [arrow] (start) -- (step1);
-    \draw [arrow] (step1) -- (step2);
-    \draw [arrow] (step2) -- (step3);
-    \draw [arrow] (step3) -- (step4);
-    \draw [arrow] (step4) -- (step5);
-    \draw [arrow] (step5) -- (step6);
-    \draw [arrow] (step6) -- (step7);
-
-    \draw [arrow] (step1) -- (note1);
-    \draw [arrow] (step2) -- (note2);
-    \draw [arrow] (step3) -- (note3);
-    \draw [arrow] (step4) -- (note4);
-    \draw [arrow] (step5) -- (note5);
-    \draw [arrow] (step6) -- (note6);
-    \draw [arrow] (step7) -- (note7);
-
-    %\node (note8) [biobias, right=0.5cm of step7, text width=2cm, align=center] {Illumina};
-    %\node (note9) [biobias, right=0.2cm of step6, text width=2cm, align=center] {TapeStation};
-    %\node (note10) [biobias, right=0.45cm of step5, text width=2cm, align=center] {Hamilton};
-    %\node (note1) [biobias, right=0.5cm of step1, text width=2cm, align=center] {Nanodrop};
-
-    % Ajout de la flèche verticale avec le texte "Processus"    
-    \node[rectangle, rounded corners, draw=white, fill=gray!10, minimum width=10cm, minimum height=2cm, text width=2cm, align=center, anchor=north, rotate=90] at ([xshift=-5.4cm, yshift=-6cm]) {\textbf{Processus technique}};
-
-    \end{tikzpicture}
-    }
-    \caption{\underline{\textit{ Schéma décisionnel pour normaliser les données RNASeq}}}
-\end{figure}
-
-
-
-\subsection{Etat de l'art}
-
-
-\begin{figure}[ht]
-\centering
-\resizebox{1\textwidth}{!}{ 
-\begin{tikzpicture}[node distance=1.5cm, every node/.style={font=\small}]
+Supposons maintenant que l’on cherche à établir un profil d’expression génique pour notre quarantaine de gènes.  
+Il faut alors s’interroger sur le support de lecture de chacun de ces gènes, c’est-à-dire le nombre de fois qu’une région d’ADN a été lue (ou comptée) au cours du séquençage.  
+On s’attend logiquement à observer une distribution des lectures, interprétable comme le reflet du niveau d’expression de chaque gène étudié.  
+Dans les faits, si l’on prend les données brutes, on s’en éloigne considérablement : un certain nombre de variables~\textemdash~biologiques (rythme circadien ?) ou expérimentales (moment du prélèvement ?) —  
+influencent cette distribution théorique, introduisant une dispersion non négligeable dans le jeu de données.  
+De plus, l’analyse bioinformatique peut, elle aussi, fausser le profil d’expression, notamment lors des choix effectués à l’étape d’alignement~ \textemdash ~nous le verrons.  
+À travers la \textbf{figure~\ref{fig:biaisRNA}}, j’illustre quelques biais, non exhaustifs, susceptibles d’affecter l’expression génique mesurée.On comprend à travers cette illustration,
+ qu’à chaque étape technique du protocole RNA-Seq, on introduit de la variabilité, parfois de manière systématique entre les expériences, parfois de manière aléatoire.\\
+ 
+Toute la stratégie de quantification de l’expression génique consiste à limiter ces biais, ou le cas échéant, à les intégrer dans l’analyse~ \textemdash~ afin d’obtenir des résultats fidèles à la réalité biologique du patient, 
+mais aussi reproductibles dans des conditions de routine diagnostique.
+L’importanct est d’effectuer un certain nombre de vérifications préalables sur les données, notamment via des statistiques descriptives, ainsi que des corrections appropriées, comme la normalisation. 
+J'ai eu l'occasion d'éffectuer un  travail préliminaire qui consiste à établir un état des lieux des méthodes conventionnelles de normalisation,
+rappelées dans la \textbf{figure \ref{fig:biaisNORMALISATION}}. Qui m'a permis d' étayer ma compréhension de cette étape d'un pipeline bioinformatique mais surtout d'en tirer une conclusion,
+ elle ne sont pas les plus adaptés pour travailler sur des gènes ciblés, notamment par le manque de consistance des données de comptage.(\textbf ajout ref travail bibliographique)
+ 
+\begin{figure}[H]
+\resizebox{1.05\textwidth}{!}{ 
+\begin{tikzpicture}[node distance=1.5cm, every node/.style={font=}]
 
 % ---------------------------------------------------
 % Noeud de départ
@@ -201,55 +204,25 @@ A travers le schéma ci-dessous je présente un nombre non exhaustif de biais qu
 
 \end{tikzpicture}
 }
-\caption{\underline{\textit{ Schéma décisionnel pour normaliser les données RNASeq}}}
+\caption{\underline{Schéma décisionnel pour normaliser les données RNASeq}}
+\label{fig:biaisNORMALISATION}
 \end{figure}
+Le périmètre de mon travail étant définit, il reste une question que l'on peut légitimement se pose à laquelle je n'ai pas répondu dans cette section : 
+pourquoi avoir une approche de RNA-Seq ciblé plutôt qu'une analyse transcriptomique globale ? 
+ A première vue, en se concentrant sur un panel restreint de gènes d’intérets (ceux impliqués dans la SLA) j'améliore la sensibilité de détection et surtout je
+ réduit les coûts expérimentaux et de traitements bioinformatiques. C'est d'autant plus adapté au diagnostic, puisqu'on aura des résultats plus rapides et immédiatement exploitables.  
+ Toutefois, je limite l’analyse aux seuls gènes ciblés, excluant la détection d’événements potentiellements pertinents, comme des isoformes rares ou des altérations affectant d’autres régions du
+  transcriptome. C'est donc un compromis qui est fait, car le séquençage transcriptomique global fournit une vision d’ensemble, mais au prix d’une complexité analytique accrue, d’un coût plus élevé
+   et d’un bruit de fond plus important.  
+Il n'ya pas ici une stratégie meilleure que l'autre tout dépend du contexte médicale et de la pertinence clinique et contraintes techniques.
+ Dans le contexte des maladies rares comme la SLA, où les gènes en cause sont bien caractérisés, le RNA-Seq ciblé constitue une option pragmatique et efficiente.\\
 
- doivent elles être intégrées à l'analyse finale ? Cette question vas être pertinente dans une étude quantitative comme ici, puisqu'il s'agit, en autre, de caractériser une eventuelle haplo-insuffisance ou surexpression. 
- Nous allons comparer les différentes stratégies.Le périmètre de ce travail préliminaire était de faire un état des lieux des méthodes conventionnelles de normalisation,
-pour \textit{in fine} détecter une éventuelle expression génétique différentielle à partir des données issues du séquençage RNA-Seq.
-En effet, la transcription, étant fondatrice de la diversité protéomique, est par nature source de nombreuses anomalies génétiques. À l’issue de ce mécanisme,
-un gène peut exprimer plusieurs isoformes dont l’impact peut être pathologique. Identifier de telles anomalies implique la création d’un protocole de séquençage spécifique et
-d’un pipeline d’analyse RNA-Seq. L’objectif, à terme, est de déployer ce \textit{workflow} en intégrant une dimension transcriptomique pour le diagnostique de la SLA.\\
-Durant mon premier semestre, j’ai eu l’occasion d’effectuer un travail de recherche bibliographique pour étayer ma compréhension des différentes approches permettant de mettre en œuvre cette étape.
-La synthèse de ce travail préliminaire peut s’apprécier à travers la figure de synthèse ci-dessous :
+Partant de ce constat, mon travail est d'évaluer la qualité et la reproductibilité des données issues du protocole de RNA-Seq ciblé appliqués aux échantillons.
+J’ai tout d’abord analysé les métriques d’alignement générées par deux outils largement utilisés dans ce domaine,
+ STAR et CRAC, afin de déterminer si la variabilité expérimentale pouvait s’expliquer en tout ou partie par des biais liés à l'étape d’alignement.
+Je propose ensuite une méthode pour quantifier l'expression fondée sur une approche par par k-mers, indépendamment de cette étape d’alignement.
+Cette démarche vise à contourner certaines limites inhérentes aux méthodes classiques présentées en \textbf{figure \ref{fig:biaisNORMALISATION}}
+ dans le cadre du RNA-Seq ciblé tout en conservant une résolution suffisante pour la détection de l'haploinsuffisance.
 
-
-
-Après avoir explorer les différentes méthodes de normalisation, en mettant particulièrement l'accent sur TMM, RLE et LBN, qui apportent une valeur ajoutée dans le contexte du RNA-Seq ciblé. Cette analyse repose sur plusieurs critères de performance clés en génétique, tels que les comparaisons inter-individuelles et la robustesse face aux valeurs extrêmes.
- L'objectif final etait d'évaluer l'approche la plus adaptée  d'un panel de gènes ciblés .
-
-\subsection{Performance à faible profondeur et robustesse aux valeurs extrêmes} \vspace{3mm} Un des principaux critères d’évaluation est la robustesse aux valeurs extrêmes. Lorsqu’on cherche à établir un profil d'expression pour une maladie rare, comme la SLA, il est essentiel de déterminer si les valeurs de comptage aux extrémités de la distribution doivent être intégrées à l'analyse finale. Cette question peut être pertinente dans une étude quantitative visant à caractériser une éventuelle haplo-insuffisance ou surexpression. Nous allons comparer les différentes stratégies.\\
-
-Les méthodes dites \textit{"Total Count"}, comme CPM, bien qu’utilisées pour leur simplicité, sont particulièrement sensibles aux valeurs extrêmes\textsuperscript{\cite{dillies_comprehensive_2013}}. Elles considèrent peu d'informations et ne permettent pas une évaluation efficace de la dispersion des données. Dans un contexte où l'expression génétique varie, elles se révèlent inadéquates. De même, FPKM et TPM présentent des limitations similaires. Ces méthodes sont souvent critiquées pour leur manque de reproductibilité et leur rigueur scientifique. Par exemple, \citeauthor{robinson_scaling_2010} (2010) ont montré que la division par la longueur du gène amplifie l’effet des valeurs aberrantes, surtout pour les gènes courts ou faiblement exprimés\textsuperscript{\cite{anders_differential_2010}}. Les travaux de \citeauthor{zhao_tpm_2021} (2021) confirment également cette limite. Quant à la méthode "Upper Quartile", cela est plus nuancé, car elle élimine les données du quartile inférieur\textsuperscript{\cite{dillies_comprehensive_2013}}, donc partiellement les valeurs extrêmes, mais elle reste peu adaptée à notre contexte où certains gènes peuvent être faiblement ou fortement exprimés par rapport à ce qui est attendu biologiquement.\\
-
-A l'inverse, TMM, qui prend en compte la composition de l’ARN au moment de la normalisation, offre une meilleure résistance aux biais causés par les valeurs extrêmes\textsuperscript{\cite{robinson_scaling_2010}}. C'est aussi le cas pour RLE, grâce à l’utilisation de la médiane comme paramètre de position, qui donne une tendance centrale. Enfin, LBN repose sur l’hypothèse que les gènes ne sont pas différentiellement exprimés entre les conditions, ce qui renforce sa pertinence pour analyser les extrémités de la distribution. Ces trois approches partagent une philosophie commune : estimer le facteur de normalisation à partir d’un ensemble de gènes supposés stables.
-
-\subsection{Compromis entre facilité d'interprétation et la pertinence biologique}
-
-Après avoir fait un panorama des différentes stratégies mathématiques pour traiter les comptages bruts, il est évident que la diversité des méthodes peut paraître déroutante. Finalement, ce qui va être essentiel pour le biologiste, c'est de lui proposer une approche qui repose sur un compromis entre facilité d'interprétation et pertinence médicale. Le biologiste doit être en mesure de comprendre les corrections pour les relier aux décisions diagnostiques. Les méthodes conceptuellement simples comme CPM et UQ sont éliminées des options disponibles pour le périmètre de notre étude, car nous avons montré que, avec des échantillons présentant des variations biologiques importantes, la normalisation conduira à des conclusions erronées. Nous avons vu que les métriques comme TPM et FPKM sont des approches moins avancées que TMM, RLE et LBN, qui sont également plus simples à comprendre et à implémenter que les autres, mais elles manquent de correction statistique pour les comparaisons inter-échantillons.\\
-
-En conclusion, la piste à creuser dans le périmètre de notre étude pencherait vers TMM ou RLE, et venir modéliser avec la LBN la surdispersion. Dans la littérature, il est régulièrement fait référence que la solution adéquate réside dans l'application d'une double correction\textsuperscript{\cite{robinson_scaling_2010}}. Comme nous l'avons souligné dans la méthodologie de la LBN, une fois que les biais techniques sont absorbés (par la correction RLE ou TMM), la méthode LBN peut être appliquée pour l'analyse de l'expression différentielle. Cette stratégie répondra à la fois à la problématique de la surdispersion et permettra d'obtenir une estimation précise de la variabilité inter-individuelle. Enfin, il est intéressant de mentionner que la taille de l'échantillon statistique (nombre de librairies) est directement corrélée à la puissance de la correction LBN. Comme souvent en statistique : plus les données seront consistantes plus la correction le sera également. Une piste de travail pour s'adapter aux contraintes de temps et de coût au laboratoire et pouvoir appliquer de manière crédible ces corrections serait donc de compiler (TMM ou RLE avec LBN) les données des diagnostics des librairies successives, semaine après semaine, pour augmenter la taille des données.
- Bien évidemment, cela doit se faire sous contrôle d'analyses statistiques pour valider une telle approche. 
-C'est une option à envisager pour fournir un modèle probabiliste puissant pour l'analyse d'expression malgrès les contraintes organisationnelles (8 échantillons par expérience).
-
-
- doit être apprécié en considérant que chaque méthode a ses avantages et inconvénients, et le choix sera fait sur un certain nombre de critères,
-  en tenant compte des spécificités des données et de l'objectif(s) biologique(s). Ce sujet sur la normalisation des données RNA-Seq dans le cadre du panel de gènes ciblés
-   nous a permis de mettre en lumière la complexité de cette étape de normalisation des données RNA-Seq et la nécessité d'une collaboration étroite entre biologistes et bioinformaticiens 
-   pour faire parler efficacement les résultats expérimentaux 
-
-
-\subsection{Le problème}
-
-Avant tout, rappelons que nous travaillons sur une maladie constitutionnelle. Par conséquent, il y a une très faible probabilité d'analyser des échantillons distincts pour un même patient à un intervalle de temps raisonnable, ce qui a peu de sens d'un point de vue de la génétique constitutionnelle, sauf dans des cas particuliers comme les études familiales. La notion de variabilité intra-individuelle est une qualité à étudier sur une matrice biologique identique. De manière générale, au laboratoire de génétique, il s'agit du sang, dans un milieu de transport adapté (tube STRECK pour l'ARN). Si ces conditions ne sont pas respectées, cela pourrait plutôt refléter une hétérogénéité biologique inhérente à une régulation de l'expression liée à la nature même du tissu, aux conditions de transport, à la variabilité de l'environnement analytique, avant même de songer à absorber les différents biais.
-Il est donc fondamental d'avoir une planification expérimentale aussi standardisée que possible et d'un référencement complet et précis des biais biologiques connus et d'en évaluer leur impact.
-Évaluer les biais biologiques et techniques est délicat. Comme nous l'avons vu plus haut, ils peuvent être confondus (préparation de la librairie, effets de lots, longueur des gènes, etc.).
-La littérature aborde cet aspect sous des angles parfois différents, et les conclusions sont attribuées à des facteurs techniques et/ou biologiques, car il est difficile de faire la distinction. 
- Chaque expérience étant unique, chaque prélèvement l'est aussi, notamment par ses délais et ses modalités d'acheminement. Pour capturer au mieux ces sources de variabilité, et à travers les différentes études comparatives, 
- j'ai constaté que les méthodes les méthodes conventionnelles présentées en \textbf{figure 1} ne sont pas ou peu adapté au RNASeq ciblé pour faire de DGE. Ceci s'explique par leurs modalités de calcul, qui intègrent la dispersion et la comparaison inter-échantillons à l'échelle du transcriptome ~\textsuperscript{\cite{dillies_comprehensive_2013}}. TMM, en utilisant une moyenne tronquée des ratios de lectures pour calculer les facteurs de normalisation,
-  va corriger efficacement les biais liés à la taille de la librairie (profondeur de séquençage notamment) et à la composition de l'ARN (régions riches en GC)\textsuperscript{\cite{abrams_protocol_2019}}.
- 
-    Présentation du jeu de données : 72 échantillons de transcriptomique ciblée (56 gènes SLA).
-    Organisation en runs de séquençage (n = 8 par run).
-    Limites méthodologique,  absence de gènes de référence stables, peu de données pour une normalisation robuste.
-    Constats initiaux : forte variabilité de profondeur de lecture inter-run, faible reproductibilité.
+Ainsi, les sections suivantes décrivent la méthodologie adoptée pour contrôler la qualité des données, 
+comparer plusieurs stratégies d’alignement, puis amorcer une réflexion sur les approches de quantification adaptées à l'étude que j'ai en charge de mener. 

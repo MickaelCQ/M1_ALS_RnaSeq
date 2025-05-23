@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2024.10.10)  19 MAY 2025 18:11
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2024.10.10)  22 MAY 2025 16:01
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -1365,6 +1365,7 @@ File: puenc.def 2021-06-07 v7.00m Hyperref: PDF Unicode definition (HO)
 Now handling font encoding PU ...
 ... no UTF-8 mapping file for font encoding PU
 )
+Package hyperref Info: Option `colorlinks' set `true' on input line 4073.
 Package hyperref Info: Hyper figures OFF on input line 4192.
 Package hyperref Info: Link nesting OFF on input line 4197.
 Package hyperref Info: Hyper index ON on input line 4200.
@@ -1390,7 +1391,7 @@ Package hyperref Info: Hyper figures OFF on input line 6076.
 Package hyperref Info: Link nesting OFF on input line 6081.
 Package hyperref Info: Hyper index ON on input line 6084.
 Package hyperref Info: backreferencing OFF on input line 6091.
-Package hyperref Info: Link coloring OFF on input line 6096.
+Package hyperref Info: Link coloring ON on input line 6094.
 Package hyperref Info: Link coloring with OCG OFF on input line 6101.
 Package hyperref Info: PDF/A mode OFF on input line 6106.
 LaTeX Info: Redefining \ref on input line 6146.
@@ -1443,20 +1444,13 @@ LaTeX Info: Redefining \labelcref on input line 2370.
 LaTeX Info: Redefining \labelcpageref on input line 2370.
 Package cleveref Info: `listings' support loaded on input line 3131.
 )
-(/usr/share/texlive/texmf-dist/tex/latex/lipsum/lipsum.sty
-Package: lipsum 2021-09-20 v2.7 150 paragraphs of Lorem Ipsum dummy text
-\g__lipsum_par_int=\count528
-\l__lipsum_a_int=\count529
-\l__lipsum_b_int=\count530
-
-(/usr/share/texlive/texmf-dist/tex/latex/lipsum/lipsum.ltd.tex))
 (/usr/share/texlive/texmf-dist/tex/latex/acro/acro.sty
 Package: acro 2022/01/27 v3.7 typeset acronyms and other abbreviations (CN)
-\g__acro_version_int=\count531
-\l__acro_tmpa_int=\count532
-\l__acro_tmpb_int=\count533
-\l__acro_tmpc_int=\count534
-\l__acro_tmpd_int=\count535
+\g__acro_version_int=\count528
+\l__acro_tmpa_int=\count529
+\l__acro_tmpb_int=\count530
+\l__acro_tmpc_int=\count531
+\l__acro_tmpd_int=\count532
 Loading module `base' ...
 Loading module `interface' ...
 Loading module `aux' ...
@@ -1465,15 +1459,15 @@ Loading module `acronyms' ...
 Loading module `formatting' ...
 Loading module `ppfixes' ...
 Loading module `tools' ...
-\l__acro_minimal_usage_int=\count536
-\l__acro_nest_int=\count537
-\g_acro_barrier_int=\count538
-\g_acro_barrier_total_int=\count539
+\l__acro_minimal_usage_int=\count533
+\l__acro_nest_int=\count534
+\g_acro_barrier_int=\count535
+\g_acro_barrier_total_int=\count536
 Loading module `commands' ...
 Loading module `templates' ...
 Loading module `list' ...
 Loading module `pages' ...
-\l__acro_pages_seq_threshold_int=\count540
+\l__acro_pages_seq_threshold_int=\count537
 Loading module `locale' ...
 Loading module `pdfsupport' ...
 Loading module `patch' ...
@@ -1491,7 +1485,7 @@ Package: xkeyval 2020/11/20 v2.8 package option processing (HA)
 \XKV@toks=\toks56
 \XKV@tempa@toks=\toks57
 )
-\XKV@depth=\count541
+\XKV@depth=\count538
 File: xkeyval.tex 2014/12/03 v2.7a key=value parser (HA)
 ))
 (/usr/share/texlive/texmf-dist/tex/latex/koma-script/tocbasic.sty
@@ -1527,7 +1521,157 @@ Package tocbasic Info: setting babel extension for `nls' on input line 188.
 \@nomenclaturefile=\write7
 \openout7 = `main.nlo'.
 
-Package nomencl Info: Writing nomenclature file main.nlo on input line 50.
+Package nomencl Info: Writing nomenclature file main.nlo on input line 52.
+
+(/usr/share/texlive/texmf-dist/tex/latex/glossaries/base/glossaries.sty
+Package: glossaries 2021/11/01 v4.49 (NLCT)
+
+(/usr/share/texlive/texmf-dist/tex/latex/mfirstuc/mfirstuc.sty
+Package: mfirstuc 2021/10/15 v2.07 (NLCT)
+\@glsmfirst=\toks58
+\@glsmrest=\toks59
+)
+(/usr/share/texlive/texmf-dist/tex/latex/textcase/textcase.sty
+Package: textcase 2019/09/14 v1.00 Text only upper/lower case changing (DPC)
+)
+(/usr/share/texlive/texmf-dist/tex/latex/xfor/xfor.sty
+Package: xfor 2009/02/05 v1.05 (NLCT)
+)
+(/usr/share/texlive/texmf-dist/tex/latex/datatool/datatool-base.sty
+Package: datatool-base 2019/09/27 v2.32 (NLCT)
+
+(/usr/share/texlive/texmf-dist/tex/latex/substr/substr.sty
+Package: substr 2009/10/20 v1.2 Handle substrings
+\c@su@anzahl=\count539
+)
+(/usr/share/texlive/texmf-dist/tex/latex/datatool/datatool-fp.sty
+Package: datatool-fp 2019/09/27 v2.32 (NLCT)
+
+(/usr/share/texlive/texmf-dist/tex/latex/fp/fp.sty
+Package: fp 1995/04/02
+
+`Fixed Point Package', Version 0.8, April 2, 1995 (C) Michael Mehlich
+(/usr/share/texlive/texmf-dist/tex/latex/fp/defpattern.sty
+Package: defpattern 1994/10/12
+\actioncount=\count540
+)
+(/usr/share/texlive/texmf-dist/tex/latex/fp/fp-basic.sty
+Package: fp-basic 1996/05/13
+\FP@xs=\count541
+\FP@xia=\count542
+\FP@xib=\count543
+\FP@xfa=\count544
+\FP@xfb=\count545
+\FP@rega=\count546
+\FP@regb=\count547
+\FP@regs=\count548
+\FP@times=\count549
+)
+(/usr/share/texlive/texmf-dist/tex/latex/fp/fp-addons.sty
+Package: fp-addons 1995/03/15
+)
+(/usr/share/texlive/texmf-dist/tex/latex/fp/fp-snap.sty
+Package: fp-snap 1995/04/05
+)
+(/usr/share/texlive/texmf-dist/tex/latex/fp/fp-exp.sty
+Package: fp-exp 1995/04/03
+)
+(/usr/share/texlive/texmf-dist/tex/latex/fp/fp-trigo.sty
+Package: fp-trigo 1995/04/14
+)
+(/usr/share/texlive/texmf-dist/tex/latex/fp/fp-pas.sty
+Package: fp-pas 1994/08/29
+)
+(/usr/share/texlive/texmf-dist/tex/latex/fp/fp-random.sty
+Package: fp-random 1995/02/23
+\FPseed=\count550
+)
+(/usr/share/texlive/texmf-dist/tex/latex/fp/fp-eqn.sty
+Package: fp-eqn 1995/04/03
+)
+(/usr/share/texlive/texmf-dist/tex/latex/fp/fp-upn.sty
+Package: fp-upn 1996/10/21
+)
+(/usr/share/texlive/texmf-dist/tex/latex/fp/fp-eval.sty
+Package: fp-eval 1995/04/03
+)))
+\@dtl@toks=\toks60
+\@dtl@tmpcount=\count551
+\dtl@tmplength=\skip116
+\dtl@sortresult=\count552
+\@dtl@numgrpsepcount=\count553
+\@dtl@datatype=\count554
+\dtl@codeA=\count555
+\dtl@codeB=\count556
+\@dtl@foreach@level=\count557
+)
+(/usr/share/texlive/texmf-dist/tex/latex/glossaries/base/glossaries-compatible-
+307.sty
+Package: glossaries-compatible-307 2021/11/01 v4.49 (NLCT)
+) (/usr/share/texlive/texmf-dist/tex/latex/tracklang/tracklang.sty
+Package: tracklang 2020/06/30 v1.5 (NLCT) Track Languages
+
+(/usr/share/texlive/texmf-dist/tex/generic/tracklang/tracklang.tex))
+(/usr/share/texlive/texmf-dist/tex/latex/translator/translator.sty
+Package: translator 2021-05-31 v1.12d Easy translation of strings in LaTeX
+)
+(/usr/share/texlive/texmf-dist/tex/latex/glossaries-english/glossaries-english.
+ldf
+File: glossaries-english.ldf 2014/11/23 v1.0
+)
+(/usr/share/texlive/texmf-dist/tex/latex/glossaries-french/glossaries-french.ld
+f
+File: glossaries-french.ldf 2016/12/12 v1.1
+)
+\gls@level=\count558
+\@gls@tmpb=\toks61
+\gls@tmplen=\skip117
+\glskeylisttok=\toks62
+\glslabeltok=\toks63
+\glsshorttok=\toks64
+\glslongtok=\toks65
+
+(/usr/share/texlive/texmf-dist/tex/latex/glossaries/styles/glossary-hypernav.st
+y
+Package: glossary-hypernav 2021/11/01 v4.49 (NLCT)
+) (/usr/share/texlive/texmf-dist/tex/latex/glossaries/styles/glossary-list.sty
+Package: glossary-list 2021/11/01 v4.49 (NLCT)
+\glslistdottedwidth=\skip118
+) (/usr/share/texlive/texmf-dist/tex/latex/glossaries/styles/glossary-long.sty
+Package: glossary-long 2021/11/01 v4.49 (NLCT)
+\glsdescwidth=\skip119
+\glspagelistwidth=\skip120
+) (/usr/share/texlive/texmf-dist/tex/latex/glossaries/styles/glossary-super.sty
+Package: glossary-super 2021/11/01 v4.49 (NLCT)
+
+(/usr/share/texlive/texmf-dist/tex/latex/supertabular/supertabular.sty
+Package: supertabular 2020/02/02 v4.1g the supertabular environment
+\c@tracingst=\count559
+\ST@wd=\dimen380
+\ST@rightskip=\skip121
+\ST@leftskip=\skip122
+\ST@parfillskip=\skip123
+\ST@pageleft=\dimen381
+\ST@headht=\dimen382
+\ST@tailht=\dimen383
+\ST@pagesofar=\dimen384
+\ST@pboxht=\dimen385
+\ST@lineht=\dimen386
+\ST@prevht=\dimen387
+\ST@toadd=\dimen388
+\ST@dimen=\dimen389
+\ST@pbox=\box103
+))
+(/usr/share/texlive/texmf-dist/tex/latex/glossaries/styles/glossary-tree.sty
+Package: glossary-tree 2021/11/01 v4.49 (NLCT)
+\glstreeindent=\skip124
+))
+\glswrite=\write8
+\glo@main@file=\write9
+\openout9 = `main.glo'.
+
+Package glossaries Info: Writing glossary file main.glo on input line 56.
+\c@glsref=\count560
 
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tik
 zlibraryshapes.geometric.code.tex
@@ -1540,10 +1684,10 @@ File: pgflibraryshapes.geometric.code.tex 2021/05/15 v3.1.9a (3.1.9a)
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/libraries/pgflibraryarrows.meta.
 code.tex
 File: pgflibraryarrows.meta.code.tex 2021/05/15 v3.1.9a (3.1.9a)
-\pgfarrowinset=\dimen380
-\pgfarrowlength=\dimen381
-\pgfarrowwidth=\dimen382
-\pgfarrowlinewidth=\dimen383
+\pgfarrowinset=\dimen390
+\pgfarrowlength=\dimen391
+\pgfarrowwidth=\dimen392
+\pgfarrowlinewidth=\dimen393
 )
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tik
 zlibrarycalc.code.tex
@@ -1558,8 +1702,8 @@ Package: tcolorbox 2022/01/07 version 5.0.2 text color boxes
 
 (/usr/share/texlive/texmf-dist/tex/latex/tools/verbatim.sty
 Package: verbatim 2020-07-07 v1.5u LaTeX2e package for verbatim enhancements
-\every@verbatim=\toks58
-\verbatim@line=\toks59
+\every@verbatim=\toks66
+\verbatim@line=\toks67
 \verbatim@in@stream=\read7
 )
 (/usr/share/texlive/texmf-dist/tex/latex/environ/environ.sty
@@ -1568,17 +1712,17 @@ Package: environ 2014/05/04 v0.3 A new way to define environments
 (/usr/share/texlive/texmf-dist/tex/latex/trimspaces/trimspaces.sty
 Package: trimspaces 2009/09/17 v1.1 Trim spaces around a token list
 ))
-\tcb@titlebox=\box103
-\tcb@upperbox=\box104
-\tcb@lowerbox=\box105
-\tcb@phantombox=\box106
-\c@tcbbreakpart=\count542
-\c@tcblayer=\count543
-\c@tcolorbox@number=\count544
-\tcb@temp=\box107
+\tcb@titlebox=\box104
+\tcb@upperbox=\box105
+\tcb@lowerbox=\box106
+\tcb@phantombox=\box107
+\c@tcbbreakpart=\count561
+\c@tcblayer=\count562
+\c@tcolorbox@number=\count563
 \tcb@temp=\box108
 \tcb@temp=\box109
 \tcb@temp=\box110
+\tcb@temp=\box111
 )
 (/usr/share/texlive/texmf-dist/tex/latex/smartdiagram/smartdiagram.sty
 Package: smartdiagram 2016/12/23 v0.3b Automatic creation of smart diagrams fro
@@ -1587,8 +1731,8 @@ m lists of items.
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tik
 zlibrarybackgrounds.code.tex
 File: tikzlibrarybackgrounds.code.tex 2021/05/15 v3.1.9a (3.1.9a)
-\pgf@layerbox@background=\box111
-\pgf@layerboxsaved@background=\box112
+\pgf@layerbox@background=\box112
+\pgf@layerboxsaved@background=\box113
 )
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tik
 zlibraryfadings.code.tex
@@ -1618,8 +1762,8 @@ File: tikzlibraryshapes.symbols.code.tex 2021/05/15 v3.1.9a (3.1.9a)
 s.symbols.code.tex
 File: pgflibraryshapes.symbols.code.tex 2021/05/15 v3.1.9a (3.1.9a)
 ))
-\pgf@layerbox@smart diagram arrow back=\box113
-\pgf@layerboxsaved@smart diagram arrow back=\box114
+\pgf@layerbox@smart diagram arrow back=\box114
+\pgf@layerboxsaved@smart diagram arrow back=\box115
 
 (/usr/share/texlive/texmf-dist/tex/latex/smartdiagram/smartdiagramlibrarycore.d
 efinitions.code.tex)
@@ -1630,34 +1774,33 @@ ommands.code.tex))
 (/usr/share/texlive/texmf-dist/tex/latex/smartdiagram/smartdiagramlibraryadditi
 ons.code.tex) (/usr/share/texlive/texmf-dist/tex/latex/appendix/appendix.sty
 Package: appendix 2020/02/08 v1.2c extra appendix facilities
-\c@@pps=\count545
-\c@@ppsavesec=\count546
-\c@@ppsaveapp=\count547
+\c@@pps=\count564
+\c@@ppsavesec=\count565
+\c@@ppsaveapp=\count566
 )
 (/usr/share/texlive/texmf-dist/tex/latex/tools/multicol.sty
 Package: multicol 2021/10/28 v1.9b multicolumn formatting (FMi)
-\c@tracingmulticols=\count548
-\mult@box=\box115
-\multicol@leftmargin=\dimen384
-\c@unbalance=\count549
-\c@collectmore=\count550
-\doublecol@number=\count551
-\multicoltolerance=\count552
-\multicolpretolerance=\count553
-\full@width=\dimen385
-\page@free=\dimen386
-\premulticols=\dimen387
-\postmulticols=\dimen388
-\multicolsep=\skip116
-\multicolbaselineskip=\skip117
-\partial@page=\box116
-\last@line=\box117
-\maxbalancingoverflow=\dimen389
-\mult@rightbox=\box118
-\mult@grightbox=\box119
-\mult@firstbox=\box120
-\mult@gfirstbox=\box121
-\@tempa=\box122
+\c@tracingmulticols=\count567
+\mult@box=\box116
+\multicol@leftmargin=\dimen394
+\c@unbalance=\count568
+\c@collectmore=\count569
+\doublecol@number=\count570
+\multicoltolerance=\count571
+\multicolpretolerance=\count572
+\full@width=\dimen395
+\page@free=\dimen396
+\premulticols=\dimen397
+\postmulticols=\dimen398
+\multicolsep=\skip125
+\multicolbaselineskip=\skip126
+\partial@page=\box117
+\last@line=\box118
+\maxbalancingoverflow=\dimen399
+\mult@rightbox=\box119
+\mult@grightbox=\box120
+\mult@firstbox=\box121
+\mult@gfirstbox=\box122
 \@tempa=\box123
 \@tempa=\box124
 \@tempa=\box125
@@ -1693,33 +1836,46 @@ Package: multicol 2021/10/28 v1.9b multicolumn formatting (FMi)
 \@tempa=\box155
 \@tempa=\box156
 \@tempa=\box157
-\c@minrows=\count554
-\c@columnbadness=\count555
-\c@finalcolumnbadness=\count556
-\last@try=\dimen390
-\multicolovershoot=\dimen391
-\multicolundershoot=\dimen392
-\mult@nat@firstbox=\box158
-\colbreak@box=\box159
-\mc@col@check@num=\count557
+\@tempa=\box158
+\c@minrows=\count573
+\c@columnbadness=\count574
+\c@finalcolumnbadness=\count575
+\last@try=\dimen400
+\multicolovershoot=\dimen401
+\multicolundershoot=\dimen402
+\mult@nat@firstbox=\box159
+\colbreak@box=\box160
+\mc@col@check@num=\count576
 )
 (/usr/share/texlive/texmf-dist/tex/latex/ragged2e/ragged2e.sty
 Package: ragged2e 2021/12/15 v3.1 ragged2e Package
-\CenteringLeftskip=\skip118
-\RaggedLeftLeftskip=\skip119
-\RaggedRightLeftskip=\skip120
-\CenteringRightskip=\skip121
-\RaggedLeftRightskip=\skip122
-\RaggedRightRightskip=\skip123
-\CenteringParfillskip=\skip124
-\RaggedLeftParfillskip=\skip125
-\RaggedRightParfillskip=\skip126
-\JustifyingParfillskip=\skip127
-\CenteringParindent=\skip128
-\RaggedLeftParindent=\skip129
-\RaggedRightParindent=\skip130
-\JustifyingParindent=\skip131
+\CenteringLeftskip=\skip127
+\RaggedLeftLeftskip=\skip128
+\RaggedRightLeftskip=\skip129
+\CenteringRightskip=\skip130
+\RaggedLeftRightskip=\skip131
+\RaggedRightRightskip=\skip132
+\CenteringParfillskip=\skip133
+\RaggedLeftParfillskip=\skip134
+\RaggedRightParfillskip=\skip135
+\JustifyingParfillskip=\skip136
+\CenteringParindent=\skip137
+\RaggedLeftParindent=\skip138
+\RaggedRightParindent=\skip139
+\JustifyingParindent=\skip140
 )
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.116 l
+       iser les liens
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
 (/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2020/03/24 1.8d listings language file
 )
@@ -1735,25 +1891,16 @@ File: lstlang1.sty 2020/03/24 1.8d listings language file
 (/usr/share/texlive/texmf-dist/tex/latex/listings/lstmisc.sty
 File: lstmisc.sty 2020/03/24 1.8d (Carsten Heinz)
 )
-(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/amssymb.sty
-Package: amssymb 2013/01/14 v3.01 AMS font symbols
+   defining Unicode char U+202F (decimal 8239)
 
-(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/amsfonts.sty
-Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
-\symAMSa=\mathgroup5
-\symAMSb=\mathgroup6
-LaTeX Font Info:    Redeclaring math symbol \hbar on input line 98.
-LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
-(Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
-))
 (/usr/share/texlive/texmf-dist/tex/latex/algorithm2e/algorithm2e.sty
 Package: algorithm2e 2017/07/18 v5.2 algorithms environments
-\c@AlgoLine=\count558
-\algocf@hangindent=\skip132
+\c@AlgoLine=\count577
+\algocf@hangindent=\skip141
 
 (/usr/share/texlive/texmf-dist/tex/latex/ifoddpage/ifoddpage.sty
 Package: ifoddpage 2016/04/23 v1.1 Conditionals for odd/even page detection
-\c@checkoddpage=\count559
+\c@checkoddpage=\count578
 )
 (/usr/share/texlive/texmf-dist/tex/latex/tools/xspace.sty
 Package: xspace 2014/10/28 v1.13 Space after command names (DPC,MH)
@@ -1761,41 +1908,41 @@ Package: xspace 2014/10/28 v1.13 Space after command names (DPC,MH)
 (/usr/share/texlive/texmf-dist/tex/latex/relsize/relsize.sty
 Package: relsize 2013/03/29 ver 4.1
 )
-\skiptotal=\skip133
-\skiplinenumber=\skip134
-\skiprule=\skip135
-\skiphlne=\skip136
-\skiptext=\skip137
-\skiplength=\skip138
-\algomargin=\skip139
-\skipalgocfslide=\skip140
-\algowidth=\dimen393
-\inoutsize=\dimen394
-\inoutindent=\dimen395
-\interspacetitleruled=\dimen396
-\interspacealgoruled=\dimen397
-\interspacetitleboxruled=\dimen398
-\algocf@ruledwidth=\skip141
-\algocf@inoutbox=\box160
-\algocf@inputbox=\box161
-\AlCapSkip=\skip142
-\AlCapHSkip=\skip143
-\algoskipindent=\skip144
-\algocf@nlbox=\box162
-\algocf@hangingbox=\box163
-\algocf@untilbox=\box164
-\algocf@skipuntil=\skip145
-\algocf@capbox=\box165
-\algocf@lcaptionbox=\skip146
-\algoheightruledefault=\skip147
-\algoheightrule=\skip148
-\algotitleheightruledefault=\skip149
-\algotitleheightrule=\skip150
-\c@algocfline=\count560
-\c@algocfproc=\count561
-\c@algocf=\count562
-\algocf@algoframe=\box166
-\algocf@algobox=\box167
+\skiptotal=\skip142
+\skiplinenumber=\skip143
+\skiprule=\skip144
+\skiphlne=\skip145
+\skiptext=\skip146
+\skiplength=\skip147
+\algomargin=\skip148
+\skipalgocfslide=\skip149
+\algowidth=\dimen403
+\inoutsize=\dimen404
+\inoutindent=\dimen405
+\interspacetitleruled=\dimen406
+\interspacealgoruled=\dimen407
+\interspacetitleboxruled=\dimen408
+\algocf@ruledwidth=\skip150
+\algocf@inoutbox=\box161
+\algocf@inputbox=\box162
+\AlCapSkip=\skip151
+\AlCapHSkip=\skip152
+\algoskipindent=\skip153
+\algocf@nlbox=\box163
+\algocf@hangingbox=\box164
+\algocf@untilbox=\box165
+\algocf@skipuntil=\skip154
+\algocf@capbox=\box166
+\algocf@lcaptionbox=\skip155
+\algoheightruledefault=\skip156
+\algoheightrule=\skip157
+\algotitleheightruledefault=\skip158
+\algotitleheightrule=\skip159
+\c@algocfline=\count579
+\c@algocfproc=\count580
+\c@algocf=\count581
+\algocf@algoframe=\box167
+\algocf@algobox=\box168
 )
 (/usr/share/texlive/texmf-dist/tex/latex/algorithmicx/algpseudocode.sty
 Package: algpseudocode 
@@ -1804,19 +1951,19 @@ Package: algpseudocode
 Package: algorithmicx 2005/04/27 v1.2 Algorithmicx
 
 Document Style algorithmicx 1.2 - a greatly improved `algorithmic' style
-\c@ALG@line=\count563
-\c@ALG@rem=\count564
-\c@ALG@nested=\count565
-\ALG@tlm=\skip151
-\ALG@thistlm=\skip152
-\c@ALG@Lnr=\count566
-\c@ALG@blocknr=\count567
-\c@ALG@storecount=\count568
-\c@ALG@tmpcounter=\count569
-\ALG@tmplength=\skip153
+\c@ALG@line=\count582
+\c@ALG@rem=\count583
+\c@ALG@nested=\count584
+\ALG@tlm=\skip160
+\ALG@thistlm=\skip161
+\c@ALG@Lnr=\count585
+\c@ALG@blocknr=\count586
+\c@ALG@storecount=\count587
+\c@ALG@tmpcounter=\count588
+\ALG@tmplength=\skip162
 )
 Document Style - pseudocode environments for use with the `algorithmicx' style
-)) (./Diagramme_conclusion.tex)
+)) (./Diagramme_conclusion.tex) (./Glossaire.tex)
 runsystem(which pygmentize && touch main.aex)...executed.
 
 runsystem(rm main.aex)...executed.
@@ -1825,30 +1972,30 @@ Package csquotes Info: Checking for multilingual support...
 Package csquotes Info: ... found 'babel' package.
 Package csquotes Info: Adjusting default style.
 Package csquotes Info: Redefining alias 'default' -> 'english'.
-Package hyperref Info: Option `colorlinks' set `true' on input line 6.
- (./main.aux)
+Package hyperref Info: Option `colorlinks' set `true' on input line 8.
+ (./main.aux (./main.acr))
 \openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 6.
-LaTeX Font Info:    ... okay on input line 6.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 6.
-LaTeX Font Info:    ... okay on input line 6.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 6.
-LaTeX Font Info:    ... okay on input line 6.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 6.
-LaTeX Font Info:    ... okay on input line 6.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 6.
-LaTeX Font Info:    ... okay on input line 6.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 6.
-LaTeX Font Info:    ... okay on input line 6.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 6.
-LaTeX Font Info:    ... okay on input line 6.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 6.
-LaTeX Font Info:    ... okay on input line 6.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 6.
-LaTeX Font Info:    ... okay on input line 6.
-LaTeX Info: Redefining \degres on input line 6.
-LaTeX Info: Redefining \up on input line 6.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Info: Redefining \degres on input line 8.
+LaTeX Info: Redefining \up on input line 8.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -1886,7 +2033,7 @@ LaTeX Info: Redefining \up on input line 6.
 
 Package lastpage Info: Please have a look at the pageslts package at
 (lastpage)             https://www.ctan.org/pkg/pageslts
-(lastpage)             ! on input line 6.
+(lastpage)             ! on input line 8.
 
 (/usr/share/texlive/texmf-dist/tex/latex/translations/translations-basic-dictio
 nary-english.trsl
@@ -1894,7 +2041,7 @@ File: translations-basic-dictionary-english.trsl (english translation file `tra
 nslations-basic-dictionary')
 )
 Package translations Info: loading dictionary `translations-basic-dictionary' f
-or `english'. on input line 6.
+or `english'. on input line 8.
 
 (/usr/share/texlive/texmf-dist/tex/latex/translations/translations-basic-dictio
 nary-french.trsl
@@ -1902,21 +2049,21 @@ File: translations-basic-dictionary-french.trsl (french translation file `trans
 lations-basic-dictionary')
 )
 Package translations Info: loading dictionary `translations-basic-dictionary' f
-or `french'. on input line 6.
+or `french'. on input line 8.
 
 (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count570
-\scratchdimen=\dimen399
-\scratchbox=\box168
-\nofMPsegments=\count571
-\nofMParguments=\count572
-\everyMPshowfont=\toks60
-\MPscratchCnt=\count573
-\MPscratchDim=\dimen400
-\MPnumerator=\count574
-\makeMPintoPDFobject=\count575
-\everyMPtoPDFconversion=\toks61
+\scratchcounter=\count589
+\scratchdimen=\dimen409
+\scratchbox=\box169
+\nofMPsegments=\count590
+\nofMParguments=\count591
+\everyMPshowfont=\toks68
+\MPscratchCnt=\count592
+\MPscratchDim=\dimen410
+\MPnumerator=\count593
+\makeMPintoPDFobject=\count594
+\everyMPtoPDFconversion=\toks69
 ) (/usr/share/texlive/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
@@ -1930,7 +2077,7 @@ e
 Package pgfplots Warning: running in backwards compatibility mode (unsuitable t
 ick labels; missing features). Consider writing \pgfplotsset{compat=1.18} into 
 your preamble.
- on input line 6.
+ on input line 8.
 
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: float package is loaded.
@@ -1940,9 +2087,10 @@ Package caption Info: longtable package is loaded.
 (/usr/share/texlive/texmf-dist/tex/latex/caption/ltcaption.sty
 Package: ltcaption 2020/05/30 v1.4b longtable captions (AR)
 )
+Package caption Info: supertabular package is loaded.
 Package caption Info: wrapfig package is loaded.
 Package caption Info: End \AtBeginDocument code.
-\c@lstlisting=\count576
+\c@lstlisting=\count595
 Package biblatex Info: Trying to load language 'english'...
 Package biblatex Info: ... file 'english.lbx' found.
 
@@ -1962,33 +2110,12 @@ Package biblatex Info: Automatic encoding selection.
 
 Package biblatex Info: Trying to load bibliographic data...
 Package biblatex Info: ... file 'main.bbl' found.
- (./main.bbl
+ (./main.bbl)
+Package biblatex Info: Reference section=0 on input line 8.
+Package biblatex Info: Reference segment=0 on input line 8.
+Package hyperref Info: Link coloring ON on input line 8.
 
-Package biblatex Warning: The following entry could not be found
-(biblatex)                in the database:
-(biblatex)                anders_differential_2010
-(biblatex)                Please verify the spelling and rerun
-(biblatex)                LaTeX afterwards.
-
-
-Package biblatex Warning: The following entry could not be found
-(biblatex)                in the database:
-(biblatex)                robinson_scaling_2010
-(biblatex)                Please verify the spelling and rerun
-(biblatex)                LaTeX afterwards.
-
-
-Package biblatex Warning: The following entry could not be found
-(biblatex)                in the database:
-(biblatex)                zhao_tpm_2021
-(biblatex)                Please verify the spelling and rerun
-(biblatex)                LaTeX afterwards.
-
-)
-Package biblatex Info: Reference section=0 on input line 6.
-Package biblatex Info: Reference segment=0 on input line 6.
-Package hyperref Info: Link coloring ON on input line 6.
- (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2021-04-02 v2.47 Cross-referencing by name of section
 
 (/usr/share/texlive/texmf-dist/tex/latex/refcount/refcount.sty
@@ -1997,57 +2124,19 @@ Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
 (/usr/share/texlive/texmf-dist/tex/generic/gettitlestring/gettitlestring.sty
 Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
-\c@section@level=\count577
+\c@section@level=\count596
 )
-LaTeX Info: Redefining \ref on input line 6.
-LaTeX Info: Redefining \pageref on input line 6.
-LaTeX Info: Redefining \nameref on input line 6.
+LaTeX Info: Redefining \ref on input line 8.
+LaTeX Info: Redefining \pageref on input line 8.
+LaTeX Info: Redefining \nameref on input line 8.
 
 (./main.out) (./main.out)
-\@outlinefile=\write8
-\openout8 = `main.out'.
+\@outlinefile=\write10
+\openout10 = `main.out'.
 
 
 No file main.nls.
 (./Page_de_garde.tex
-<logo_FDS_rond.png, id=106, 467.346pt x 465.9006pt>
-File: logo_FDS_rond.png Graphic file (type png)
-<use logo_FDS_rond.png>
-Package pdftex.def Info: logo_FDS_rond.png  used on input line 9.
-(pdftex.def)             Requested size: 71.34682pt x 71.13188pt.
-LaTeX Font Info:    Trying to load font information for U+wasy on input line 11
-.
- (/usr/share/texlive/texmf-dist/tex/latex/wasysym/uwasy.fd
-File: uwasy.fd 2020/01/19 v2.4 Wasy-2 symbol font definitions
-)
-LaTeX Font Info:    Trying to load font information for U+msa on input line 11.
-
-(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
-File: umsa.fd 2013/01/14 v3.01 AMS symbols A
-)
-LaTeX Font Info:    Trying to load font information for U+msb on input line 11.
-
-
-(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
-File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-)
-<Logo_Bioinfo.png, id=108, 268.75406pt x 264.23718pt>
-File: Logo_Bioinfo.png Graphic file (type png)
-<use Logo_Bioinfo.png>
-Package pdftex.def Info: Logo_Bioinfo.png  used on input line 15.
-(pdftex.def)             Requested size: 72.34721pt x 71.13188pt.
-<Logo_UM.png, id=109, 200.75pt x 200.75pt>
-File: Logo_UM.png Graphic file (type png)
-<use Logo_UM.png>
-Package pdftex.def Info: Logo_UM.png  used on input line 21.
-(pdftex.def)             Requested size: 68.28778pt x 68.28644pt.
-
-Overfull \vbox (10.0pt too high) has occurred while \output is active []
-
- [1
-
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./logo_FDS_rond.png> <./Lo
-go_Bioinfo.png> <./Logo_UM.png>]) (./Resume.tex
 
 Package fancyhdr Warning: \headheight is too small (-10.0pt): 
 (fancyhdr)                Make it at least 0.0pt, for example:
@@ -2059,12 +2148,65 @@ Package fancyhdr Warning: \headheight is too small (-10.0pt):
 
 Overfull \vbox (10.0pt too high) has occurred while \output is active []
 
-LaTeX Font Info:    Trying to load font information for T1+cmss on input line 8
+LaTeX Font Info:    Trying to load font information for T1+cmss on input line 2
 .
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/t1cmss.fd
 File: t1cmss.fd 2019/12/16 v2.5j Standard LaTeX font definitions
 )
+
+Package fancyhdr Warning: \footskip is too small (-35.0pt): 
+(fancyhdr)                Make it at least 15.67365pt, for example:
+(fancyhdr)                \setlength{\footskip}{15.67365pt}.
+
+[1
+
+\openout8 = `main.ist'.
+
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
+<logo_FDS_rond.png, id=98, 467.346pt x 465.9006pt>
+File: logo_FDS_rond.png Graphic file (type png)
+<use logo_FDS_rond.png>
+Package pdftex.def Info: logo_FDS_rond.png  used on input line 9.
+(pdftex.def)             Requested size: 71.34682pt x 71.13188pt.
+LaTeX Font Info:    Trying to load font information for U+wasy on input line 11
+.
+
+(/usr/share/texlive/texmf-dist/tex/latex/wasysym/uwasy.fd
+File: uwasy.fd 2020/01/19 v2.4 Wasy-2 symbol font definitions
+)
+<Logo_Bioinfo.png, id=100, 268.75406pt x 264.23718pt>
+File: Logo_Bioinfo.png Graphic file (type png)
+<use Logo_Bioinfo.png>
+Package pdftex.def Info: Logo_Bioinfo.png  used on input line 15.
+(pdftex.def)             Requested size: 72.34721pt x 71.13188pt.
+<Logo_UM.png, id=101, 200.75pt x 200.75pt>
+File: Logo_UM.png Graphic file (type png)
+<use Logo_UM.png>
+Package pdftex.def Info: Logo_UM.png  used on input line 21.
+(pdftex.def)             Requested size: 68.28778pt x 68.28644pt.
+
+Overfull \vbox (10.0pt too high) has occurred while \output is active []
+
+pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has 
+been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.67 \end{titlepage}
+                     [1 <./logo_FDS_rond.png> <./Logo_Bioinfo.png> <./Logo_UM.p
+ng>]) (./Resume.tex
+
+Package fancyhdr Warning: \headheight is too small (-10.0pt): 
+(fancyhdr)                Make it at least 0.0pt, for example:
+(fancyhdr)                \setlength{\headheight}{0.0pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-10.0pt}.
+
+
+Overfull \vbox (10.0pt too high) has occurred while \output is active []
+
+
 
 Package fancyhdr Warning: \footskip is too small (-35.0pt): 
 (fancyhdr)                Make it at least 15.67365pt, for example:
@@ -2095,8 +2237,8 @@ Package fancyhdr Warning: \footskip is too small (-35.0pt):
 (fancyhdr)                \setlength{\footskip}{15.67365pt}.
 
 [2] (./main.toc)
-\tf@toc=\write9
-\openout9 = `main.toc'.
+\tf@toc=\write11
+\openout11 = `main.toc'.
 
 
 
@@ -2117,28 +2259,11 @@ Package fancyhdr Warning: \footskip is too small (-35.0pt):
 (fancyhdr)                \setlength{\footskip}{15.67365pt}.
 
 [3]) (./Introduction.tex
-
-! LaTeX Error: Unicode character â€¯ (U+202F)
-               not set up for use with LaTeX.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.19 ...ncerne une maladie neurodÃ©gÃ©nÃ©rativeâ€¯
-                                                  : la sclÃ©rose latÃ©rale a...
-
-You may provide a definition with
-\DeclareUnicodeCharacter 
-
-<Cortex_Spinal.jpg, id=168, 1306.8825pt x 869.2475pt>
+<Cortex_Spinal.jpg, id=152, 1306.8825pt x 869.2475pt>
 File: Cortex_Spinal.jpg Graphic file (type jpg)
 <use Cortex_Spinal.jpg>
-Package pdftex.def Info: Cortex_Spinal.jpg  used on input line 28.
+Package pdftex.def Info: Cortex_Spinal.jpg  used on input line 17.
 (pdftex.def)             Requested size: 256.07481pt x 170.31828pt.
-
-LaTeX Warning: Hyper reference `def:prevalence' on page 4 undefined on input li
-ne 33.
 
 
 Package fancyhdr Warning: \headheight is too small (-10.0pt): 
@@ -2158,6 +2283,10 @@ Package fancyhdr Warning: \footskip is too small (-35.0pt):
 (fancyhdr)                \setlength{\footskip}{15.67365pt}.
 
 [4 <./Cortex_Spinal.jpg>]
+Underfull \hbox (badness 10000) in paragraph at lines 39--43
+
+ []
+
 
 ! Package pgf Error: No shape named `' is known.
 
@@ -2165,40 +2294,27 @@ See the pgf package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.103     }
-           
+l.94  }
+       
 This error message was generated by an \errmessage
 command, so I can't give any explicit help.
 Pretend that you're Hercule Poirot: Examine all clues,
 and deduce the truth by order and method.
 
 
-Overfull \hbox (0.57625pt too wide) in paragraph at lines 103--103
+Overfull \hbox (0.57625pt too wide) in paragraph at lines 94--94
  [][]\T1/cmr/bx/n/12 Processus 
  []
 
-Missing character: There is no ; in font nullfont!
 
-! Package tikz Error: + or - expected.
+Underfull \hbox (badness 2237) in paragraph at lines 100--108
+[][]\T1/cmr/m/n/12 Supposons main-te-nant que l'on
+ []
 
-See the tikz package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.203 }
-       
-(That was another \errmessage.)
 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.203 }
-       
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
+Underfull \hbox (badness 10000) in paragraph at lines 100--108
+
+ []
 
 
 Package fancyhdr Warning: \headheight is too small (-10.0pt): 
@@ -2218,23 +2334,36 @@ Package fancyhdr Warning: \footskip is too small (-35.0pt):
 (fancyhdr)                \setlength{\footskip}{15.67365pt}.
 
 [5]
-Underfull \hbox (badness 10000) in paragraph at lines 221--222
+Missing character: There is no ; in font nullfont!
 
+! Package tikz Error: + or - expected.
+
+See the tikz package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.206 }
+       
+(That was another \errmessage.)
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.206 }
+       
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+
+Overfull \hbox (25.61383pt too wide) in paragraph at lines 117--207
+[][] 
  []
 
 
-LaTeX Warning: Citation 'robinson_scaling_2010' on page 6 undefined on input li
-ne 223.
-
-
-LaTeX Warning: Citation 'anders_differential_2010' on page 6 undefined on input
- line 223.
-
-
-LaTeX Warning: Citation 'zhao_tpm_2021' on page 6 undefined on input line 223.
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 223--224
+Underfull \hbox (badness 10000) in paragraph at lines 210--219
 
  []
 
@@ -2255,20 +2384,18 @@ Package fancyhdr Warning: \footskip is too small (-35.0pt):
 (fancyhdr)                Make it at least 15.67365pt, for example:
 (fancyhdr)                \setlength{\footskip}{15.67365pt}.
 
-[6]
+[6]) (./Methods.tex
+LaTeX Font Info:    Trying to load font information for T1+pcr on input line 4.
 
-LaTeX Warning: Citation 'robinson_scaling_2010' on page 7 undefined on input li
-ne 225.
+ (/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1pcr.fd
+File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
+)
+LaTeX Font Info:    Trying to load font information for TS1+pcr on input line 2
+4.
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 229--230
-
- []
-
-
-LaTeX Warning: Citation 'robinson_scaling_2010' on page 7 undefined on input li
-ne 231.
-
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ts1pcr.fd
+File: ts1pcr.fd 2001/06/04 font definitions for TS1/pcr.
+)
 
 Package fancyhdr Warning: \headheight is too small (-10.0pt): 
 (fancyhdr)                Make it at least 0.0pt, for example:
@@ -2287,6 +2414,9 @@ Package fancyhdr Warning: \footskip is too small (-35.0pt):
 (fancyhdr)                \setlength{\footskip}{15.67365pt}.
 
 [7]
+LaTeX Font Info:    Font shape `T1/pcr/m/it' in size <10> not available
+(Font)              Font shape `T1/pcr/m/sl' tried instead on input line 35.
+
 
 Package fancyhdr Warning: \headheight is too small (-10.0pt): 
 (fancyhdr)                Make it at least 0.0pt, for example:
@@ -2304,7 +2434,17 @@ Package fancyhdr Warning: \footskip is too small (-35.0pt):
 (fancyhdr)                Make it at least 15.67365pt, for example:
 (fancyhdr)                \setlength{\footskip}{15.67365pt}.
 
-[8]) (./Methods.tex
+[8]
+<Mapping_P_Relative_Vtex.pdf, id=257, 794.97pt x 505.89pt>
+File: Mapping_P_Relative_Vtex.pdf Graphic file (type pdf)
+<use Mapping_P_Relative_Vtex.pdf>
+Package pdftex.def Info: Mapping_P_Relative_Vtex.pdf  used on input line 84.
+(pdftex.def)             Requested size: 512.14963pt x 325.92215pt.
+
+Overfull \hbox (25.61005pt too wide) in paragraph at lines 83--85
+ [] 
+ []
+
 
 Package fancyhdr Warning: \headheight is too small (-10.0pt): 
 (fancyhdr)                Make it at least 0.0pt, for example:
@@ -2322,14 +2462,33 @@ Package fancyhdr Warning: \footskip is too small (-35.0pt):
 (fancyhdr)                Make it at least 15.67365pt, for example:
 (fancyhdr)                \setlength{\footskip}{15.67365pt}.
 
-[9]) (./Results.tex) (./Discussion.tex)
-LaTeX Font Info:    Trying to load font information for T1+pcr on input line 18
-.
+[9 <./Mapping_P_Relative_Vtex.pdf>]
 
-(/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1pcr.fd
-File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
-)
-Overfull \hbox (4.79897pt too wide) in paragraph at lines 18--18
+LaTeX Warning: Command \texttimes invalid in math mode on input line 119.
+
+
+LaTeX Warning: Command \texttimes invalid in math mode on input line 119.
+
+Missing character: There is no Ö in font cmr12!
+
+Package fancyhdr Warning: \headheight is too small (-10.0pt): 
+(fancyhdr)                Make it at least 0.0pt, for example:
+(fancyhdr)                \setlength{\headheight}{0.0pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-10.0pt}.
+
+
+Overfull \vbox (10.0pt too high) has occurred while \output is active []
+
+
+
+Package fancyhdr Warning: \footskip is too small (-35.0pt): 
+(fancyhdr)                Make it at least 15.67365pt, for example:
+(fancyhdr)                \setlength{\footskip}{15.67365pt}.
+
+[10]) (./Results.tex) (./Discussion.tex) (./main.gls)
+Overfull \hbox (4.79897pt too wide) in paragraph at lines 24--24
 \T1/cmr/m/it/12 (PNDS) Fi-lière FILS-LAN\T1/cmr/m/n/12 . Ar-gu-men-taire scien-
 ti-fique. TOURS : Centre de ré-fé-rence SLA TOURS,
  []
@@ -2351,7 +2510,7 @@ Package fancyhdr Warning: \footskip is too small (-35.0pt):
 (fancyhdr)                Make it at least 15.67365pt, for example:
 (fancyhdr)                \setlength{\footskip}{15.67365pt}.
 
-[10] 
+[11] 
 AED: lastpage setting LastPage
 
 Package fancyhdr Warning: \headheight is too small (-10.0pt): 
@@ -2370,30 +2529,7 @@ Package fancyhdr Warning: \footskip is too small (-35.0pt):
 (fancyhdr)                Make it at least 15.67365pt, for example:
 (fancyhdr)                \setlength{\footskip}{15.67365pt}.
 
-[11]
-Overfull \vbox (12.0pt too high) has occurred while \output is active []
-
-
-
-Package fancyhdr Warning: \headheight is too small (-10.0pt): 
-(fancyhdr)                Make it at least 0.0pt, for example:
-(fancyhdr)                \setlength{\headheight}{0.0pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-
-(fancyhdr)                \addtolength{\topmargin}{-10.0pt}.
-
-
-Overfull \vbox (10.0pt too high) has occurred while \output is active []
-
-
-
-Package fancyhdr Warning: \footskip is too small (-35.0pt): 
-(fancyhdr)                Make it at least 15.67365pt, for example:
-(fancyhdr)                \setlength{\footskip}{15.67365pt}.
-
-[12
-
-]
+[12]
 Overfull \vbox (12.0pt too high) has occurred while \output is active []
 
 
@@ -2420,57 +2556,76 @@ Package fancyhdr Warning: \footskip is too small (-35.0pt):
 Overfull \vbox (12.0pt too high) has occurred while \output is active []
 
 
-(./main.aux)
 
-LaTeX Warning: There were undefined references.
+Package fancyhdr Warning: \headheight is too small (-10.0pt): 
+(fancyhdr)                Make it at least 0.0pt, for example:
+(fancyhdr)                \setlength{\headheight}{0.0pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
 
+(fancyhdr)                \addtolength{\topmargin}{-10.0pt}.
+
+
+Overfull \vbox (10.0pt too high) has occurred while \output is active []
+
+
+
+Package fancyhdr Warning: \footskip is too small (-35.0pt): 
+(fancyhdr)                Make it at least 15.67365pt, for example:
+(fancyhdr)                \setlength{\footskip}{15.67365pt}.
+
+[14
+
+]
+Overfull \vbox (12.0pt too high) has occurred while \output is active []
+
+
+(./main.aux (./main.acr))
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 2D4B0A977A89F2D2B726052053FA8B32;4054.
+(rerunfilecheck)             Checksum: A964CA1DBC436974530509BFDC2996B8;3253.
 Package logreq Info: Writing requests to 'main.run.xml'.
 \openout1 = `main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 65063 strings out of 478287
- 1482152 string characters out of 5849288
- 2445682 words of memory out of 5000000
- 82238 multiletter control sequences out of 15000+600000
- 498132 words of font info for 90 fonts, out of 8000000 for 9000
+ 70977 strings out of 478287
+ 1601569 string characters out of 5849288
+ 2601524 words of memory out of 5000000
+ 88003 multiletter control sequences out of 15000+600000
+ 497469 words of font info for 86 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 115i,12n,109p,1419b,2076s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/share/texmf/
-fonts/enc/dvips/cm-super/cm-super-t1.enc}</usr/share/texlive/texmf-dist/fonts/t
-ype1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
-ublic/amsfonts/cmextra/cmex8.pfb></usr/share/texlive/texmf-dist/fonts/type1/pub
-lic/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/am
-sfonts/cm/cmmi12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts
-/cm/cmmi6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmm
-i8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb>
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/s
-hare/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/tex
-live/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/t
-exmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texmf/fonts/type
-1/public/cm-super/sfbi1440.pfb></usr/share/texmf/fonts/type1/public/cm-super/sf
-bx0800.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1095.pfb></usr/sha
-re/texmf/fonts/type1/public/cm-super/sfbx1200.pfb></usr/share/texmf/fonts/type1
-/public/cm-super/sfbx1440.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfb
-x1728.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx2488.pfb></usr/shar
-e/texmf/fonts/type1/public/cm-super/sfcc1200.pfb></usr/share/texmf/fonts/type1/
-public/cm-super/sfcc1728.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfcc
-2074.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm0800.pfb></usr/share
-/texmf/fonts/type1/public/cm-super/sfrm1095.pfb></usr/share/texmf/fonts/type1/p
-ublic/cm-super/sfrm1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1
-440.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfsi1200.pfb></usr/share/
-texmf/fonts/type1/public/cm-super/sfsx1728.pfb></usr/share/texmf/fonts/type1/pu
-blic/cm-super/sfti0800.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfti10
-95.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfti1200.pfb></usr/share/t
-exmf/fonts/type1/public/cm-super/sfxc1095.pfb></usr/share/texmf/fonts/type1/pub
-lic/cm-super/sfxc1200.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/courie
-r/ucrr8a.pfb>
-Output written on main.pdf (14 pages, 1023387 bytes).
+ 115i,12n,109p,1151b,2723s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-t1.enc}{/usr/share/texliv
+e/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/share/texmf/fonts/enc/dvips/cm-s
+uper/cm-super-ts1.enc}</usr/share/texlive/texmf-dist/fonts/type1/public/amsfont
+s/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cmex
+tra/cmex8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmm
+i12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb
+></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/
+share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/t
+exlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/t
+exmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-d
+ist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texmf/fonts/type1/publ
+ic/cm-super/sfbi1440.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1095
+.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1200.pfb></usr/share/tex
+mf/fonts/type1/public/cm-super/sfbx1440.pfb></usr/share/texmf/fonts/type1/publi
+c/cm-super/sfbx1728.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx2488.
+pfb></usr/share/texmf/fonts/type1/public/cm-super/sfcc1200.pfb></usr/share/texm
+f/fonts/type1/public/cm-super/sfcc1728.pfb></usr/share/texmf/fonts/type1/public
+/cm-super/sfcc2074.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm0600.p
+fb></usr/share/texmf/fonts/type1/public/cm-super/sfrm0800.pfb></usr/share/texmf
+/fonts/type1/public/cm-super/sfrm1095.pfb></usr/share/texmf/fonts/type1/public/
+cm-super/sfrm1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1440.pf
+b></usr/share/texmf/fonts/type1/public/cm-super/sfsi1200.pfb></usr/share/texmf/
+fonts/type1/public/cm-super/sfsx1728.pfb></usr/share/texmf/fonts/type1/public/c
+m-super/sfti1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfxc1095.pfb
+></usr/share/texmf/fonts/type1/public/cm-super/sfxc1200.pfb></usr/share/texlive
+/texmf-dist/fonts/type1/urw/courier/ucrb8a.pfb></usr/share/texlive/texmf-dist/f
+onts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/ur
+w/courier/ucrro8a.pfb>
+Output written on main.pdf (16 pages, 999738 bytes).
 PDF statistics:
- 419 PDF objects out of 1000 (max. 8388607)
- 307 compressed objects within 4 object streams
- 39 named destinations out of 1000 (max. 500000)
- 285 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 487 PDF objects out of 1000 (max. 8388607)
+ 374 compressed objects within 4 object streams
+ 84 named destinations out of 1000 (max. 500000)
+ 258 words of extra memory for PDF output out of 10000 (max. 10000000)
 
