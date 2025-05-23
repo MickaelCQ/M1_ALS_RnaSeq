@@ -14,8 +14,13 @@ Début_de_la_session,Fin_de_la_session,Duree,Projet,Tache(s),Langage(s),Commentai
 2025-05-12 13:40:35,2025-05-12 16:49:44,04:09,BAM_Log,"Début transformation du script R ggplot2, pour ajouter les données de mapping Crac et comparé les outils sur les datas SLA",R,Aucun
 2025-05-12 21:51:11,2025-05-12 23:09:44,01:18,BAM_Log,Transformation du script R ggplot2 suite,R,Aucun
 2025-05-13 07:46:35,2025-05-13 08:19:56,00:33,BAM_Log,Transformation du script R ggplot2 suite,R,Aucun
+2025-05-14 08:29:12,2025-05-14 17:43:29,09:14,Biblio,Bibliographie STAR et CRAC fonctionnement Algo pour compréhension sur les divergences d'alignement,Biblio,Aucun
 2025-05-15 08:54:27,2025-05-15 16:22:01,07:33,BAM_Log,"Test de significativité(Normalité, shapiro, student ) sur la  responsabilité de l'alignement dans le prct de mapping unique",R,Aucun
-2025-05-16 08:28:04,2025-05-16 17:44:04,07:33,BAM_Log,"Bibliographie Kmerexplore, Kmerator, documentation fonctionnement, début rédaction rapport",R,Aucun
+2025-05-16 08:28:04,2025-05-16 17:44:04,07:33,Biblio,"Bibliographie Kmerexplore, Kmerator, documentation fonctionnement, début rédaction rapport",Biblio,Aucun
 2025-05-16 20:45:40,2025-05-16 23:46:54,03:01,Rapport,"Montage du template, modification cible de compilation début introduction/et Matériels et méthodes",LateX,Aucun
 2025-05-19 09:08:14,2025-05-19 11:56:58,02:48,Rapport,"Structuration rapport LateX, partie introduction, contexte biologique",LateX,Aucun
 2025-05-19 13:13:45,2025-05-19 18:17:47,05:04,Rapport,"Rapport Partie introduction, biais biologique, problÃ©matique et normalisation",LateX,Aucun
+2025-05-20 09:11:03,2025-05-20 17:26:53,08:15,BAM_Log,Transformation du script R ggplot2 suite,R,Aucun
+2025-05-21 08:46:48,2025-05-23 18:51:49,10:05,Rapport,"Suite rédaction du rapport, réunion avec anthony sur la stratégie du stage Post alignement",LateX,Aucun
+2025-05-23 08:22:19,2025-05-23 11:42:21,03:20,Rapport,"Structuration rapport LateX, partie introduction, contexte biologique",LateX,Aucun
+2025-05-23 13:08:42,2025-05-23 17:42:43,04:34,BAM_Log,Transformation du script R ggplot2 suite,R,Aucun
