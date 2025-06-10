@@ -22,9 +22,9 @@
 # - Répondre à l'hypothèse de dispersion des données entre nos runs RNASeq en corrélant les informations d'alignements et les données expérimentales.
 # - Permet d'évaluer la reproductibilité des run RNASeq (pour notre cas d'étude). 
 
-#############################################################################################################################################
-# OUTPUT Log Final Star type , on utilisera chaque label avec grep et le "|" pour cut sur -f2 , sur chaque ligne la stratégie reste la même : 
-#############################################################################################################################################
+##############################
+# OUTPUT Log Final Star type 
+#############################
 
 #                             Started job on |       Apr 28 10:35:
 #                         Started mapping on |       Apr 28 10:38:
@@ -35,6 +35,20 @@
 #                  Average input read length |       302
 # .....
 
+#############################
+# OUTPUT Log Final Crac type
+############################
+#----------------------------------
+#           Some STATISTICS
+#----------------------------------
+#Total number of reads analyzed: 1489292
+
+#Single: 1384676 (92.9755%)
+#Multiple: 46963 (3.15338%)
+#None: 15729 (1.05614%)
+#Duplication: 41924 (2.81503%)
+#.....
+
 
 # Demande du répertoire des logs STAR
 #echo "Entrez le répertoire contenant les logs STAR à traiter (Log.final.out) au format : ~/Dir1/Dir2/..."
@@ -44,6 +58,7 @@
 #echo "Entrez le répertoire contenant les fichiers summary CRAC (.summary) : ~/Dir1/Dir2/...."
 #read CRAC_DIR
 
+#Exemple .... 
 STAR_DIR="/home/mickael/M1_Stage/M1_ALS_RnaSeq/4.LOG_STAR_01052025_HG37";
 CRAC_DIR="/home/mickael/M1_Stage/M1_ALS_RnaSeq/output/crac/summary";
 
@@ -218,7 +233,6 @@ for CRAC_summary in "$CRAC_DIR"/*.summary;
     # READ LINE CSV: 
     echo "${CRAC_Echantillon},${CRAC_Date_Mapping},${CRAC_Total_reads},${CRAC_Unique_reads},${CRAC_Unique_pct},${CRAC_Multi_reads},${CRAC_Multi_pct},${CRAC_No_map_reads},${CRAC_No_map_pct},${CRAC_Dup_reads},${CRAC_Dup_pct},${CRAC_Explainable_reads},${CRAC_Explainable_pct},${CRAC_Rep_reads},${CRAC_Rep_pct},${CRAC_Normal_reads},${CRAC_Normal_pct},${CRAC_AlmostNormal_reads},${CRAC_AlmostNormal_pct},${CRAC_SeqErr_reads},${CRAC_SeqErr_pct},${CRAC_SNV_reads},${CRAC_SNV_pct},${CRAC_ShortIndel_reads},${CRAC_ShortIndel_pct},${CRAC_Splice_reads},${CRAC_Splice_pct},${CRAC_WeakSplice_reads},${CRAC_WeakSplice_pct},${CRAC_Chimera_reads},${CRAC_Chimera_pct},${CRAC_PE_Chimera_reads},${CRAC_PE_Chimera_pct},${CRAC_BioUndetermined_reads},${CRAC_BioUndetermined_pct},${CRAC_Undetermined_reads},${CRAC_Undetermined_pct}" >> "$SBC"
   done
-
 
 ########################################################	
 # ETAPE 3 : Fusion des données de mapping STAR/CRAC    : 
