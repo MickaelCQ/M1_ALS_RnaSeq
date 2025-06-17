@@ -2341,16 +2341,43 @@
   <!-- CITATION DATA -->
   <!-- SECTION 0 -->
   <bcf:bibdata section="0">
-    <bcf:datasource type="file" datatype="bibtex" glob="false">./references.bib</bcf:datasource>
+    <bcf:datasource type="file" datatype="bibtex" glob="false">./references_All.bib</bcf:datasource>
   </bcf:bibdata>
   <bcf:section number="0">
-    <bcf:citekey order="1">centre_constitutif_sla_de_tours_protocole_2020</bcf:citekey>
-    <bcf:citekey order="2">orphanet_prevalence_2023</bcf:citekey>
-    <bcf:citekey order="3">c_wolfson_et_al_global_2023</bcf:citekey>
-    <bcf:citekey order="4">centre_constitutif_sla_de_tours_protocole_2020</bcf:citekey>
-    <bcf:citekey order="5">centre_constitutif_sla_de_tours_protocole_2020</bcf:citekey>
-    <bcf:citekey order="6">orphanet_prevalence_2023</bcf:citekey>
-    <bcf:citekey order="7">c_wolfson_et_al_global_2023</bcf:citekey>
+    <bcf:citekey order="1">SLA_protocole_2020</bcf:citekey>
+    <bcf:citekey order="2">M.rare_prevalence_2023</bcf:citekey>
+    <bcf:citekey order="3">SLA_prevalence_2023</bcf:citekey>
+    <bcf:citekey order="4">SLA_protocole_2020</bcf:citekey>
+    <bcf:citekey order="5">berard_bwt</bcf:citekey>
+    <bcf:citekey order="6">berard_table_suffixes</bcf:citekey>
+    <bcf:citekey order="7">illumina_bam_format</bcf:citekey>
+    <bcf:citekey order="8">cock_fastq_2009</bcf:citekey>
+    <bcf:citekey order="9">mancheron_motifs_2006</bcf:citekey>
+    <bcf:citekey order="10">samtools_hts_specs_2024</bcf:citekey>
+    <bcf:citekey order="11">snakemake_2025</bcf:citekey>
+    <bcf:citekey order="12">samtools_hts_specs_2024</bcf:citekey>
+    <bcf:citekey order="13">wagner_TPM_2012</bcf:citekey>
+    <bcf:citekey order="14">EdgeR_2024</bcf:citekey>
+    <bcf:citekey order="15">robinson_scaling_2010</bcf:citekey>
+    <bcf:citekey order="16">shapiro_wilk_1965</bcf:citekey>
+    <bcf:citekey order="17">statistical_test_2021</bcf:citekey>
+    <bcf:citekey order="18">wilcoxon_signed_rank_1945</bcf:citekey>
+    <bcf:citekey order="19">SLA_protocole_2020</bcf:citekey>
+    <bcf:citekey order="20">M.rare_prevalence_2023</bcf:citekey>
+    <bcf:citekey order="21">SLA_prevalence_2023</bcf:citekey>
+    <bcf:citekey order="22">berard_bwt</bcf:citekey>
+    <bcf:citekey order="23">berard_table_suffixes</bcf:citekey>
+    <bcf:citekey order="24">illumina_bam_format</bcf:citekey>
+    <bcf:citekey order="25">cock_fastq_2009</bcf:citekey>
+    <bcf:citekey order="26">mancheron_motifs_2006</bcf:citekey>
+    <bcf:citekey order="27">samtools_hts_specs_2024</bcf:citekey>
+    <bcf:citekey order="28">snakemake_2025</bcf:citekey>
+    <bcf:citekey order="29">wagner_TPM_2012</bcf:citekey>
+    <bcf:citekey order="30">EdgeR_2024</bcf:citekey>
+    <bcf:citekey order="31">robinson_scaling_2010</bcf:citekey>
+    <bcf:citekey order="32">shapiro_wilk_1965</bcf:citekey>
+    <bcf:citekey order="33">statistical_test_2021</bcf:citekey>
+    <bcf:citekey order="34">wilcoxon_signed_rank_1945</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="nty">

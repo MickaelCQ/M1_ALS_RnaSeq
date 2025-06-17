@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2024.10.10)  22 MAY 2025 16:01
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2024.10.10)  17 JUN 2025 15:19
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -1521,7 +1521,7 @@ Package tocbasic Info: setting babel extension for `nls' on input line 188.
 \@nomenclaturefile=\write7
 \openout7 = `main.nlo'.
 
-Package nomencl Info: Writing nomenclature file main.nlo on input line 52.
+Package nomencl Info: Writing nomenclature file main.nlo on input line 49.
 
 (/usr/share/texlive/texmf-dist/tex/latex/glossaries/base/glossaries.sty
 Package: glossaries 2021/11/01 v4.49 (NLCT)
@@ -1670,7 +1670,7 @@ Package: glossary-tree 2021/11/01 v4.49 (NLCT)
 \glo@main@file=\write9
 \openout9 = `main.glo'.
 
-Package glossaries Info: Writing glossary file main.glo on input line 56.
+Package glossaries Info: Writing glossary file main.glo on input line 53.
 \c@glsref=\count560
 
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tik
@@ -1864,18 +1864,6 @@ Package: ragged2e 2021/12/15 v3.1 ragged2e Package
 \RaggedRightParindent=\skip139
 \JustifyingParindent=\skip140
 )
-
-! LaTeX Error: Missing \begin{document}.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.116 l
-       iser les liens
-You're in trouble here.  Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
 (/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2020/03/24 1.8d listings language file
 )
@@ -1891,8 +1879,18 @@ File: lstlang1.sty 2020/03/24 1.8d listings language file
 (/usr/share/texlive/texmf-dist/tex/latex/listings/lstmisc.sty
 File: lstmisc.sty 2020/03/24 1.8d (Carsten Heinz)
 )
-   defining Unicode char U+202F (decimal 8239)
+Runaway argument?
+{ language=R, basicstyle=\ttfamily \footnotesize \color {rText}, back\ETC.
+! Paragraph ended before \lst@DefDriver@@ was complete.
+<to be read again> 
+                   \par 
+l.290 
+      
+I suspect you've forgotten a `}', causing me to apply this
+control sequence to too much text. How can we recover?
+My plan is to forget the whole thing and hope for the best.
 
+   defining Unicode char U+202F (decimal 8239)
 (/usr/share/texlive/texmf-dist/tex/latex/algorithm2e/algorithm2e.sty
 Package: algorithm2e 2017/07/18 v5.2 algorithms environments
 \c@AlgoLine=\count577
@@ -1973,7 +1971,14 @@ Package csquotes Info: ... found 'babel' package.
 Package csquotes Info: Adjusting default style.
 Package csquotes Info: Redefining alias 'default' -> 'english'.
 Package hyperref Info: Option `colorlinks' set `true' on input line 8.
- (./main.aux (./main.acr))
+ (./main.aux
+
+LaTeX Warning: Label `lst:CRACAlign' multiply defined.
+
+
+LaTeX Warning: Label `lst:CRACAlign@cref' multiply defined.
+
+(./main.acr))
 \openout1 = `main.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 8.
@@ -2110,12 +2115,19 @@ Package biblatex Info: Automatic encoding selection.
 
 Package biblatex Info: Trying to load bibliographic data...
 Package biblatex Info: ... file 'main.bbl' found.
- (./main.bbl)
+ (./main.bbl
+
+Package biblatex Warning: The following entry could not be found
+(biblatex)                in the database:
+(biblatex)                robinson_scaling_2010
+(biblatex)                Please verify the spelling and rerun
+(biblatex)                LaTeX afterwards.
+
+)
 Package biblatex Info: Reference section=0 on input line 8.
 Package biblatex Info: Reference segment=0 on input line 8.
 Package hyperref Info: Link coloring ON on input line 8.
-
-(/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
+ (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2021-04-02 v2.47 Cross-referencing by name of section
 
 (/usr/share/texlive/texmf-dist/tex/latex/refcount/refcount.sty
@@ -2164,7 +2176,7 @@ Package fancyhdr Warning: \footskip is too small (-35.0pt):
 \openout8 = `main.ist'.
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-<logo_FDS_rond.png, id=98, 467.346pt x 465.9006pt>
+<logo_FDS_rond.png, id=146, 467.346pt x 465.9006pt>
 File: logo_FDS_rond.png Graphic file (type png)
 <use logo_FDS_rond.png>
 Package pdftex.def Info: logo_FDS_rond.png  used on input line 9.
@@ -2175,12 +2187,12 @@ LaTeX Font Info:    Trying to load font information for U+wasy on input line 11
 (/usr/share/texlive/texmf-dist/tex/latex/wasysym/uwasy.fd
 File: uwasy.fd 2020/01/19 v2.4 Wasy-2 symbol font definitions
 )
-<Logo_Bioinfo.png, id=100, 268.75406pt x 264.23718pt>
+<Logo_Bioinfo.png, id=148, 268.75406pt x 264.23718pt>
 File: Logo_Bioinfo.png Graphic file (type png)
 <use Logo_Bioinfo.png>
 Package pdftex.def Info: Logo_Bioinfo.png  used on input line 15.
 (pdftex.def)             Requested size: 72.34721pt x 71.13188pt.
-<Logo_UM.png, id=101, 200.75pt x 200.75pt>
+<Logo_UM.png, id=149, 200.75pt x 200.75pt>
 File: Logo_UM.png Graphic file (type png)
 <use Logo_UM.png>
 Package pdftex.def Info: Logo_UM.png  used on input line 21.
@@ -2236,7 +2248,12 @@ Package fancyhdr Warning: \footskip is too small (-35.0pt):
 (fancyhdr)                Make it at least 15.67365pt, for example:
 (fancyhdr)                \setlength{\footskip}{15.67365pt}.
 
-[2] (./main.toc)
+[2] (./main.toc
+LaTeX Font Info:    Trying to load font information for T1+pcr on input line 29
+.
+ (/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1pcr.fd
+File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
+))
 \tf@toc=\write11
 \openout11 = `main.toc'.
 
@@ -2259,7 +2276,7 @@ Package fancyhdr Warning: \footskip is too small (-35.0pt):
 (fancyhdr)                \setlength{\footskip}{15.67365pt}.
 
 [3]) (./Introduction.tex
-<Cortex_Spinal.jpg, id=152, 1306.8825pt x 869.2475pt>
+<Cortex_Spinal.jpg, id=214, 1306.8825pt x 869.2475pt>
 File: Cortex_Spinal.jpg Graphic file (type jpg)
 <use Cortex_Spinal.jpg>
 Package pdftex.def Info: Cortex_Spinal.jpg  used on input line 17.
@@ -2307,12 +2324,12 @@ Overfull \hbox (0.57625pt too wide) in paragraph at lines 94--94
  []
 
 
-Underfull \hbox (badness 2237) in paragraph at lines 100--108
+Underfull \hbox (badness 2237) in paragraph at lines 100--104
 [][]\T1/cmr/m/n/12 Supposons main-te-nant que l'on
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 100--108
+Underfull \hbox (badness 10000) in paragraph at lines 105--108
 
  []
 
@@ -2342,14 +2359,14 @@ See the tikz package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.206 }
+l.203 }
        
 (That was another \errmessage.)
 
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.206 }
+l.203 }
        
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -2358,12 +2375,12 @@ really didn't forget anything, try typing `2' now; then
 my insertion and my current dilemma will both disappear.
 
 
-Overfull \hbox (25.61383pt too wide) in paragraph at lines 117--207
+Overfull \hbox (25.61383pt too wide) in paragraph at lines 114--204
 [][] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 210--219
+Underfull \hbox (badness 10000) in paragraph at lines 215--216
 
  []
 
@@ -2384,18 +2401,17 @@ Package fancyhdr Warning: \footskip is too small (-35.0pt):
 (fancyhdr)                Make it at least 15.67365pt, for example:
 (fancyhdr)                \setlength{\footskip}{15.67365pt}.
 
-[6]) (./Methods.tex
-LaTeX Font Info:    Trying to load font information for T1+pcr on input line 4.
+[6]
+Underfull \hbox (badness 10000) in paragraph at lines 217--219
 
- (/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1pcr.fd
-File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
-)
-LaTeX Font Info:    Trying to load font information for TS1+pcr on input line 2
-4.
+ []
 
-(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ts1pcr.fd
-File: ts1pcr.fd 2001/06/04 font definitions for TS1/pcr.
-)
+
+Underfull \hbox (badness 10000) in paragraph at lines 220--221
+
+ []
+
+) (./Methods.tex
 
 Package fancyhdr Warning: \headheight is too small (-10.0pt): 
 (fancyhdr)                Make it at least 0.0pt, for example:
@@ -2414,8 +2430,13 @@ Package fancyhdr Warning: \footskip is too small (-35.0pt):
 (fancyhdr)                \setlength{\footskip}{15.67365pt}.
 
 [7]
+LaTeX Font Info:    Trying to load font information for TS1+pcr on input line 2
+0.
+ (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ts1pcr.fd
+File: ts1pcr.fd 2001/06/04 font definitions for TS1/pcr.
+)
 LaTeX Font Info:    Font shape `T1/pcr/m/it' in size <10> not available
-(Font)              Font shape `T1/pcr/m/sl' tried instead on input line 35.
+(Font)              Font shape `T1/pcr/m/sl' tried instead on input line 30.
 
 
 Package fancyhdr Warning: \headheight is too small (-10.0pt): 
@@ -2435,13 +2456,174 @@ Package fancyhdr Warning: \footskip is too small (-35.0pt):
 (fancyhdr)                \setlength{\footskip}{15.67365pt}.
 
 [8]
-<Mapping_P_Relative_Vtex.pdf, id=257, 794.97pt x 505.89pt>
-File: Mapping_P_Relative_Vtex.pdf Graphic file (type pdf)
-<use Mapping_P_Relative_Vtex.pdf>
-Package pdftex.def Info: Mapping_P_Relative_Vtex.pdf  used on input line 84.
-(pdftex.def)             Requested size: 512.14963pt x 325.92215pt.
 
-Overfull \hbox (25.61005pt too wide) in paragraph at lines 83--85
+Package fancyhdr Warning: \headheight is too small (-10.0pt): 
+(fancyhdr)                Make it at least 0.0pt, for example:
+(fancyhdr)                \setlength{\headheight}{0.0pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-10.0pt}.
+
+
+Overfull \vbox (10.0pt too high) has occurred while \output is active []
+
+
+
+Package fancyhdr Warning: \footskip is too small (-35.0pt): 
+(fancyhdr)                Make it at least 15.67365pt, for example:
+(fancyhdr)                \setlength{\footskip}{15.67365pt}.
+
+[9]
+
+! LaTeX Error: Invalid UTF-8 byte sequence (â\lst@EC€\lst@EC™).
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.81 	@echo "Conversion SAM -> BAM pour lâ€™Ã©
+                                              chantillon : $*"
+The document does not appear to be in UTF-8 encoding.
+Try adding \UseRawInputEncoding as the first line of the file
+or specify an encoding such as \usepackage [latin1]{inputenc}
+in the document preamble.
+Alternatively, save the file in UTF-8 using your editor or another tool
+
+
+Package fancyhdr Warning: \headheight is too small (-10.0pt): 
+(fancyhdr)                Make it at least 0.0pt, for example:
+(fancyhdr)                \setlength{\headheight}{0.0pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-10.0pt}.
+
+
+Overfull \vbox (10.0pt too high) has occurred while \output is active []
+
+
+
+Package fancyhdr Warning: \footskip is too small (-35.0pt): 
+(fancyhdr)                Make it at least 15.67365pt, for example:
+(fancyhdr)                \setlength{\footskip}{15.67365pt}.
+
+[10]
+
+Package fancyhdr Warning: \headheight is too small (-10.0pt): 
+(fancyhdr)                Make it at least 0.0pt, for example:
+(fancyhdr)                \setlength{\headheight}{0.0pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-10.0pt}.
+
+
+Overfull \vbox (10.0pt too high) has occurred while \output is active []
+
+
+
+Package fancyhdr Warning: \footskip is too small (-35.0pt): 
+(fancyhdr)                Make it at least 15.67365pt, for example:
+(fancyhdr)                \setlength{\footskip}{15.67365pt}.
+
+[11]
+
+! Package Listings Error: Couldn't load requested style.
+
+See the Listings package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.157 ...lâ€™Ã©galitÃ© des TPM par Ã©chantillon}}]
+                                                  
+The following styles weren't loadable:
+    ,rstyle$
+This may cause errors in the sequel.
+
+
+! Package Listings Error: style rstyle undefined.
+
+See the Listings package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.157 ...lâ€™Ã©galitÃ© des TPM par Ã©chantillon}}]
+                                                  
+The style is not loadable. Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+Package fancyhdr Warning: \headheight is too small (-10.0pt): 
+(fancyhdr)                Make it at least 0.0pt, for example:
+(fancyhdr)                \setlength{\headheight}{0.0pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-10.0pt}.
+
+
+Overfull \vbox (10.0pt too high) has occurred while \output is active []
+
+
+
+Package fancyhdr Warning: \footskip is too small (-35.0pt): 
+(fancyhdr)                Make it at least 15.67365pt, for example:
+(fancyhdr)                \setlength{\footskip}{15.67365pt}.
+
+[12]
+
+LaTeX Warning: Citation 'robinson_scaling_2010' on page 13 undefined on input l
+ine 195.
+
+
+Overfull \hbox (130.9134pt too wide) detected at line 202
+\OML/cmm/m/it/12 M[] \OT1/cmr/m/n/12 = [][](\OML/cmm/m/it/12 R[]\OT1/cmr/m/n/12
+ ) \OMS/cmsy/m/n/12 ^^@ [][]\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 R[]\OT1/cmr/m/n/1
+2 )  \OMS/cmsy/m/n/12 ([])  \OML/cmm/m/it/12 M[] \OT1/cmr/m/n/12 = [][] []
+ []
+
+
+Package wrapfig Warning: Collision between wrapping environments on input line 
+208.
+
+
+Overfull \hbox (124.82262pt too wide) detected at line 213
+\OML/cmm/m/it/12 TMM[] \OT1/cmr/m/n/12 = [] [] \OML/cmm/m/it/12 ;  [] w[] \OT1/
+cmr/m/n/12 = []
+ []
+
+
+Package wrapfig Warning: Stationary wrapfigure forced to float on input line 21
+7.
+
+) (./Results.tex
+
+Package fancyhdr Warning: \headheight is too small (-10.0pt): 
+(fancyhdr)                Make it at least 0.0pt, for example:
+(fancyhdr)                \setlength{\headheight}{0.0pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-10.0pt}.
+
+
+Overfull \vbox (10.0pt too high) has occurred while \output is active []
+
+
+
+Package fancyhdr Warning: \footskip is too small (-35.0pt): 
+(fancyhdr)                Make it at least 15.67365pt, for example:
+(fancyhdr)                \setlength{\footskip}{15.67365pt}.
+
+[13]
+<Figure_STAR_CRAC_P.pdf, id=405, 722.7pt x 361.35pt>
+File: Figure_STAR_CRAC_P.pdf Graphic file (type pdf)
+<use Figure_STAR_CRAC_P.pdf>
+Package pdftex.def Info: Figure_STAR_CRAC_P.pdf  used on input line 17.
+(pdftex.def)             Requested size: 512.14963pt x 256.07509pt.
+<Figure_STAR_CRAC_R.pdf, id=406, 722.7pt x 361.35pt>
+File: Figure_STAR_CRAC_R.pdf Graphic file (type pdf)
+<use Figure_STAR_CRAC_R.pdf>
+Package pdftex.def Info: Figure_STAR_CRAC_R.pdf  used on input line 28.
+(pdftex.def)             Requested size: 512.14963pt x 256.07509pt.
+
+Overfull \hbox (25.61005pt too wide) in paragraph at lines 27--29
  [] 
  []
 
@@ -2462,14 +2644,7 @@ Package fancyhdr Warning: \footskip is too small (-35.0pt):
 (fancyhdr)                Make it at least 15.67365pt, for example:
 (fancyhdr)                \setlength{\footskip}{15.67365pt}.
 
-[9 <./Mapping_P_Relative_Vtex.pdf>]
-
-LaTeX Warning: Command \texttimes invalid in math mode on input line 119.
-
-
-LaTeX Warning: Command \texttimes invalid in math mode on input line 119.
-
-Missing character: There is no Ö in font cmr12!
+[14 <./Figure_STAR_CRAC_P.pdf>]
 
 Package fancyhdr Warning: \headheight is too small (-10.0pt): 
 (fancyhdr)                Make it at least 0.0pt, for example:
@@ -2487,10 +2662,108 @@ Package fancyhdr Warning: \footskip is too small (-35.0pt):
 (fancyhdr)                Make it at least 15.67365pt, for example:
 (fancyhdr)                \setlength{\footskip}{15.67365pt}.
 
-[10]) (./Results.tex) (./Discussion.tex) (./main.gls)
-Overfull \hbox (4.79897pt too wide) in paragraph at lines 24--24
-\T1/cmr/m/it/12 (PNDS) Fi-lière FILS-LAN\T1/cmr/m/n/12 . Ar-gu-men-taire scien-
-ti-fique. TOURS : Centre de ré-fé-rence SLA TOURS,
+[15 <./Figure_STAR_CRAC_R.pdf>]) (./Discussion.tex)
+
+Package fancyhdr Warning: \headheight is too small (-10.0pt): 
+(fancyhdr)                Make it at least 0.0pt, for example:
+(fancyhdr)                \setlength{\headheight}{0.0pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-10.0pt}.
+
+
+Overfull \vbox (10.0pt too high) has occurred while \output is active []
+
+
+
+Package fancyhdr Warning: \footskip is too small (-35.0pt): 
+(fancyhdr)                Make it at least 15.67365pt, for example:
+(fancyhdr)                \setlength{\footskip}{15.67365pt}.
+
+[16] (./Annexes.tex
+<STAR_log.png, id=441, 584.1825pt x 696.6025pt>
+File: STAR_log.png Graphic file (type png)
+<use STAR_log.png>
+Package pdftex.def Info: STAR_log.png  used on input line 8.
+(pdftex.def)             Requested size: 245.82962pt x 293.1344pt.
+<CRAC_summary.png, id=442, 542.025pt x 565.11125pt>
+File: CRAC_summary.png Graphic file (type png)
+<use CRAC_summary.png>
+Package pdftex.def Info: CRAC_summary.png  used on input line 14.
+(pdftex.def)             Requested size: 245.82962pt x 256.29822pt.
+
+
+Package fancyhdr Warning: \headheight is too small (-10.0pt): 
+(fancyhdr)                Make it at least 0.0pt, for example:
+(fancyhdr)                \setlength{\headheight}{0.0pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-10.0pt}.
+
+
+Overfull \vbox (10.0pt too high) has occurred while \output is active []
+
+
+
+Package fancyhdr Warning: \footskip is too small (-35.0pt): 
+(fancyhdr)                Make it at least 15.67365pt, for example:
+(fancyhdr)                \setlength{\footskip}{15.67365pt}.
+
+[17 <./STAR_log.png> <./CRAC_summary.png>]) (./main.gls
+
+Package fancyhdr Warning: \headheight is too small (-10.0pt): 
+(fancyhdr)                Make it at least 0.0pt, for example:
+(fancyhdr)                \setlength{\headheight}{0.0pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-10.0pt}.
+
+
+Overfull \vbox (10.0pt too high) has occurred while \output is active []
+
+
+
+Package fancyhdr Warning: \footskip is too small (-35.0pt): 
+(fancyhdr)                Make it at least 15.67365pt, for example:
+(fancyhdr)                \setlength{\footskip}{15.67365pt}.
+
+[18]
+Underfull \hbox (badness 10000) has occurred while \output is active
+ [][]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1--1
+ |\T1/cmr/bx/n/17.28 Glossaire|
+ []
+
+)
+
+Package fancyhdr Warning: \headheight is too small (-10.0pt): 
+(fancyhdr)                Make it at least 0.0pt, for example:
+(fancyhdr)                \setlength{\headheight}{0.0pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-10.0pt}.
+
+
+Overfull \vbox (10.0pt too high) has occurred while \output is active []
+
+
+
+Package fancyhdr Warning: \footskip is too small (-35.0pt): 
+(fancyhdr)                Make it at least 15.67365pt, for example:
+(fancyhdr)                \setlength{\footskip}{15.67365pt}.
+
+[19]
+Underfull \hbox (badness 10000) in paragraph at lines 25--25
+ |\T1/cmr/bx/n/17.28 6 Bi-blio-gra-phie com-pi-lée|
+ []
+
+
+Overfull \hbox (6.87315pt too wide) in paragraph at lines 27--27
+\T1/pcr/m/n/12 pluginfile . php / 932659 / mod _ resource / content / 3 / BWT .
+ pdf$[][] \T1/cmr/m/n/12 (vi-sité le 28/04/2025). 
  []
 
 
@@ -2510,7 +2783,14 @@ Package fancyhdr Warning: \footskip is too small (-35.0pt):
 (fancyhdr)                Make it at least 15.67365pt, for example:
 (fancyhdr)                \setlength{\footskip}{15.67365pt}.
 
-[11] 
+[20]
+Overfull \hbox (4.81099pt too wide) in paragraph at lines 27--27
+[]\T1/cmr/m/n/12 Posit []\T1/cmr/m/sc/12 Team[]\T1/cmr/m/n/12 . \T1/cmr/m/it/12
+ DGE-List Func-tion ^^V RDo-cu-men-ta-tion\T1/cmr/m/n/12 . Do-cu-men-ta-tion de
+ la fonc-tion \T1/pcr/m/n/12 DGEList()
+ []
+
+
 AED: lastpage setting LastPage
 
 Package fancyhdr Warning: \headheight is too small (-10.0pt): 
@@ -2529,7 +2809,7 @@ Package fancyhdr Warning: \footskip is too small (-35.0pt):
 (fancyhdr)                Make it at least 15.67365pt, for example:
 (fancyhdr)                \setlength{\footskip}{15.67365pt}.
 
-[12]
+[21]
 Overfull \vbox (12.0pt too high) has occurred while \output is active []
 
 
@@ -2550,7 +2830,7 @@ Package fancyhdr Warning: \footskip is too small (-35.0pt):
 (fancyhdr)                Make it at least 15.67365pt, for example:
 (fancyhdr)                \setlength{\footskip}{15.67365pt}.
 
-[13
+[22
 
 ]
 Overfull \vbox (12.0pt too high) has occurred while \output is active []
@@ -2573,59 +2853,67 @@ Package fancyhdr Warning: \footskip is too small (-35.0pt):
 (fancyhdr)                Make it at least 15.67365pt, for example:
 (fancyhdr)                \setlength{\footskip}{15.67365pt}.
 
-[14
+[23
 
 ]
 Overfull \vbox (12.0pt too high) has occurred while \output is active []
 
 
 (./main.aux (./main.acr))
+
+LaTeX Warning: There were multiply-defined labels.
+
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: A964CA1DBC436974530509BFDC2996B8;3253.
+(rerunfilecheck)             Checksum: 20CE5C2108E9815159DC013582C238B2;6534.
 Package logreq Info: Writing requests to 'main.run.xml'.
 \openout1 = `main.run.xml'.
 
- ) 
+ )
+(\end occurred inside a group at level 1)
+
+### semi simple group (level 1) entered at line 239 (\begingroup)
+### bottom level 
 Here is how much of TeX's memory you used:
- 70977 strings out of 478287
- 1601569 string characters out of 5849288
- 2601524 words of memory out of 5000000
- 88003 multiletter control sequences out of 15000+600000
- 497469 words of font info for 86 fonts, out of 8000000 for 9000
+ 71525 strings out of 478287
+ 1610853 string characters out of 5849288
+ 2605526 words of memory out of 5000000
+ 88438 multiletter control sequences out of 15000+600000
+ 498875 words of font info for 89 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 115i,12n,109p,1151b,2723s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-t1.enc}{/usr/share/texliv
-e/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/share/texmf/fonts/enc/dvips/cm-s
-uper/cm-super-ts1.enc}</usr/share/texlive/texmf-dist/fonts/type1/public/amsfont
-s/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cmex
-tra/cmex8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmm
-i12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb
-></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/
-share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/t
-exlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/t
-exmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-d
-ist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texmf/fonts/type1/publ
-ic/cm-super/sfbi1440.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1095
-.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1200.pfb></usr/share/tex
-mf/fonts/type1/public/cm-super/sfbx1440.pfb></usr/share/texmf/fonts/type1/publi
-c/cm-super/sfbx1728.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx2488.
-pfb></usr/share/texmf/fonts/type1/public/cm-super/sfcc1200.pfb></usr/share/texm
-f/fonts/type1/public/cm-super/sfcc1728.pfb></usr/share/texmf/fonts/type1/public
-/cm-super/sfcc2074.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm0600.p
-fb></usr/share/texmf/fonts/type1/public/cm-super/sfrm0800.pfb></usr/share/texmf
-/fonts/type1/public/cm-super/sfrm1095.pfb></usr/share/texmf/fonts/type1/public/
-cm-super/sfrm1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1440.pf
-b></usr/share/texmf/fonts/type1/public/cm-super/sfsi1200.pfb></usr/share/texmf/
-fonts/type1/public/cm-super/sfsx1728.pfb></usr/share/texmf/fonts/type1/public/c
-m-super/sfti1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfxc1095.pfb
-></usr/share/texmf/fonts/type1/public/cm-super/sfxc1200.pfb></usr/share/texlive
-/texmf-dist/fonts/type1/urw/courier/ucrb8a.pfb></usr/share/texlive/texmf-dist/f
-onts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/ur
-w/courier/ucrro8a.pfb>
-Output written on main.pdf (16 pages, 999738 bytes).
+ 115i,13n,109p,1575b,8683s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-t1.enc}{/us
+r/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/share/texmf/fonts/
+enc/dvips/cm-super/cm-super-ts1.enc}</usr/share/texlive/texmf-dist/fonts/type1/
+public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public
+/amsfonts/cmextra/cmex8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/a
+msfonts/cm/cmmi12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfont
+s/cm/cmmi6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cm
+mi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb
+></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/s
+hare/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/t
+exlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texmf/fo
+nts/type1/public/cm-super/sfbi1440.pfb></usr/share/texmf/fonts/type1/public/cm-
+super/sfbx0800.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1095.pfb><
+/usr/share/texmf/fonts/type1/public/cm-super/sfbx1200.pfb></usr/share/texmf/fon
+ts/type1/public/cm-super/sfbx1440.pfb></usr/share/texmf/fonts/type1/public/cm-s
+uper/sfbx1728.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx2488.pfb></
+usr/share/texmf/fonts/type1/public/cm-super/sfcc1200.pfb></usr/share/texmf/font
+s/type1/public/cm-super/sfcc1728.pfb></usr/share/texmf/fonts/type1/public/cm-su
+per/sfcc2074.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm0600.pfb></u
+sr/share/texmf/fonts/type1/public/cm-super/sfrm0800.pfb></usr/share/texmf/fonts
+/type1/public/cm-super/sfrm1095.pfb></usr/share/texmf/fonts/type1/public/cm-sup
+er/sfrm1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1440.pfb></us
+r/share/texmf/fonts/type1/public/cm-super/sfsi1200.pfb></usr/share/texmf/fonts/
+type1/public/cm-super/sfsx1728.pfb></usr/share/texmf/fonts/type1/public/cm-supe
+r/sfti1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfxc1095.pfb></usr
+/share/texmf/fonts/type1/public/cm-super/sfxc1200.pfb></usr/share/texlive/texmf
+-dist/fonts/type1/urw/courier/ucrb8a.pfb></usr/share/texlive/texmf-dist/fonts/t
+ype1/urw/courier/ucrr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/cour
+ier/ucrro8a.pfb>
+Output written on main.pdf (25 pages, 1173874 bytes).
 PDF statistics:
- 487 PDF objects out of 1000 (max. 8388607)
- 374 compressed objects within 4 object streams
- 84 named destinations out of 1000 (max. 500000)
- 258 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 762 PDF objects out of 1000 (max. 8388607)
+ 629 compressed objects within 7 object streams
+ 188 named destinations out of 1000 (max. 500000)
+ 369 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -1,0 +1,259 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Références bibliographiques normalisées – Cohérence style & contenu
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Tests statistiques canoniques
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+@article{wilcoxon_signed_rank_1945,
+  author  = {Wilcoxon, Frank},
+  title   = {Individual Comparisons by Ranking Methods},
+  journal = {Biometrics Bulletin},
+  volume  = {1},
+  number  = {6},
+  pages   = {80--83},
+  year    = {1945},
+  month   = dec,
+  note    = {Introduction du test des rangs signés pour échantillons appariés}
+}
+
+@article{gosset_student_1908,
+  author  = {Gosset, William Sealy (pseudonym “Student”)},
+  title   = {The Probable Error of a Mean},
+  journal = {Biometrika},
+  volume  = {6},
+  number  = {1},
+  pages   = {1--25},
+  year    = {1908},
+  note    = {Fondation de la loi de Student pour petits échantillons}
+}
+
+@article{shapiro_wilk_1965,
+  author  = {Shapiro, Samuel S. and Wilk, Martin B.},
+  title   = {An Analysis of Variance Test for Normality (Complete Samples)},
+  journal = {Biometrika},
+  volume  = {52},
+  number  = {3--4},
+  pages   = {591--611},
+  year    = {1965},
+  note    = {Test de normalité basé sur l’analyse de la variance}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Spécifications de formats
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+@techreport{samtools_hts_specs_2024,
+  author       = {{SAM/BAM Format Specification Working Group}},
+  title        = {SAM/BAM Format Specification (v1.6)},
+  institution  = {Global Alliance for Genomics and Health / Samtools},
+  year         = {2024},
+  month        = nov,
+  type         = {Technical Report},
+  url          = {https://samtools.github.io/hts-specs/SAMv1.pdf},
+  urldate      = {2025-06-11},
+  note         = {Définit la structure du format SAM/BAM v1.6, champs obligatoires et options}
+}
+
+@manual{illumina_bam_format,
+  author       = {{Illumina, Inc.}},
+  title        = {BAM File Format},
+  organization = {Illumina},
+  year         = {2025},
+  url          = {https://support.illumina.com/help/BS_App_RNASeq_Alignment_OLH_1000000006112/Content/Source/Informatics/BAM-Format.htm},
+  urldate      = {2025-06-11},
+  note         = {Description du format binaire compressé (BGZF), indexation, et usage en RNA-seq}
+}
+
+@article{cock_fastq_2009,
+  author  = {Cock, Peter J.A. and Fields, Christopher J. and Goto, Naohisa and Heuer, Michael L. and Rice, Peter M.},
+  title   = {The Sanger FASTQ File Format for Sequences with Quality Scores, and the Solexa/Illumina FASTQ Variants},
+  journal = {Nucleic Acids Research},
+  volume  = {38},
+  number  = {6},
+  pages   = {1767--1771},
+  year    = {2009},
+  month   = dec,
+  doi     = {10.1093/nar/gkp1137},
+  note    = {Définition du format FASTQ Sanger et variantes, encodage qualité Phred en ASCII}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Aligneurs RNA-seq
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+@article{dobin_star_2012,
+  author  = {Dobin, Alexander and Davis, Christopher A. and Schlesinger, Felix and Drenkow, Johannes and Zaleski, Christine and Jha, Sonali and Batut, Philippe and Chaisson, Mark and Gingeras, Thomas R.},
+  title   = {STAR: Ultrafast Universal RNA-seq Aligner},
+  journal = {Bioinformatics},
+  volume  = {29},
+  number  = {1},
+  pages   = {15--21},
+  year    = {2012},
+  month   = jan,
+  doi     = {10.1093/bioinformatics/bts635},
+  note    = {Aligner RNA-seq à base de suffix arrays et préfixes mappables maximaux (MPMs)}
+}
+
+@article{philippe_crac_2013,
+  author  = {Philippe, Nicolas and Salson, Mikaël and Commes, Thérèse and Rivals, Éric},
+  title   = {CRAC: An Integrated Approach to the Analysis of RNA-seq Reads},
+  journal = {Genome Biology},
+  volume  = {14},
+  pages   = {R30},
+  year    = {2013},
+  month   = mar,
+  doi     = {10.1186/gb-2013-14-3-r30},
+  note    = {Analyse combinée basée sur les k-mers, précision >99\% sur jonctions d’épissage}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Cours et manuels
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+@misc{snakemake_2025,
+  author       = {Köster, Johannes},
+  title        = {Snakemake Tutorial (Official Documentation)},
+  year         = {2025},
+  url          = {https://snakemake.readthedocs.io/en/stable/tutorial/tutorial.html},
+  urldate      = {2025-06-17},
+  note         = {Tutoriel pour apprendre à utiliser Snakemake (workflow RNA-seq, règles, dépendances, environnement)}
+}
+
+@misc{statistical_test_2021,
+  author       = {Soetewey, Antoine},
+  title        = {What Statistical Test Should I Do?},
+  howpublished = {Blog post on Stats and R},
+  year         = {2021},
+  month        = dec,
+  url          = {https://statsandr.com/blog/what-statistical-test-should-i-do/},
+  urldate      = {2025-06-11},
+  note         = {Guide pratique d’aide au choix du test statistique}
+}
+
+@misc{berard_table_suffixes,
+  author   = {Bérard, Sèverine},
+  title    = {Table des Suffixes — Suffix Array},
+  year     = {2025},
+  language = {French},
+  url      = {https://moodle.umontpellier.fr/pluginfile.php/636401/mod_resource/content/1/TableSuffixes.pdf},
+  urldate  = {2025-04-02},
+  note     = {Support de cours sur les tableaux de suffixes}
+}
+
+@misc{berard_bwt,
+  author   = {Bérard, Sèverine},
+  title    = {La Transformée de Burrows-Wheeler (BWT)},
+  year     = {2025},
+  language = {French},
+  url      = {https://moodle.umontpellier.fr/pluginfile.php/932659/mod_resource/content/3/BWT.pdf},
+  urldate  = {2025-04-28},
+  note     = {Présentation pédagogique de l’algorithme BWT}
+}
+
+@misc{EdgeR_2024,
+  author  = {Posit Team},
+  title   = {{DGEList} Function — RDocumentation},
+  year    = {2024},
+  url     = {https://www.rdocumentation.org/packages/edgeR/versions/3.14.0/topics/DGEList},
+  urldate = {2024-08-30},
+  note    = {Documentation de la fonction \texttt{DGEList()} dans edgeR (v3.14.0)}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Thèse
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+@phdthesis{mancheron_motifs_2006,
+  author   = {Mancheron, Alban},
+  title    = {Extraction de motifs communs dans un ensemble de séquences : Application à l’identification de sites de liaison aux protéines dans les séquences primaires d’ADN},
+  school   = {Université de Nantes, École Doctorale STIM},
+  address  = {Nantes, France},
+  year     = {2006},
+  month    = jun,
+  type     = {Thèse de doctorat},
+  pages    = {162},
+  advisor  = {Irène Rusu},
+  url      = {https://theses.fr/2006NANT2060},
+  urldate  = {2025-01-14}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Épidémiologie et PNDS SLA
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+@article{SLA_prevalence_2023,
+  author       = {{C. Wolfson et al.}},
+  title        = {Global Prevalence and Incidence of Amyotrophic Lateral Sclerosis: A Systematic Review},
+  journal      = {Neurology},
+  volume       = {101},
+  number       = {6},
+  year         = {2023},
+  month        = aug,
+  doi          = {10.1212/WNL.0000000000207474},
+  url          = {https://www.neurology.org/doi/10.1212/WNL.0000000000207474},
+  urldate      = {2024-11-13},
+  note         = {Revue systématique des données mondiales sur la SLA}
+}
+
+@techreport{SLA_protocole_2020,
+  author       = {{Centre Constitutif SLA de Tours}},
+  title        = {Protocole National de Diagnostic et de Soins (PNDS) – Filière FILSLAN},
+  institution  = {Centre de Référence SLA, TOURS},
+  type         = {Argumentaire scientifique},
+  year         = {2020},
+  month        = nov,
+  pages        = {6},
+  url          = {https://www.has-sante.fr/upload/docs/application/pdf/2021-12/pnds_argumentaire_sla_genetique_2020.final.pdf},
+  urldate      = {2024-03-28},
+  note         = {Document officiel du PNDS pour la SLA, version génétique}
+}
+
+@techreport{M.rare_prevalence_2023,
+  author       = {{Orphanet}},
+  title        = {Prévalence des Maladies Rares : Données Bibliographiques Classées par Fréquence Décroissante},
+  institution  = {Orphanet – INSERM, US14},
+  type         = {Argumentaire scientifique},
+  year         = {2023},
+  month        = nov,
+  pages        = {14},
+  url          = {https://www.orpha.net/pdfs/orphacom/cahiers/docs/FR/Prevalence_des_maladies_rares_par_prevalence_decroissante_ou_cas.pdf},
+  urldate      = {2024-03-28},
+  note         = {Synthèse statistique de la prévalence des maladies rares}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Normalisation RNA-Seq
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+@article{liao_featureCounts_2014,
+  author    = {Liao, Yang and Smyth, Gordon K. and Shi, Wei},
+  title     = {featureCounts: An Efficient General Purpose Program for Assigning Sequence Reads to Genomic Features},
+  journal   = {Bioinformatics},
+  volume    = {30},
+  number    = {7},
+  pages     = {923--930},
+  year      = {2014},
+  month     = apr,
+  doi       = {10.1093/bioinformatics/btt656},
+  url       = {https://doi.org/10.1093/bioinformatics/btt656},
+  urldate   = {2024-08-30},
+  note      = {Outil rapide et précis d’assignation des reads à des régions génomiques dans Rsubread}
+}
+
+
+@article{wagner_TPM_2012,
+  author  = {Wagner, Günter P. and Kin, Koryu and Lynch, Vincent J.},
+  title   = {Measurement of mRNA Abundance Using RNA-seq Data: RPKM Measure Is Inconsistent Among Samples},
+  journal = {Theory in Biosciences},
+  volume  = {131},
+  number  = {4},
+  pages   = {281--285},
+  year    = {2012},
+  month   = dec,
+  doi     = {10.1007/s12064-012-0162-3},
+  url     = {https://doi.org/10.1007/s12064-012-0162-3},
+  urldate = {2024-08-30},
+  note    = {Critique de la méthode RPKM ; justification de l’usage du TPM pour la comparabilité}
+}

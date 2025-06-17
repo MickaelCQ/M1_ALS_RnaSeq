@@ -1,27 +1,20 @@
 \section{Matériels \& Méthodes}
 
-Le \og \textit{mapping} \fg{} dans un pipeline bioinformatique est une étape charnière, et dans notre cas d'étude, on peut raisonnablement penser que cette étape est susceptible de biaiser le signal biologique réel.  
-Pour évaluer la phase d'alignement, j'ai sélectionné deux outils que je vous présente ici : \texttt{STAR} et \texttt{CRAC}.
+\subsection{L'étape d'alignement}
 
-\subsection{Présentation conceptuelle de STAR et CRAC}
+%Le \og \textit{mapping} \fg{} dans un pipeline bioinformatique est logiquement, une étape clé. Ainsi, on peut raisonnablement penser que ce traitement est susceptible de biaiser le signal biologique réel. Pour évaluer la phase d'alignement, j'ai sélectionné deux outils que je vous présente ici : \texttt{STAR}~\textsuperscript{\cite{dobin_star_2012}} et \texttt{CRAC}~\textsuperscript{\cite{philippe_crac_2013}}~\textsuperscript{\cite{philippe_crac_2013}}.
+
+\subsubsection{Présentation conceptuelle de STAR et CRAC}
+\textbf{Ajouter explication BWT\textsuperscript{\cite{berard_bwt}}, SA \textsuperscript{\cite{berard_table_suffixes}}, et approche par kmer ...}
 
 
-\textbf{Ajouter explication BWT, SA, et approche par k-mer ..}
+Ainsi, j'ai cherché à évaluer l'impact de cette étape en générant les fichiers \texttt{BAM} pour l'intégralité des patients concernés à l'aide de deux outils distincts : \texttt{STAR} et \texttt{CRAC}, fondés sur des stratégies algorithmiques différentes. La majeure partie des commandes, ainsi que leurs paramètres, sont consultables dans un \texttt{Makefile} disponible sur le \texttt{Git}. Comme évoqué dans la partie introductive, nous travaillons ici sur un jeu de données limité à 72 patients. La génération des fichiers \texttt{BAM}~\textsuperscript{\cite{illumina_bam_format}} s'effectue à partir de deux fichiers \texttt{FASTQ}~\textsuperscript{\cite{cock_fastq_2009}}, obtenus via la technologie Illumina\texttrademark, puisque les données ont été produites en mode \gls{paired-end}.
 
-Ainsi, j'ai cherché à évaluer l’impact de cette étape en générant les fichiers \texttt{BAM} pour l'intégralité des patients concernés à l’aide de deux outils distincts : \texttt{STAR} et \texttt{CRAC}, 
-fondés sur des stratégies algorithmiques différentes. La majeure partie des commandes, ainsi que leurs paramètres, sont consultables dans un \texttt{Makefile} disponible sur le \texttt{Git}.  
-Comme évoqué dans la partie introductive, nous travaillons ici sur un jeu de données limité à 72 patients.  
-La génération des fichiers \texttt{BAM} s’effectue à partir de deux fichiers \texttt{FASTQ}, obtenus via la technologie Illumina\texttrademark~,
- puisque les données ont été produites en mode \gls{paired-end}.
+\subsubsection{Génération des fichiers d'alignement au format BAM}
 
-\subsection{Génération des fichiers d’alignement au format BAM}
+Dans l'absolu, ce qui nous intéresse, c'est le fichier consignant les métriques d'alignement générées durant l'exécution de l'outil, et non directement le fichier \texttt{BAM} lui-même. Pour autant, ce fichier, est produit pendant la génération du \texttt{BAM}. Il s'agit d'un fichier \og log \fg{} pour \texttt{STAR} et d'un fichier dénommé \og summary \fg pour \texttt{CRAC}. Pour automatiser ces opérations, j'ai conçu un \textit{pipeline} en \texttt{Bash} à l'aide de l'utilitaire \texttt{Make}, de manière à traiter séquentiellement les paires de fichiers \texttt{FASTQ}.
 
-Dans l’absolu, ce qui nous intéresse, c’est le fichier consignant les métriques d’alignement générées durant l’exécution de l’outil, et non directement le fichier \texttt{BAM} lui-même.  
-(Il s’agit d’un fichier de \og log \fg{} pour \texttt{STAR} et d’un fichier \og summary \fg{} pour \texttt{CRAC}.)  
-J’ai mis en place un pipeline reproductible à cette fin.  
-Pour chaque outil, j’ai conçu quelques cibles en \texttt{Bash} permettant de lancer les alignements en série à partir des paires de fichiers \texttt{FASTQ}.
-
-\begin{lstlisting}[style=makefileStyle, label={lst:FASTQGen}, caption={\underline{Construction de la variable \texttt{SAMPLES} pour traiter séquentiellement les \texttt{fastq}}}]
+\begin{lstlisting}[style=makefileStyle, label={lst:FASTQGen}, caption={\underline{Construction de la variable \texttt{SAMPLES} pour traiter séquentiellement les \texttt{FASTQ}}}]
 SAMPLES = $(shell \
     for R1 in $(FASTQ_DIR)/*_1.fastq.gz; do \
         R2= echo $$R1 | sed 's/_1.fastq.gz/_2.fastq.gz/'; \
@@ -31,30 +24,28 @@ SAMPLES = $(shell \
     done)
 \end{lstlisting}
 
-Dans les différents codes que je vous présente ci-dessous, je cherche à stocker les parties sujettes à changement dans des variables, afin de rendre l’exécution la plus générique possible. 
-En effet, le répertoire de stockage des dépendances (comme l’index, par exemple) ainsi que celui des fichiers de sortie dépendent de l’organisation propre à l’utilisateur sur sa machine d’exécution.
+Les cibles que je vous présente ci-dessous sont conçues pour rendre l'exécution la plus générique possible. En effet, le répertoire de stockage des dépendances (comme l'index, par exemple) ainsi que celui des fichiers de sortie dépendent de l'organisation de l'utilisateur sur sa machine d'exécution. Par ailleurs, la documentation de STAR référence une quantité substantielle d'options mais l'objectif ici n'est pas de réaliser une comparaison formelle de l'outil, mais plutôt d'évaluer dans quelle mesure une approche alternative de \textit{mapping} influence la manière dont les lectures sont classées.C'est une première étape dans les investigations visant à caractériser le jeu de données et à évaluer la viabilité d'une analyse DGE dans le cadre du RNA-seq ciblé et ses contraintes présentées en introduction. Le code ci-dessous montre la construction de la règle pour lancer \texttt{STAR} :
 
 \begin{lstlisting}[style=makefileStyle, label={lst:STARAlign}, caption={\underline{Cible \texttt{Star\_Paire} pour générer les \texttt{BAM} avec STAR}}]
-# Détection des échantillons par présence des fichiers fastq _1 et _2
+# Détection des échantillons par présence des fichiers FASTQ _1 et _2
 BAMS_STAR = $(addprefix $(OUTBAM_STAR)/, $(addsuffix .bam, $(SAMPLES)))
 
 Star_Paire: $(BAMS_STAR)
 $(OUTBAM_STAR)/%.bam:
 	@mkdir -p $(OUTBAM_STAR) $(OUTLOG_STAR) $(TMPDIR)/$*;
-	@echo ">>Lancement de l'alignement de l'échantillon $* avec STAR";
+	@echo ">> Lancement de l'alignement de l'échantillon $* avec STAR";
 	STAR --runThreadN $(THREADS)  
 		--genomeDir $(REF_STAR)  
-		 --readFilesIn $(FASTQ_DIR)/$*_1.fastq.gz $(FASTQ_DIR)/$*_2.fastq.gz 
-		 --readFilesCommand zcat --outSAMtype BAM SortedByCoordinate 
-		 --outFileNamePrefix $(TMPDIR)/$*/;
+		--readFilesIn $(FASTQ_DIR)/$*_1.fastq.gz $(FASTQ_DIR)/$*_2.fastq.gz 
+		--readFilesCommand zcat --outSAMtype BAM SortedByCoordinate 
+		--outFileNamePrefix $(TMPDIR)/$*/;
 	@mv $(TMPDIR)/$*/Aligned.sortedByCoord.out.bam $(OUTBAM_STAR)/$*.bam;
 	@mv $(TMPDIR)/$*/Log.final.out $(OUTLOG_STAR)/$*.Log.final.out;
 \end{lstlisting}
 
-Concernant l'utilisation de CRAC, une étape supplémentaire est nécessaire, car l'aligneur génère nativement une sortie au format \texttt{SAM}.  
-J'ai rédigé une cible supplémentaire pour convertir les fichiers \texttt{SAM} en \texttt{BAM} grâce à l'utilitaire \texttt{Samtools}.  
-On peut également ajouter une condition pour s'assurer que la sortie n'est pas déja présente,  
-afin de ne relancer le traitement que pour les fichiers \texttt{fastq} dont le \texttt{SAM} n'a pas été généré.
+Concernant l'utilisation de \texttt{Crac}, le paramétrage a également été laissé par défaut, à l'exception du choix de la taille du \textit{kmer}, indispensable puisque l’outil repose sur une approche de type \textit{kmer matching}. Evidemment, la même référence génomique a été utilisée pour \texttt{STAR}, afin de garantir la comparabilité des métriques. Notons que ce choix de taille du \textit{kmer} est fondamental dans la mesure ou il conditionne la sensibilité et la spécificité de l’aligneur. Si il est trop court on augmentera la sensibilité (autrement dit sa capacité à détecter des correspondances même en présence d’erreurs ou de mutations), mais au prix d’une plus grande ambiguïté et d’un risque accru d'alignement non spécifique \textsuperscript{\cite{mancheron_motifs_2006}} . À l’inverse, un \textit{kmer} plus long favorise la spécificité, mais peut perdre en sensibilité, notamment dans des régions génomiques complexes ou peu couvertes.
+
+Dans notre cas, un compromis a été établi avec une taille de \textbf{31 bases}. Ce choix n’est pas anodin : il permet notamment de représenter efficacement les \textit{kmers} en mémoire en utilisant un encodage binaire compact, où chaque base (A, C, G, T) est encodée sur 2 bits. Ainsi, un \textit{kmer} de 31 bases tient sur 62 bits, ce qui permet de l’encoder dans un entier de 64 bits, sans dépassement de capacité, tout en optimisant les performances en termes de vitesse d’accès et d’empreinte mémoire. Ce type de représentation est couramment utilisé dans les structures de données bioinformatiques comme les tables de hachage. Ce réglage technique conditionne donc les performances algorithmiques de \texttt{CRAC}:
 
 \begin{lstlisting}[style=makefileStyle, label={lst:CRACAlign}, caption={\underline{Cible \texttt{Crac\_Paire} pour générer les \texttt{BAM} avec CRAC}}]
 CRAC_SAMS = $(addprefix output/crac/bam/, $(addsuffix .sam, $(SAMPLES)))
@@ -64,87 +55,148 @@ Crac_Paire: $(CRAC_SAMS)
 output/crac/bam/%.sam: $(FASTQ_DIR)/%_1.fastq.gz $(FASTQ_DIR)/%_2.fastq.gz
 	@echo "Vérification de l'échantillon : $*"
 	@if [ ! -f output/crac/bam/$*.bam ]; then 
-	    echo "Lancement de l'alignement de l'échantillon : $* avec Crac"; 
+	    echo "Lancement de l'alignement de l'échantillon : $* avec CRAC"; 
 	    mkdir -p output/crac/summary output/crac/log output/crac/bam; \
-	    gunzip -c $(FASTQ_DIR)/$*_1.fastq.gz > $(FASTQ_DIR)/$*_1.fastq;\ 
+	    gunzip -c $(FASTQ_DIR)/$*_1.fastq.gz > $(FASTQ_DIR)/$*_1.fastq; \
 	    gunzip -c $(FASTQ_DIR)/$*_2.fastq.gz > $(FASTQ_DIR)/$*_2.fastq; \
-	    crac --nb-tags-info-stored 10000 --bam --stranded -i $(REF_CRAC) -k $(KMER_CRAC) 
-	    	 --summary output/crac/summary/$*.summary
-	         --nb-threads $(THREADS) -r $(FASTQ_DIR)/$*_1.fastq $(FASTQ_DIR)/$*_2.fastq -o output/crac/bam/$*.sam
-	         2> output/crac/log/$*_crac.log;
+	    crac --nb-tags-info-stored 10000 --bam --stranded -i $(REF_CRAC) -k $(KMER_CRAC) \
+	        --summary output/crac/summary/$*.summary \
+	        --nb-threads $(THREADS) -r $(FASTQ_DIR)/$*_1.fastq $(FASTQ_DIR)/$*_2.fastq -o output/crac/bam/$*.sam \
+	        2> output/crac/log/$*_crac.log;
 	else 
 	    echo "Fichier déjà aligné : $@"; 
 	fi
 \end{lstlisting}
 
-    Structure de traitement par run (batch de 8 échantillons).
-    
-    Mise en place d’un pipeline reproductible.
-    
-\subsubsection{Analyse de la variabilité expérimental et levée d'ambiguité sur l'alignement}
-\begin{figure}[H]
-\begin{center}
-\resizebox{1.05\textwidth}{!}{  
-    \includegraphics[width=1\linewidth]{Mapping_P_Relative_Vtex.pdf}}
-    \caption{\underline{Comparaison des profils d'alignement entre STAR et CRAC}}
-    \label{fig:mappingp}
-\end{center}
-\end{figure}
+Notons qu'une étape supplémentaire est nécessaire, car l'aligneur génère nativement une sortie au format \texttt{SAM}~\textsuperscript{\cite{samtools_hts_specs_2024}}. J'ai donc rédigé une cible supplémentaire pour convertir les fichiers \texttt{SAM} en \texttt{BAM} grâce à l'utilitaire \texttt{Samtools} :
 
-.... explications des deux approches algorithmiques a rajouter.
- 
+\begin{lstlisting}[style=makefileStyle, label={lst:CRACAlign}, caption={\underline{Cible \texttt{Crac\_Paire} pour générer les \texttt{BAM} avec CRAC}}]
+# Génère une liste des fichiers SAM sans extension
+SAM_FILES := $(basename $(notdir $(wildcard output/crac/bam/*.sam)))
 
-Pour évaluer si les deux outils d’alignement, STAR et CRAC, diffèrent significativement dans leur capacité à aligner les lectures uniques,
- j’ai réalisé une analyse statistique sur les proportions relatives des lectures uniques par patient.J’ai d’abord effectué un test de normalité de Shapiro-Wilk sur les données 
- de proportions de lectures uniques pour chaque outil afin de vérifier l’hypothèse de normalité nécessaire pour utiliser un test paramétrique. 
- Les résultats ont validé cette hypothèse, j’ai donc pu appliquer un test t de Student apparié pour comparer les moyennes des proportions de lectures uniques entre STAR et CRAC. 
- Le test t n’a pas montré de différence statistiquement significative (p > 0.05) entre les deux outils, ce qui suggère que, globalement,
-  leur capacité à aligner des lectures uniques est comparable dans mon jeu de données.
+# Règle principale pour convertir tous les SAM en BAM+BAI
+Convert_bam_sam: $(addprefix output/crac/bam/, $(addsuffix .bam, $(SAM_FILES)))
 
-Cependant, je tiens à souligner que ces résultats quantitatifs ne reflètent pas nécessairement les différences qualitatives dans les approches d’alignement de STAR et CRAC.
- En effet, ces deux outils reposent sur des algorithmes différents, avec des stratégies distinctes pour gérer les lectures multiples, les lectures chimériques, et les jonctions d’épissage. 
- Ces différences peuvent influencer la localisation précise des alignements, la sensibilité à certains types de variants, ainsi que la qualité globale des données alignées.
-Par conséquent, même si la proportion de lectures uniques est comparable, j’interprète ces résultats avec prudence. Pour les analyses de quantification ultérieures,
- je recommande d’intégrer une étude plus approfondie des alignements, incluant une inspection visuelle des lectures alignées et une analyse des différences dans les catégories de lectures multiples 
- et chimériques. Cela me permettra de m’assurer que la variabilité introduite par les différences d’algorithmes n’impacte pas les conclusions biologiques que je tirerai des données.
+output/crac/bam/%.bam: output/crac/bam/%.sam
+	@echo "Conversion SAM -> BAM pour l’échantillon : $*"
+	#Conversion (view), en binaire (-b), avec une entrée SAM (-S) ET et trie du BAM en position génomique (sort) :
+	samtools view -@ $(THREADS) -bS $< | samtools sort -@ $(THREADS) -o $@
+	samtools index $@
+	@rm -f $<
+\end{lstlisting}
 
+\subsubsection{Traitement des fichiers de sortie}
 
-Afin de comparer les performances respectives des deux outils d’alignement (STAR et CRAC) en termes de profondeur de lecture totale par patient,
- nous avons tout d’abord extrait les totaux de lectures alignées pour chacun d’eux.
-Une étape préalable essentielle consiste à évaluer la normalité des distributions de ces profondeurs d’alignement à l’aide du test de Shapiro-Wilk.
- Dans les deux cas (STAR et CRAC), les p-values obtenues sont inférieures à 0,05, ce qui indique un écart significatif à la normalité. 
- Dès lors, l’hypothèse d’une distribution gaussienne est rejetée, ce qui justifie le recours à un test non paramétrique.
+l'alignement terminé, on obtient des formats de logs assez différents (cf. annexe \textbf{\ref{annexe:format_log}}), pour lesquels il est nécessaire d’extraire les métriques afin d’évaluer s’il existe une différence significative dans la capacité des outils à aligner de manière unique les lectures. Si tel est le cas, je pense que c'est intéressant d’examiner de plus près si cette différence peut impacter l'analyse quantitative \textit{a posteriori}. Pour ce faire, j’ai développé un petit script \texttt{Bash} dont le code est consultable sur \href{https://github.com/MickaelCQ/M1_ALS_RnaSeq/blob/main/3.Home_script/Fusion_Stats_BAM.sh}{GitHub}. Dans les grandes lignes, le script commence avec la définition des répertoires sources, puis j'effectue quelques vérifications d’usage, ( présence des fichiers par exemples). Pour chaque log associé à son \texttt{BAM}, j’extrais les métadonnées du patient (\textit{Run}, \textit{Patient}, \textit{Type}) contenues dans le nom du fichier, tout ces indicateurs sont récupérés à l’aide de commandes shell (\texttt{grep}, \texttt{cut}, \texttt{tr}, \texttt{sed}), en tenant compte des spécificités de chaque type de log présenté en annexe \textbf{\ref{annexe:format_log}}. \\
 
-Nous avons donc utilisé le test de Wilcoxon pour données appariées afin de comparer les profondeurs d’alignement entre STAR et CRAC
- pour un même ensemble de patients. Ce test est particulièrement adapté dans ce contexte, car il ne repose pas sur l’hypothèse de normalité des données,
-  et il tient compte de la structure appariée des échantillons (comparaison patient par patient).
+Au dela du développement de ce script \texttt{Bash} j'ai dû modifier la règle du \textit{pipeline} \texttt{Snakemake}\textsuperscript{\cite{snakemake_2025}} utilisée au laboratoire. J'ai intégré la logique \og d'extraction de ces métriques, ce qui n'était pas prévu au départ dans la règle historique. Cette contribution est disponible sur le \texttt{Git} et en annexe \textbf{\ref{annexe:snake_ali}}. 
+Mon fichier tabulé effectivement généré, j'ai compléter l'analyse en m'intéressant au flag NH (\textit{Number of Hits}) et CIGAR (\textit{Compact Idiosyncratic Gapped Alignment Report}), il s'agit de champs par défaut du fichier \texttt{SAM}. \textsuperscript{\cite{samtools_hts_specs_2024}}. Dans les grandes lignes, la stratégie consiste à extraire toutes les lectures alignées de manière unique dans \texttt{CRAC} (NH = 1), puisqu'on s'interesse ici à nos lectures mappée de manière unique dans un outil et pas dans l'autre. Ensuite on récupère le \texttt{CIGAR} qui comme son acronyme l'indique est une forme compacte de représentation. Nous verrons dans la section résultats que pousser les investigations en s'intéressant à ces champs ont eu du sens dans la mesure ou le CIGAR stocke la structure précise de l'alignement et le NH aide à évaluer l'ambiguité de ce dernier.
 
+Après ce travail sur la phase d'alignement je me suis efforcé de généré une table de comptage en vue de s'intéresser à proprement parler à l'analyse quantitative, dans la section suivante je vous présente  comment j'ai procédé.
 
-Le test de Wilcoxon a retourné une p-value extrêmement faible $(p = 3,637 × 10^{-13})$, ce qui indique une différence significative entre les profondeurs d’alignement fournies par STAR et CRAC. Autrement dit, l’outil CRAC génère de manière systématique un nombre de lectures alignées significativement plus élevé que STAR pour les mêmes échantillons, ce qui suggère une sensibilité accrue ou une stratégie d’alignement plus permissive.
+\subsection{Génération de la table de comptage avec \texttt{featuresCount}\textsuperscript{\cite{liao_featureCounts_2014}} et formatage.}}
 
-    Statistiques descriptives sur la profondeur de lecture, par run et par échantillon.
+regle de génération : 
 
-    Mise en évidence de la non-reproductibilité : inter-run vs. intra-run.
+\begin{lstlisting}[style=makefileStyle, label={lst:FCExon}, caption={\underline{Cible \texttt{fc\_exons} pour la quantification à l’échelle des exons avec \texttt{featureCounts}}}]
+# Quantification des lectures à l’échelle des exons à partir des BAM alignés
 
-    Visualisations pour illustrer la disparité de couverture.
+fc_exons:
+	@mkdir -p $(dir $(OUTPUT_FC))
+	# Appel à featureCounts : -p (mode pairé), --countReadPairs (comptage par paire),
+	# -T (nombre de threads), -t exon (cible = exon), -a (annotation), -o (sortie), fichiers BAM
+	featureCounts -p --countReadPairs -T $(THREADS) -t exon \
+		-a $(GTF_PATH) -o $(OUTPUT_FC) $(BAMS)
+	@echo "featureCounts à l'échelle de l'exon terminé."
+\end{lstlisting}
 
 
-    Présentation de STAR et CRAC :
+\subsection{Recherche de la bonne approche pour normaliser les données }
 
-        Méthodologie, hypothèses sous-jacentes, différences de traitement.
+L'objectif de cette section, est de présenter les trois approches de normalisation que j'ai étudiées durant le stage, TPM, TMM et RLE, avec l'objectif de choisir la plus adéquate pour normaliser les données pour l’analyse DGE.
+Quelques éléments de formalise s'imposent concernant les notations. On supposera que chaque expérience de SHD a permis d’obtenir des \textit{reads} alignés \( (R_g) \), des comptages \( (C_g) \) ou des fragments \( (F_g) \) sur un gène d’intérêt \( (g) \) de longueur \( (L_g) \), en kilobases, pour un échantillon \( (e) \) aligné sur un génome de référence --- ici GRCh37, afin de conserver une référence cohérente avec les expériences menées sur l'ADN au laboratoire sur la SLA. Les comptages de \textit{reads} (en ordonnée \textit{y}) sont étiquetés avec l’identifiant de l’échantillon ou le \textit{run} (en abscisse \textit{x}) pour la majorité des graphiques qui seront présentés. Enfin, comme je l'ai évoqué en introduction, on admet l’hypothèse selon laquelle l’abondance des \( C_{g,e} \) est proportionnelle à l’expression du gène en question. Ces remarques effectuées, passons aux aspects purement méthodologiques.
 
-    Alignement des mêmes échantillons avec les deux outils.
+\newpage 
+\subsubsection{TPM : Transcrit par million}
 
-    Comparaison des métriques de mapping : taux d’alignement unique/multiple/non-aligné.
+\begin{wrapfigure}{r}{0.4\textwidth}
+\vspace{-10mm}
+\begin{tcolorbox}[colback=lightgray,colframe=darkblue,boxrule=0.5pt,arc=2pt,boxsep=5pt,width=0.40\textwidth,title=\center Formule de calcul des TPM,fonttitle=\bfseries\small]
+\begin{equation*}
+\mathrm{TPM}_{g,e} = \lambda \cdot \frac{\mathrm{RPK}_{g,e}}{\sum_e \left( \frac{R_e}{L_e} \right)}
+\end{equation*}
+\smallskip
+avec\quad
+\begin{equation*}
+\mathrm{RPK}_{g,e} = \frac{R_{g,e}}{L_{g,e}}
+\end{equation*}
+\end{tcolorbox}
+\vspace{-5mm}
+\end{wrapfigure}
 
-    Conclusion : validation que l’étape d’alignement n’est pas responsable de la variabilité observée.
+Cette méthode a été introduite par Wagner et al. en 2012 \textsuperscript{\cite{wagner_TPM_2012}}. L'objectif des TPM est de comparer les comptages entre les échantillons. Cela est possible grâce à l'ordre des opérations mathématiques. On va chercher à normaliser d'abord sur la longueur du gène, puis dans un second temps sur la profondeur échantillonnale. Cette technique est relativement sommaire, pour autant j'ai choisi d'intégrer les TPM dans ma comparaison de méthodes car la somme des \({TPM}_{g,e}\) est identique, ce qui facilite la comparaison des différents échantillons pour un même gène et il est facile de s'en convaincre :
 
-\subsubsection{Vers une approche alternative de quantification}
+\begin{lstlisting}[style=rStyle, label={lst:TPMequals}, caption={\underline{Vérification de l’égalité des TPM par échantillon}}]
+all_tpm |> group_by(Sample) |> summarise(tot_tpm = sum(tpm)) |> arrange(tot_tpm)
 
-    Justification du besoin de s’affranchir des biais d’alignement.
+   Sample     tot_tpm
+   <chr>          <dbl>
+ 1 2307121892   1000000
+ 2 C01P016      1000000
+ 3 C01P027      1000000
+...
+\end{lstlisting}
+Par ailleurs, pour la partie normalisation sous \texttt{R}, j’ai travaillé avec la librairie \texttt{EdgeR} \textsuperscript{\cite{EdgeR_2024}}. Pour autant, il n’existe pas de fonction intégrée pour le calcul des TPM ; ses modalités de calcul étant simples, je les ai donc codées manuellement. L’intégralité du script est disponible sur le \texttt{Git}. La stratégie TPM ne tient pas compte de l’hétérogénéité des librairies par exemple. Pour la suite, j’introduis les méthodes TMM et RLE, qui, en théorie, permettent de pallier à ces limitations. Du reste,  nous verrons dans la section résultat si ces approches se comportent en pratique comme attendu en théorie. 
 
-    Introduction à la quantification par k-mer : promesse de neutralité méthodologique.
+\subsubsection{Limiter l'impact des valeurs aberrantes : TMM}
 
-    Transition vers une stratégie plus robuste de détection différentielle.
+Il s'agit ici d'une approche fondamentalement différente de celle abordée précédemment, avec une formulation mathématique plus complexe. La compréhension du TMM (Trimmed Mean of M-values) repose sur trois notions fondamentales : la M-value, l’A-value, et les coefficients de pondération. La M-value \(M_{g,e}\) est la première étape pour calculer le facteur \(TMM_e\) d’un échantillon \(e\), par rapport à un échantillon de référence \(k\), pour chaque gène \(g\). Elle se définit comme le log-ratio de l’expression normalisée du gène \(g\) entre \(e\) et \(k\), après correction des biais liés à la profondeur de lecture.
 
-\subsubsection{Qualité et spécificité de l'alignement}
+\begin{wrapfigure}{r}{0.4\textwidth}
+\vspace{-5mm}
+\begin{tcolorbox}[colback=lightgray,colframe=darkblue,boxrule=0.5pt,arc=2pt,boxsep=5pt,width=0.40\textwidth,title=\center La M-value (TMM),fonttitle=\bfseries\small]
+\begin{equation*}
+M_{g,e} = \log_2 \left( \frac{R_{g,e}}{R_{g,k}} \right)
+\end{equation*}
+\end{tcolorbox}
+\end{wrapfigure}
+Pour obtenir une estimation fiable de \(M_{g,e}\), deux critères sont généralement requis. Premièrement, la condition de référence \(k\) doit être biologiquement pertinente — par exemple, un échantillon non traité dans une étude évaluant la SLA (cela parait logique). Deuxièmement, cette référence doit être aussi homogène que possible vis-à-vis des variables confondantes (âge, sexe, etc.), afin de limiter l’introduction de biais dans les comparaisons.
+
+Toutefois, ces conditions sont difficiles à satisfaire dans le cadre de ce travail, pour deux raisons principales~: d’une part, j’ai rencontré des difficultés pour obtenir les métadonnées techniques associées aux échantillons controles; d’autre part, les critères d’inclusion des patients dans le protocole n’ont pas nécessairement été définis en tenant compte des contraintes spécifiques aux analyses bioinformatiques en aval ...
+
+\begin{wrapfigure}{r}{0.4\textwidth}
+\vspace{-10mm}
+\begin{tcolorbox}[colback=lightgray,colframe=darkblue,boxrule=0.5pt,arc=2pt,boxsep=5pt,width=0.40\textwidth,title=\center Formule de calcul de la A-value,fonttitle=\bfseries\small]
+\begin{equation*}
+A_{g,e} = \frac{1}{2} \log_2 \left( R_{g,e} \times R_{g,k} \right)
+\end{equation*}
+\end{tcolorbox}
+
+\end{wrapfigure}
+
+La seconde notion, l’A-value (\(A_{g,e}\)), quantifie l’abondance moyenne du gène \(g\) dans les échantillons \(e\) et \(k\). Il s’agit d’une moyenne géométrique exprimée en base logarithmique, qui se veut représenter l’expression globale du gène dans la comparaison. Bien qu'elle n'intervienne pas directement dans le calcul du facteur TMM, l’A-value permet de visualiser l’intensité moyenne du signal et d’explorer la stabilité des gènes en fonction de leur abondance. Il existe une relation mathématique simple entre M-value et A-value\textsuperscript{\cite{robinson_scaling_2010}}
+
+\begin{wrapfigure}{r}{0.4\textwidth}
+\vspace{-10mm}
+\begin{tcolorbox}[colback=lightgray,colframe=darkblue,boxrule=0.5pt,arc=2pt,boxsep=5pt,width=0.40\textwidth,title=\center A-value (TMM),fonttitle=\bfseries\small]
+\begin{equation*}
+M_{g,e} = \log_2(R_{g,e}) - \log_2(R_{g,k}) \quad \Longleftrightarrow \quad M_{g,e} = \log_2\left( \frac{R_{g,e}}{2^{A_{g,e}}} \right)
+\end{equation*}
+\end{tcolorbox}
+\end{wrapfigure}
+
+Enfin, les M-values sont pondérées par des coefficients \(w_{g,e}\), qui reflètent leur précision. Ces poids sont définis comme l'inverse de la variance estimée des M-values, de manière à réduire l’impact des gènes dont l’expression est trop variable.
+
+\begin{wrapfigure}{l}{0.4\textwidth}
+\vspace{-10mm}
+\begin{tcolorbox}[colback=lightgray,colframe=lightgray,boxrule=0.5pt,arc=2pt,boxsep=5pt,width=0.40\textwidth,title=\center Pondération des M-Value,fonttitle=\bfseries\small]
+\begin{equation*}
+TMM_e = \exp \left( \frac{\sum_{g} w_{g,e} M_{g,e}}{\sum_{g} w_{g,e}} \right), \quad \text{avec} \quad w_{g,e} = \frac{1}{\text{Var}(M_{g,e})}
+\end{equation*}
+\end{tcolorbox}
+\end{wrapfigure}
+
+Il est clair que le TMM est plus complexe à calculer que les normalisations linéaires précédentes. De plus, les détails de certains paramètres (filtrage, choix de \(k\), pondérations exactes) sont difficilement accessibles directement dans la fonction \texttt{calcNormFactors()} d’\texttt{edgeR}. Nous proposons donc ci-dessous le code R utilisé pour la normalisation TMM, accompagné de fonctions simples pour illustrer les calculs de M-value et d’A-value :
+
+En conclusion, le TMM constitue une méthode robuste de normalisation, en intégrant à la fois la stabilité relative des gènes (via la M-value) et leur abondance (via l’A-value), tout en éliminant les gènes extrêmes. Moins sensible à la profondeur de séquençage que CPM ou FPKM, elle constitue une alternative pertinente pour les jeux de données complexes ou peu reproductibles. Nous présenterons à présent une méthode complémentaire : la normalisation basée sur la médiane logarithmique, mieux adaptée à certaines contraintes biologiques.
+

@@ -3,7 +3,7 @@
 
 Ce travail est la synthèse de mon stage de première année de Master, durant lequel j’ai intégré l’équipe de la professeure Thérèse Commes du laboratoire Bio2M,  
 rattaché à l’Institut national de la santé et de la recherche médicale (INSERM). J’ai eu la chance d’être accompagné dans mon apprentissage par Anthony Boureux, enseignant-chercheur.  
-L’équipe collabore  avec des services cliniques et des plateformes hospitalières, ce qui favorise la résolution de problématiques liées au champ médical.  
+L’équipe collabore  avec des services cliniques et des plateformes hospitalières, ce qui favorise la résolution de problématiques liées au diagnostic médical.  
 Ainsi, j’ai eu l’occasion de contribuer à un projet de recherche translationnelle que Bio2M mène en partenariat avec le CHU de Nîmes. Ce travail est en lien direct avec des enjeux diagnostiques,
  puisqu’il concerne une maladie neurodégénérative : la sclérose latérale amyotrophique (SLA).  
 Les différentes missions qui m’ont été confiées s’inscrivent dans le champ de la transcriptomique, et plus particulièrement dans le cadre de l’analyse d’expression génique appliquée à la SLA,  
@@ -20,9 +20,9 @@ pour \textit{in fine} tenter d’identifier la causalité génétique chez les p
 \end{wrapfigure}
 
 Une maladie rare se définit par une \gls{prevalence} de 0,05~\% dans la population générale.  
-Quatre-vingts pour cent de ces maladies sont d’origine génétique~\textsuperscript{\cite{centre_constitutif_sla_de_tours_protocole_2020}},  
-et la SLA en fait partie : elle touche un individu sur 20\,000 en Europe~\textsuperscript{\cite{orphanet_prevalence_2023}},  
-et sa prevalence mondiale varie de 1{,}57 à 11{,}8 pour 100\,000 selon les pays, de l’Iran aux États-Unis~\textsuperscript{\cite{c_wolfson_et_al_global_2023}}.  
+Quatre-vingts pour cent de ces maladies sont d’origine génétique~\textsuperscript{\cite{SLA_protocole_2020}},  
+et la SLA en fait partie : elle touche un individu sur 20\,000 en Europe~\textsuperscript{\cite{M.rare_prevalence_2023}},  
+et sa prevalence mondiale varie de 1{,}57 à 11{,}8 pour 100\,000 selon les pays, de l’Iran aux États-Unis~\textsuperscript{\cite{SLA_prevalence_2023}}.  
 C’est une maladie neurodégénérative causée par une atteinte du motoneurone central au niveau du cortex cérébral \textbf{(figure~\ref{fig:Cortex})},  
 conduisant à une dégénérescence progressive des fonctions musculaires. Cette pathologie est très handicapante, tant sur le plan physique que social.  
 En raison de sa gravité et des conséquences dévastatrices pour les patients et leur entourage, elle constitue un domaine de recherche de premier plan pour les généticiens cliniques.  
@@ -31,7 +31,7 @@ Notons que les gènes responsables de la SLA sont globalement bien documentés. 
 Dans 90~\% des cas, leur implication est directe dans les formes familiales. Dans les 10~\% restants, on observe des formes dites sporadiques,  
 où la causalité génétique est cette fois indirecte, via des perturbations de processus cellulaires clés tels que l’\gls{homeostasie} de l’ARN, le \gls{transport axonal} ou l’\gls{autophagie}.    
 On observe également une forte hétérogénéité génétique dans cette maladie, perceptible à travers l’implication de gènes aux fonctions parfois très différentes,  
-mais qui convergent toujours vers une dégénérescence neuronale. Les gènes les plus fréquemment impliqués sont \textit{SOD1}, \textit{TARDBP}, \textit{FUS} et \textit{C9ORF72}~\textsuperscript{\cite{centre_constitutif_sla_de_tours_protocole_2020}}.  
+mais qui convergent toujours vers une dégénérescence neuronale. Les gènes les plus fréquemment impliqués sont \textit{SOD1}, \textit{TARDBP}, \textit{FUS} et \textit{C9ORF72}~\textsuperscript{\cite{SLA_protocole_2020}}.  
 Majoritaires dans la maladie, ils constituent le socle des recherches génétiques pour tenter la mise au point de thérapies ciblées et faire progresser la compréhension ainsi que le diagnostic de cette pathologie.
 
 \subsection{L’apport du RNA-Seq ciblé dans le périmètre de notre analyse}
@@ -98,21 +98,18 @@ notamment à travers une \gls{haploinsuffisance} ou, au contraire, une surexpres
  \end{wrapfigure}
 
 Supposons maintenant que l’on cherche à établir un profil d’expression génique pour notre quarantaine de gènes.  
-Il faut alors s’interroger sur le support de lecture de chacun de ces gènes, c’est-à-dire le nombre de fois qu’une région d’ADN a été lue (ou comptée) au cours du séquençage.  
+Il convient alors de s’interroger sur le support de lecture de chacun de ces gènes, c’est-à-dire le nombre de fois qu’une région de l’ADN a été lue (ou comptée) au cours du séquençage.  
 On s’attend logiquement à observer une distribution des lectures, interprétable comme le reflet du niveau d’expression de chaque gène étudié.  
-Dans les faits, si l’on prend les données brutes, on s’en éloigne considérablement : un certain nombre de variables~\textemdash~biologiques (rythme circadien ?) ou expérimentales (moment du prélèvement ?) —  
-influencent cette distribution théorique, introduisant une dispersion non négligeable dans le jeu de données.  
-De plus, l’analyse bioinformatique peut, elle aussi, fausser le profil d’expression, notamment lors des choix effectués à l’étape d’alignement~ \textemdash ~nous le verrons.  
-À travers la \textbf{figure~\ref{fig:biaisRNA}}, j’illustre quelques biais, non exhaustifs, susceptibles d’affecter l’expression génique mesurée.On comprend à travers cette illustration,
- qu’à chaque étape technique du protocole RNA-Seq, on introduit de la variabilité, parfois de manière systématique entre les expériences, parfois de manière aléatoire.\\
- 
-Toute la stratégie de quantification de l’expression génique consiste à limiter ces biais, ou le cas échéant, à les intégrer dans l’analyse~ \textemdash~ afin d’obtenir des résultats fidèles à la réalité biologique du patient, 
-mais aussi reproductibles dans des conditions de routine diagnostique.
-L’importanct est d’effectuer un certain nombre de vérifications préalables sur les données, notamment via des statistiques descriptives, ainsi que des corrections appropriées, comme la normalisation. 
-J'ai eu l'occasion d'éffectuer un  travail préliminaire qui consiste à établir un état des lieux des méthodes conventionnelles de normalisation,
-rappelées dans la \textbf{figure \ref{fig:biaisNORMALISATION}}. Qui m'a permis d' étayer ma compréhension de cette étape d'un pipeline bioinformatique mais surtout d'en tirer une conclusion,
- elle ne sont pas les plus adaptés pour travailler sur des gènes ciblés, notamment par le manque de consistance des données de comptage.(\textbf ajout ref travail bibliographique)
- 
+En pratique, si l’on se fonde sur les données brutes, cette hypothèse s’avère souvent éloignée de la réalité : un certain nombre de variables~—~biologiques (rythme circadien, état physiologique, etc.) ou expérimentales (moment du prélèvement, conditions de manipulation, etc.)~—~influencent cette distribution théorique, introduisant une dispersion non négligeable dans le jeu de données.
+
+Par ailleurs, le traitement bioinformatique peut lui aussi fausser le profil d’expression, notamment à travers les choix opérés lors de l’étape d’alignement~—~comme nous le verrons.  
+La \textbf{figure~\ref{fig:biaisRNA}} illustre quelques-uns des biais, non exhaustifs, susceptibles d’affecter la quantification de l’expression génique.  
+On comprend à travers cette illustration qu’à chaque étape technique du protocole RNA-seq, de la préparation des échantillons à l’analyse bioinformatique, une part de variabilité est introduite, parfois de manière systématique entre les expériences, parfois de manière aléatoire.\\
+
+Toute la stratégie de quantification différentielle de l’expression génique (DGE) consiste à limiter ces biais ou, le cas échéant, à les intégrer dans l’analyse~—~afin d’obtenir des résultats à la fois fidèles à la réalité biologique du patient, mais également reproductibles dans un contexte de routine diagnostique.  Je m'efforce ici d’effectuer un certain nombre de vérifications sur les données expérimentales, notamment à l’aide d’analyses statistiques descriptives, et \textit{in fine}, de suggérer de corrections appropriées (par la phase de normalisation).
+
+À cet égard, j’ai mené un travail bibliographique visant à établir un état des lieux des stratégies conventionnelles , dont je propose une synthèse dans la \textbf{figure~\ref{fig:biaisNORMALISATION}}.  
+Ces investigations m’ont permis d’approfondir ma compréhension de l'analyse quantitative en RNA-Seq.
 \begin{figure}[H]
 \resizebox{1.05\textwidth}{!}{ 
 \begin{tikzpicture}[node distance=1.5cm, every node/.style={font=}]
@@ -207,22 +204,19 @@ rappelées dans la \textbf{figure \ref{fig:biaisNORMALISATION}}. Qui m'a permis 
 \caption{\underline{Schéma décisionnel pour normaliser les données RNASeq}}
 \label{fig:biaisNORMALISATION}
 \end{figure}
-Le périmètre de mon travail étant définit, il reste une question que l'on peut légitimement se pose à laquelle je n'ai pas répondu dans cette section : 
-pourquoi avoir une approche de RNA-Seq ciblé plutôt qu'une analyse transcriptomique globale ? 
- A première vue, en se concentrant sur un panel restreint de gènes d’intérets (ceux impliqués dans la SLA) j'améliore la sensibilité de détection et surtout je
- réduit les coûts expérimentaux et de traitements bioinformatiques. C'est d'autant plus adapté au diagnostic, puisqu'on aura des résultats plus rapides et immédiatement exploitables.  
- Toutefois, je limite l’analyse aux seuls gènes ciblés, excluant la détection d’événements potentiellements pertinents, comme des isoformes rares ou des altérations affectant d’autres régions du
-  transcriptome. C'est donc un compromis qui est fait, car le séquençage transcriptomique global fournit une vision d’ensemble, mais au prix d’une complexité analytique accrue, d’un coût plus élevé
-   et d’un bruit de fond plus important.  
-Il n'ya pas ici une stratégie meilleure que l'autre tout dépend du contexte médicale et de la pertinence clinique et contraintes techniques.
- Dans le contexte des maladies rares comme la SLA, où les gènes en cause sont bien caractérisés, le RNA-Seq ciblé constitue une option pragmatique et efficiente.\\
 
-Partant de ce constat, mon travail est d'évaluer la qualité et la reproductibilité des données issues du protocole de RNA-Seq ciblé appliqués aux échantillons.
-J’ai tout d’abord analysé les métriques d’alignement générées par deux outils largement utilisés dans ce domaine,
- STAR et CRAC, afin de déterminer si la variabilité expérimentale pouvait s’expliquer en tout ou partie par des biais liés à l'étape d’alignement.
-Je propose ensuite une méthode pour quantifier l'expression fondée sur une approche par par k-mers, indépendamment de cette étape d’alignement.
-Cette démarche vise à contourner certaines limites inhérentes aux méthodes classiques présentées en \textbf{figure \ref{fig:biaisNORMALISATION}}
- dans le cadre du RNA-Seq ciblé tout en conservant une résolution suffisante pour la détection de l'haploinsuffisance.
+\subsection{Problématique et réflexion sur les choix expérimentaux}
+Au regard des éléments mentionnés précédemment, ce travail à un double objectifs  en avançant sur les deux questions suivantes :
+\begin{itemize}
+  \item Les méthodes conventionnelles de normalisation sont-elles adaptées à l’analyse quantitative de panels de gènes ciblés~?
+  \item Quelle crédibilité accorder à cette même analyse quantitative en RNA-Seq ciblé dans notre contexte expérimental peu reproductible ~?
+\end{itemize}
 
-Ainsi, les sections suivantes décrivent la méthodologie adoptée pour contrôler la qualité des données, 
-comparer plusieurs stratégies d’alignement, puis amorcer une réflexion sur les approches de quantification adaptées à l'étude que j'ai en charge de mener. 
+En effet, à la différence d'analyse du transcriptome global, le RNA-Seq ciblé produit des données peu bruyante~—~et pour cause : l’étape expérimentale d’enrichissement conduit à une sur-représentation des gènes d’intérêt. Cette absence de \og consistance \fg dans les données de comptage complexifie l’interprétation statistique et appelle, disons, à une adaptation soit de l'approche analytique. \\
+ 
+Une dernière question mérite d’être posée~:  pourquoi avoir opté pour une approche de RNA-Seq ciblé plutôt qu’une analyse transcriptomique globale~?  
+On peut dégager plusieurs arguments à cette question. À première vue, en se concentrant sur un panel restreint de gènes d’intérêt (ceux impliqués dans la SLA), j’améliore la sensibilité de détection tout en réduisant les coûts expérimentaux, d'analyse bioinformatiques et tertiaire. C’est d’autant plus pertinent dans une perspective diagnostique, puisque les résultats sont obtenus plus rapidement et sont plus rapidement exploitables, on peut raisonnablement penser que l'analyse biologique d'un transcriptome globale et bien plus chronophage.\\
+
+A l'inverse, cette approche limite l’analyse aux seuls gènes ciblés, excluant par là même occasion, la détection d’événements potentiellement pertinents, tels que des isoformes rares ou des altérations affectant d’autres régions du transcriptome. Il s’agit donc d’un compromis, le RNA-Seq global offre une vision d’ensemble, mais au prix d’une complexité analytique accrue, d’un coût plus élevé, et d’un bruit de fond plus important qui nous le verrons peut être utile à certaines étapes du \textit{pipeline}.  \\
+
+Tout est discutable, il n’existe pas, à proprement parler, de stratégie idéale~: tout dépend du contexte médical, de la pertinence clinique et des contraintes techniques et financière. Pour autant, dans le cadre des maladies rares comme la SLA, où les gènes impliqués sont généralement bien caractérisés, le RNA-Seq ciblé constitue une option pragmatique. Ainsi, les sections suivantes décrivent la méthodologie adoptée pour contrôler la qualité des données, évaluer l'impact de l'alignement, et amorcer une réflexion sur les approches de quantification adaptées à l’étude que j’ai en charge de mener, et je propose ensuite une méthode de quantification fondée sur une approche par \textit{k}mers, qui pourrait être explorée pour contourner toutes les contraintes évoquées et les limites inhérentes aux méthodes classiques (voir \textbf{figure~\ref{fig:biaisNORMALISATION}}), en conservant une résolution suffisante pour la détection de l’haploinsuffisance.

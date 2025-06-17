@@ -4,7 +4,6 @@
 \usepackage[utf8]{inputenc} % Encodage UTF-8
 \usepackage{paracol}
 \usepackage{wasysym}
-
 %____________________________ Mise en page _______________________ 
 \usepackage[left=1.5cm,right=1.5cm,top=2cm,bottom=2cm]{geometry} % Gestion des marges
 \usepackage{setspace} % Gestion des espaces interlignes
@@ -12,8 +11,6 @@
 \usepackage{titling} % Personnalisation du titre
 \usepackage{fancyhdr} % Personnalisation des en-têtes et pieds de page
 \usepackage{lastpage} 
-
-
 %__________________________ Mathématiques ________________________
 \usepackage{mathtools} % Paquet pour des équations et symboles mathématiques
 \usepackage{siunitx} % Écriture avec la notation scientifique
@@ -40,7 +37,7 @@
 
 %______________________ graphie et références ______________________
 \usepackage[backend=biber]{biblatex} % Gestion de la bibliographie
-\addbibresource{./references.bib}
+\addbibresource{./references_All.bib}
 
 \usepackage{csquotes} % Gestion des guillemets typographiques
 \usepackage[colorlinks=true, linkcolor=darkblue, urlcolor=darkblue]{hyperref}
@@ -59,7 +56,7 @@
 
 % ----- Compteur pour les exposants glossaire ----------
 \newcounter{glsref}
-\renewcommand*{\theglsref}{\textsuperscript{\arabic{glsref}}}
+\renewcommand*{\theglsref}{\textsuperscript{\arabic{glsref}}}	
 % Sauvegarde de la commande originale 
 \let\oldgls\gls
 % Redéfinition de \gls pour ajouter l'exposant auto-incrémenté
@@ -81,6 +78,18 @@
 \usepackage{multicol} % Texte en colonnes
 \usepackage{lastpage} % Référence à la dernière page
 \usepackage{ragged2e} % Justification d'un texte à l'intérieur d'un parbox
+\usepackage{xcolor}
+%##########################################################################################################################################################################
+%                                                                                  PALETTES DE COULEURS
+%##########################################################################################################################################################################
+% Palette MAKEFILE
+\definecolor{makefileText}{rgb}{0.12, 0.12, 0.12}             % Noir doux, plus élégant que pur noir
+\definecolor{makefileBackground}{RGB}{245, 247, 250}          % Gris bleuté très clair
+\definecolor{makefileKeyword}{rgb}{0.0, 0.28, 0.67}           % Bleu académique
+\definecolor{makefileComment}{rgb}{0.0, 0.5, 0.0}             % Vert foncé, proche du LaTeX original
+\definecolor{makefileString}{rgb}{0.55, 0.0, 0.0}             % Bordeaux sobre
+\definecolor{makefileFrame}{gray}{0.65}                       % Gris neutre pour les bordures
+\definecolor{makefileNumbers}{gray}{0.45}                     % Gris discret pour numéros de ligne
 
 \definecolor{darkpurple}{RGB}{102,0,153}
 \definecolor{darkblue}{rgb}{0.0, 0.3, 0.6} % Bleu foncé pour les sections
@@ -112,21 +121,10 @@
 % Appliquer les liens en bleu et soulignés uniquement dans la bibliographie
 \AtEndPreamble{\hypersetup{ colorlinks=true, linkcolor=black, urlcolor=darkblue,filecolor=black }}
 
-% Redéfinir ma commande \bibliography pour personn
-liser les liens
+% Redéfinir ma commande \bibliography pour personne
 \usepackage{etoolbox}
 \pretocmd{\bibliography}{ \hypersetup{ colorlinks=true,linkcolor=black, urlcolor=black, filecolor=black}}{}{}
-\hypersetup{citecolor=darkblue,}
-
-%---------------------------Diagramme de conclusion ----------------------------------------
-
-% Définition de la mise en forme listing (pour l'intégration des codes et pseudoCode)
-\definecolor{background}{HTML}{F1F1F0}
-\definecolor{string}{HTML}{DD1144}
-\definecolor{keyword}{HTML}{0077AA}
-\definecolor{comment}{HTML}{44AA99}
-\definecolor{identifier}{HTML}{000000}
-\definecolor{framecolor}{HTML}{CCCCCC}
+\hypersetup{citecolor=darkblue}
 
 \lstset{
   backgroundcolor=\color{background}, % Couleur de fond
@@ -181,14 +179,9 @@ liser les liens
   frame=single,                           % Encadrement du listing
   rulesepcolor=\color{gray}               % Couleur de la ligne d'encadrement
 }
-% Palette scientifique sobre
-\definecolor{makefileText}{rgb}{0.12, 0.12, 0.12}             % Noir doux, plus élégant que pur noir
-\definecolor{makefileBackground}{RGB}{245, 247, 250}          % Gris bleuté très clair
-\definecolor{makefileKeyword}{rgb}{0.0, 0.28, 0.67}           % Bleu académique
-\definecolor{makefileComment}{rgb}{0.0, 0.5, 0.0}             % Vert foncé, proche du LaTeX original
-\definecolor{makefileString}{rgb}{0.55, 0.0, 0.0}             % Bordeaux sobre
-\definecolor{makefileFrame}{gray}{0.65}                       % Gris neutre pour les bordures
-\definecolor{makefileNumbers}{gray}{0.45}                     % Gris discret pour numéros de ligne
+%##########################################################################################################################################################################
+%                                                                                  STYLE BASH MAKEFILE CODE
+%##########################################################################################################################################################################
 
 % Style Makefile haut niveau
 \lstdefinestyle{makefileStyle}{
@@ -216,6 +209,7 @@ liser les liens
   belowskip=1em,
   morekeywords={@mv,doxygen, for,done, fi, if, then, pdflatex, firefox, evince, mkdir, -p, @,mv, zcat, STAR, crac,gunzip, > , >> ,echo}     
 }
+
 % Définition du caption lstlisting
 \renewcommand{\lstlistingname}{Code}
 
@@ -223,6 +217,79 @@ liser les liens
 \lstnewenvironment{makefile}[1][]{
   \lstset{style=makefileStyle, #1}
 }{}
+
+%##########################################################################################################################################################################
+%                                                                                  STYLE R MAKEFILE CODE
+%##########################################################################################################################################################################
+% PALETTE R
+\definecolor{background}{HTML}{F1F1F0}
+\definecolor{string}{HTML}{DD1144}
+\definecolor{keyword}{HTML}{0077AA}
+\definecolor{comment}{HTML}{44AA99}
+\definecolor{identifier}{HTML}{000000}
+\definecolor{framecolor}{HTML}{CCCCCC}
+\definecolor{rText}{HTML}{000000}
+\definecolor{rBackground}{HTML}{F0F0F0}
+\definecolor{rKeyword}{HTML}{0077AA}
+\definecolor{rComment}{HTML}{888888}
+\definecolor{rString}{HTML}{DD1144}
+\definecolor{rFrame}{HTML}{CCCCCC}
+\definecolor{rNumbers}{HTML}{999999}
+
+\lstdefinestyle{rStyle}{
+  language=R,
+  basicstyle=\ttfamily\footnotesize\color{rText},
+  backgroundcolor=\color{rBackground},
+  keywordstyle=\bfseries\color{rKeyword},
+  commentstyle=\itshape\color{rComment},
+  stringstyle=\color{rString},
+  frame=single,
+  rulecolor=\color{rFrame},
+  rulesepcolor=\color{rFrame},
+  numbers=left,
+  numberstyle=\tiny\color{rNumbers},
+  numbersep=8pt,
+  stepnumber=1,
+  showstringspaces=false,
+  breaklines=true,
+  breakatwhitespace=true,
+  columns=flexible,
+  tabsize=2,
+  xleftmargin=2em,
+  xrightmargin=1em,
+  aboveskip=1em,
+  belowskip=1em,
+  literate=
+    {*\%>%}{\%>\%}3
+    {~}{{\textasciitilde}}1
+    {^}{{\textasciicircum}}1
+    {<-}{{$\gets$}}2
+    {<<-}{{$\ll$}}2
+    {->}{{$\to$}}2
+    {=>}{{$\Rightarrow$}}2,
+    {é}{{\'e}}1
+    {è}{{\`e}}1
+    {ê}{{\^e}}1
+    {ë}{{\¨e}}1
+    {à}{{\`a}}1
+    {ç}{{\c{c}}}1
+    {ù}{{\`u}}1
+    {û}{{\^u}}1
+    {î}{{\^i}}1
+    {ï}{{\¨i}}1
+    {ô}{{\^o}}1,
+  morekeywords={
+    library, function, if, else, for, while, return, TRUE, FALSE, NA,
+    read_csv, read_tsv, filter, select, mutate, group_by, summarise,
+    pivot_longer, pivot_wider, ggplot, geom_point, geom_boxplot,
+    aes, labs, theme, facet_wrap, scale_fill_brewer,
+    arrange, inner_join, left_join, rename, distinct, unnest,
+    across, everything, starts_with, ends_with, contains,|>
+  }
+}
+
+% Environnement spécifique pour rStyle
+\lstnewenvironment{rstylefile}[1][]{\lstset{style=rStyle, #1}}{}
 %_________________________ Définition de la bibliographie ____________________
 \title{Rapport DevOPS M1} %Titre du fichier
 
@@ -241,7 +308,7 @@ liser les liens
 %                              DEFINITIONS DU GLOSSAIRE 
 %-------------------------------------------------------------------------------------------------
 %________________________Définition de la mise en forme  des pieds de pages et en-tête ___________________
-%Définir un fond d'image pour les pages sauf la première
+%Définir un fond d'image pour les pages sauf la premièr
 
 \newcommand{\fairemarges}{
     \makenomenclature
@@ -332,8 +399,7 @@ liser les liens
             rectangle 
             ($(current page.south east) + (-0.5cm,0.5cm)$);
     \end{tikzpicture}}
-    
-
+ 
 % Couleurs élégantes pour le code
 \definecolor{bgcolor}{rgb}{0.95,0.95,0.95}   % Fond gris clair
 \definecolor{commentcolor}{rgb}{0,0.5,0}      % Vert foncé pour les commentaires
@@ -386,3 +452,4 @@ liser les liens
 \tikzstyle{decision} = [diamond,draw=orange!80!black,fill=orange!20,thick,aspect=2.5,text centered,inner sep=1pt]
 \tikzstyle{process} = [rectangle,draw=green!50!black,fill=green!20,thick,minimum width=2.5cm,minimum height=1cm,text centered]
 \tikzstyle{formula} = [ rectangle,draw=purple!80!black,fill=purple!10,thick,text centered,rounded corners,minimum width=4.5cm,minimum height=0.9cm]
+
