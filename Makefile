@@ -1,4 +1,3 @@
-
 # ##########################################################################################################################################################################
 # Ce fichier est sous la licence MIT (Massachusetts Institute of Technology):
 # ##########################################################################################################################################################################
@@ -34,13 +33,14 @@ OUTLOG_STAR = LOGS_STAR_$(DATE)
 OUTBAM_STAR = BAM_STAR_$(DATE)
 TMPDIR = TMP_STAR_$(DATE)
 
-
 #REF_CRAC = /data/indexes/crac/GRCh37/GRCh37newIndexSansMito	
 REF_CRAC = /data/indexes/crac/GRCh37_with_MT/GRCh37newIndexAvecMito
 
 OUTBAM_CRAC = BAM_CRAC_$(DATE)
 OUTSAM_CRAC = SAM_CRAC_$(DATE)
 TMPDIR_CRAC = TMP_CRAC_$(DATE)
+BAM_FC = 
+
 KMER_CRAC= 22
 UNZIP_FASTQ = fastq_unzipped
 
@@ -53,6 +53,7 @@ SAMPLES = $(shell \
             basename $$R1 _1.fastq.gz; \
         fi; \
     done)
+    
 #Ctrl + Shift + u 2500, puis Entrée ou Espace : ─
 # ─	U+2500	Ctrl+Shift+u
 # │	U+2502	Ctrl+Shift+u
@@ -65,8 +66,6 @@ SAMPLES = $(shell \
 # ┬	U+252C	Ctrl+Shift+u
 # ┴	U+2534	Ctrl+Shift+u
 # ┼	U+253C	Ctrl+Shift+u
-
-
 
 template:
 	@clear
@@ -97,8 +96,13 @@ template:
 	@echo "│                                                                        Outils Samtools                                                             │"
 	@echo "└────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘"
 	@echo "[10] Convert_bam_sam         │ (aucun)                                           │ Convertit les SAM CRAC en BAM triés et indexés." 
-
-
+	@echp " "
+	@echo "┌────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐"
+	@echo "│                                                 Outils de Comptages - Expression différentielle                                                    │"
+	@echo "└────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘"
+	@echo "[11] 
+	
+	
 Update_swap:
 	@if [ -z "$(size)" ]; then \
  		echo "Soucis dans la valeur du swap :fournir une valeur comme :  make update_swap size=16)"; \
@@ -191,7 +195,6 @@ $(OUTBAM_STAR)/%.bam:
 7: Star_Paire_All
 
 Star_Paire_Alone:
-
 	@if [ -z "$(FQ1)" ] || [ -z "$(FQ2)" ] || [ -z "$(OUT)" ]; then \
 		echo "Utilisation : make Star_Paire_Alone FQ1=... FQ2=... OUT=SampleName" && exit 1; \
 	fi
@@ -205,11 +208,25 @@ Star_Paire_Alone:
 	     --outSAMtype BAM SortedByCoordinate \
 	     --outFileNamePrefix $(TMPDIR)/$(OUT)/
 8: Star_Paire_Alone
+
+#############################################################################################################################################################
+# 					Lancement de FeaturesCount pour les tables de comptage
+#############################################################################################################################################################
+
+GTF_PATH := ./Homo_sapiens.GRCh37.gtf
+OUTPUT_FC =  FC_COUNTS_$(DATE)
+
+fc_exons:
+	@mkdir -p $(dir $(OUTPUT_FC))
+	featureCounts -p --countReadPairs -T $(THREADS) -t exon \
+		-a $(GTF_PATH) -o $(OUTPUT_FC) $(BAMS)
+	@echo "featureCounts à l'échelle de l'exon terminé."
+	
+11:fc_exons
 #############################################################################################################################################################
 # 							REGLE DE COMPILATION Rapports Latex
 #############################################################################################################################################################	     
-	
-# Paramètres pour latex :
+
 TEXFILE = $(DIR)/main.tex
 MAIN = main
 PDF = $(MAIN).pdf
@@ -221,10 +238,16 @@ pdfLatex:
 		echo "[ERREUR] Il faut spécifier un répertoire valide avec DIR=chemin/vers/dossier"; \
 		exit 1; \
 	fi; \
-	echo "[INFO] Compilation LaTeX de $(DIR)/main.tex..."; \
-	cd $(DIR) && $(LATEX) main.tex && $(BIB) main && $(LATEX) main.tex && $(LATEX) main.tex ; \
-	evince ./main.pdf > /dev/null 2>&1 &
-
+	echo "[INFO] Compilation LaTeX de $(TEXFILE)..."; \
+	cd $(DIR) && { \
+		$(LATEX) $(MAIN).tex 2>&1 | grep -E --color=always '(^!|^l\.[0-9]+|^.*\.tex:)' || true; \
+		makeglossaries $(MAIN) > /dev/null 2>&1; \
+		$(BIB) $(MAIN) > /dev/null 2>&1; \
+		$(LATEX) $(MAIN).tex > /dev/null 2>&1; \
+		$(LATEX) $(MAIN).tex > /dev/null 2>&1; \
+		evince $(PDF) > /dev/null 2>&1 & \
+	}; 
+2: pdfLatex
 
 cleanLatex:
 	find $(BUILDLATEX) -type f -name "$(MAIN).*" ! -name "$(MAIN).pdf" -delete
