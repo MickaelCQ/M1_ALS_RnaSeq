@@ -25,8 +25,8 @@ THREADS=10
 mkdir -p "$(dirname "$OUTPUT_PATH")"
 mkdir -p logs
 
-# Exécution de featureCounts en mode exonique (-f)
-featureCounts -p --countReadPairs -T "$THREADS" -f \
+# Exécution de featureCounts en mode "exonique"
+featureCounts -p --countReadPairs -T "$THREADS" -t exon \
 -a "$GTF_PATH" -o "$OUTPUT_PATH" \
 "output/STAR/bam/202402-2401121737-SLA.bam" \
 "output/STAR/bam/202402-C01P026-Control.bam" \
