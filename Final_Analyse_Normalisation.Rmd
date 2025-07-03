@@ -15,9 +15,7 @@ geometry: "left=1.5cm,right=1.5cm,top=2cm,bottom=2cm"
 ---
   
 ```{r setup, include=FALSE}
-# ────────────────────────────────────────────────────────────────────────────────
 #  Chunk technique global : options knitr
-# ────────────────────────────────────────────────────────────────────────────────
 knitr::opts_chunk$set(
   echo        = TRUE,   # Montrer le code 
   warning     = FALSE,  # Ne pas surcharger le PDF
@@ -36,11 +34,9 @@ Ici je traite de **TPM** (intègre la longueur des genes), **TMM** (concu au dé
 # Préparation/mise en forme du dataset
 
 ```{r lib, include=TRUE}
-# ────────────────────────────────────────────────────────────────────────────────
 #  Charger les librairies nécessaires.
 #  edgeR : pour calcNormFactors (TMM, RLE) + cpm()
 #  purrr : fusion propre des dataframes
-# ────────────────────────────────────────────────────────────────────────────────
 library(readr)      # Import TSV
 library(dplyr)      # Manipulations de données
 library(tidyr)      # pivot_longer / separate
@@ -55,26 +51,38 @@ library(kableExtra) # Jolis tableaux LaTeX
 # Import/préparation de la matrice de comptages
 
 ```{r dataset}
-#  Lecture du fichier de comptages généré par featureCounts (-f).
-#  Colonne : Geneid | nom_gène | Chr | Longueur | échantillons...
+# Lecture du fichier de comptages généré par featureCounts (-f).
+# Colonnes attendues : Geneid | gene_name | Chr | Length | échantillons...
 
 tableau_comptages_bruts <- read_tsv("~/Final_counts_56genes.tsv", show_col_types = FALSE)
+
+# Renommage pour uniformiser la colonne gene_name en nom_gene
+tableau_comptages_bruts <- tableau_comptages_bruts %>% rename(nom_gene = gene_name, Longueur = Length)
 
 # Passage au format long pour faciliter les transformations ultérieures.
 comptages_long <- tableau_comptages_bruts %>%
   pivot_longer(
-    cols      = -c(Geneid, nom_gene = gene_name, Chr, Longueur = Length),
+    cols      = -c(Geneid, nom_gene, Chr, Longueur),
     names_to  = "ID_complet",
     values_to = "lectures_brutes"
   ) %>%
   separate(
-    identifiant_complet,
+    col     = "ID_complet",
     into    = c("run", "echantillon", "condition"),
-    sep     = "-",
+    sep     = "-",  
+    extra   = "merge",    
     remove  = TRUE
   )
 ```
 
+# Analyse exploratoires des données brutes
+```{r exploration}
+# Somme des lectures par échantillon, vérification de la taille des lib
+taille_bibliotheque <- comptages_long |> group_by(echantillon) |> summarise(somme_lectures =sum(lectures_brutes)) |> arrange(desc(somme_lectures))
+print(taille_bibliotheque)
+
+
+```
 # Normalisations
 
 ```{r matricecomptes}
@@ -125,12 +133,38 @@ On regarde a premiere vue comment les comptes normalisés ce répartissent par g
 
 ```{r graph gene}
 liste_genes <- unique(donnees_normalisees$nom_gene)
-groupes_genes <- split(liste_genes, ceiling(seq_along(liste_genes) /7 ))
+groupes_genes <- split(liste_genes, ceiling(seq_along(liste_genes) / 12))
 
-for (groupe in seq_along(groupes_genes)) {
-  sous_groupe <- donnees_normalisees |>  filter(nom_gene %in% groupes_genes[[groupe]])
-  p <- ggplot(sous_groupe, aes(x= echantillon))+
-    geom_line(aes(y =TPM_transcrits_par_M, color = "TPM", group =1),linewidth = 0.7)+
-    
+donnees_normalisees$condition <- factor(donnees_normalisees$condition, levels = c("Control", "SLA"))
+
+for (indice_pan in seq_along(groupes_genes)) {
+  sous_ensemble <- donnees_normalisees %>% filter(nom_gene %in% groupes_genes[[indice_pan]])
+  
+  p <- ggplot(sous_ensemble, aes(x = echantillon)) +
+    geom_line(aes(y = TPM_transcrits_par_M, color = condition,
+                  group = interaction(condition, "TPM")), linewidth = 0.7) +
+    geom_line(aes(y = TMM_cpm, color = condition,
+                  group = interaction(condition, "TMM")), linewidth = 0.7, linetype = "dashed") +
+    geom_line(aes(y = RLE_cpm, color = condition,
+                  group = interaction(condition, "RLE")), linewidth = 0.7, linetype = "dotted") +
+    facet_wrap(~ nom_gene, scales = "free_y") +
+    theme_minimal(base_size = 10) +
+    theme(axis.text.x = element_blank(), legend.position = "top") +
+    scale_color_manual(values = c("Control" = "steelblue", "SLA" = "darkgray")) +
+    labs(title = sprintf("Comparaison TPM / TMM / RLE par condition – Panel %d", indice_pan),
+         y = "Expression normalisée", x = NULL)
+  
+  print(p)
 }
+
+
+
 ```
+
+# Références
+
+Robinson, M.D., & Oshlack, A. (2010). A scaling normalization method for differential expression analysis of RNA‑seq data. Genome Biology.
+
+Li, B., & Dewey, C.N. (2011). RSEM: accurate transcript quantification from RNA‑Seq data. BMC Bioinformatics.
+
+Risso, D., etal. (2014). Normalization of RNA‑seq data using factor analysis of control genes or samples. Nature Biotechnology.
