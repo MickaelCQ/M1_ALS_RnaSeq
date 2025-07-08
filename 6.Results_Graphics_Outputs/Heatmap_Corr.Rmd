@@ -5,15 +5,40 @@ date: "`r Sys.Date()`"
 output:
   pdf_document: default
   html_document: default
+  license: "GPL v3"
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 ```
 
+# Fonction pour transformer les colonnes de comptage en log2 ou log10 selon un choix
+```{r Log, include=FALSE}
+log_transform_counts <- function(df, cols, base = 2, pseudo_count = 1) {
+  # df : dataframe
+  # cols : vecteur des noms de colonnes à transformer (variables réponses)
+  # base : base du logarithme (2 ou 10)
+  # pseudo_count : ajout d'une petite constante pour éviter log(0)
+  
+  stopifnot(base %in% c(2, 10))
+  
+  df_transformed <- df
+  
+  for (col in cols) {
+    if(col %in% colnames(df)) {
+      # Transformation logarithmique avec pseudo count
+      df_transformed[[col]] <- log(df[[col]] + pseudo_count, base = base)
+    }
+  }
+  return(df_transformed)
+}
+```
+
 ```{r tidyv}
 library(tidyverse)
 library(purrr)
+library(viridis)
+
 ```
 
 # 1. Préparation du df et des données d'entrée
@@ -31,7 +56,7 @@ df_raw <- read_csv(fichier,
 df_raw[grep("^CRAC_.*_reads$", names(df_raw))] <- df_raw[grep("^CRAC_.*_reads$", names(df_raw))]/ 2
 ```
 
-# 3. Choix des variables explicatives et réponses pour l'exploration
+# 2. Choix des variables explicatives et réponses pour l'exploration
 
 Ci-dessous, je stocke dans deux vecteurs les variables explicatives et les variables réponses que j’ai choisies pour mon analyse de corrélation. Il a fallu faire des choix : cette sélection n’est pas exhaustive. On peut bien sûr discuter de la pertinence de telle ou telle métrique, mais, dans le cadre de ces analyses univariées, je cherche à balayer rapidement les éléments qui me semblent les plus susceptibles d’influencer la robustesse expérimentale.\newline
 J’ai dû faire ces choix en tenant compte du temps imparti et du cadre du stage, car il y avait beaucoup de points à aborder, mais aussi en fonction de la disponibilité et de l’accessibilité des données. Comme je l’évoque plus haut dans mon rapport, lorsqu’on cherche à évaluer la corrélation entre deux variables, il faut poser des limites, et ici, le critère temporel a joué un rôle évident :
@@ -45,6 +70,7 @@ vars_resp <- c("STAR_Total_reads", "STAR_Unique_reads", "STAR_Unique_pct", "STAR
                "STAR_Multi_pct", "STAR_No_map_reads", "STAR_No_map_pct_sum",
                "CRAC_Total_reads", "CRAC_Unique_reads", "CRAC_Unique_pct", "CRAC_Multi_reads", 
                "CRAC_Multi_pct", "CRAC_No_map_reads", "CRAC_No_map_pct")
+
 ```
 
 J’ai également choisi de filtrer les variables qualitatives (par manque de temps). Même si je les stocke dans les vecteurs initiaux, je n’ai pas eu le temps de les explorer pour l’instant, mais elles sont incluses afin de pouvoir étudier leur impact ultérieurement.
@@ -57,14 +83,16 @@ vars_exp_num <- vars_exp[sapply(df_raw[vars_exp], is.numeric)]
 vars_resp_num <- vars_resp[sapply(df_raw[vars_resp], is.numeric)]
 ```
 
-# 4. Fonction personnalisée pour les corrélations
+# 3. Fonction personnalisée pour les corrélations
 
 J’encapsule le calcul de plusieurs métriques dans une fonction : le coefficient de corrélation de Pearson, le coefficient de détermination R2, ainsi que la p-valeur associée à la pente du modèle linéaire (qui se trouve à la ligne 2, colonne 4 du tableau des coefficients). Cette p-valeur permet d’évaluer la significativité statistique de la relation linéaire entre les variables testées x et y.
 Documentation : lm() R manual (https://stat.ethz.ch/R-manual/R-devel/library/stats/html/lm.html)
 
-**Avec le coefficient de Pearson : ** je cherche à mesurer la direction de la relation entre mes deux variables x et y.
+**Avec le coefficient de Pearson/ Spaerman: ** je cherche à mesurer la direction de la relation entre mes deux variables x et y.
 
 **Avec le coefficient de determination R2 : ** je quantifie "l'explicabilité de la variance de y vers x . (on peut dire cela plus simplement en parlant de la qualité de la relation linéaire)
+
+\vspace{10cm}
 
 ```{r define-corr-function}
 corr_metrics <- function(x, y) {
@@ -74,23 +102,37 @@ corr_metrics <- function(x, y) {
   y_ok <- y[ok]
   
   # Au moins 30 valeurs pour avoir un effectif minimum :
-  if(length(x_ok) < 30) return(c(cor = NA, R2 = NA, pval = NA)) 
+  if(length(x_ok) < 15) return(c(cor = NA, R2 = NA, pval = NA, method = NA)) 
   
-  # Calcul du coefficient de pearson:
-  cor_val <- cor(x_ok, y_ok, method = "pearson")
+  
+  # On teste la normalité pour faire un choix sur la stratégie de corrélation: 
+  normal_x <- shapiro.test(x_ok)$p.value > 0.05
+  normal_y <- shapiro.test(y_ok)$p.value > 0.05 
+  method <- ifelse(normal_x & normal_y, "pearson", "spearman")
+  
+  # Calcul du coefficient:
+  cor_val <- cor(x_ok, y_ok, method = method)
+  
   # Détermination du modèle linéaire pour chaque variable nettoyée
   lmfit <- lm(y_ok ~ x_ok)
   sum_lm <- summary(lmfit)
+  
   # Extraction du coefficient de détermination: 
   R2 <- sum_lm$r.squared
   
   # Qualité de la relation à travers la valeur de pvalue : 
   pval <- coef(summary(lmfit))[2,4]
-  c(cor = cor_val, R2 = R2, pval = pval)
+  
+  return(c(cor = cor_val, R2 = R2, pval = pval, method = method))
 }
 ```
 \vspace{10mm}
-# 5. Calcul des matrices de corrélation
+
+```{R log_count, include =FALSE}
+# Transformation log  sur les variables réponses numériques (les comptages)
+#df_raw <- log_transform_counts(df_raw, vars_resp_num, base = 10)
+```
+
 
 ```{r compute-correlation-matrices}
 cor_mat  <- matrix(NA_real_, nrow = length(vars_resp_num), 
@@ -98,6 +140,9 @@ cor_mat  <- matrix(NA_real_, nrow = length(vars_resp_num),
                    dimnames = list(vars_resp_num, vars_exp_num))
 R2_mat   <- cor_mat
 pval_mat <- cor_mat
+meth_mat <- matrix(NA_character_, nrow = length(vars_resp_num), 
+                  ncol = length(vars_exp_num),
+                  dimnames = list(vars_resp_num,vars_exp_num))
 
 for (resp in vars_resp_num) {
   for (expv in vars_exp_num) {
@@ -105,6 +150,7 @@ for (resp in vars_resp_num) {
     cor_mat[resp, expv]  <- m["cor"]
     R2_mat[resp, expv]   <- m["R2"]
     pval_mat[resp, expv] <- m["pval"]
+    meth_mat[resp, expv] <- m["method"]
   }
 }
 ```
@@ -115,107 +161,178 @@ for (resp in vars_resp_num) {
 df_corr <- as.data.frame(as.table(cor_mat))
 colnames(df_corr) <- c("Response", "Explicative", "Correlation")
 
-df_corr$R2 <- as.vector(R2_mat)
-df_corr$pval <- as.vector(pval_mat)
-
-df_corr <- df_corr %>%
+df_corr <- df_corr |>
   mutate(
-    R2_label = ifelse(!is.na(R2), sprintf("R²=%.2f", R2), ""),
+    Correlation = as.numeric(Correlation),
+    R2 = as.numeric(as.vector(R2_mat)),
+    pval = as.numeric(as.vector(pval_mat)),
+    method = as.vector(meth_mat)
+  ) |>
+  mutate(
+    R2_label = ifelse(!is.na(R2), sprintf("R2=%.2f", R2), ""),
     signif = case_when(
       is.na(pval) ~ "NS",
       pval < 0.001 ~ "***",
-      pval < 0.01  ~ "**",
-      pval < 0.05  ~ "*",
+      pval < 0.05  ~ "**",
+      pval < 0.10  ~ "*",
       TRUE         ~ "NS"
     ),
-    label = ifelse(!is.na(Correlation),
-                   paste0("r:", sprintf("%.3f",Correlation), "\n", R2_label, "\n", signif),
-                   "")
+    label = ifelse(
+      !is.na(Correlation),
+      paste0("r:", sprintf("%.3f", Correlation), " \n", method, "\n", R2_label, "\n", signif),
+      ""
+    )
   )
 ```
 
-# 7. Génération de la heatmap des corrélations
+# 7.1. Génération de la heatmap intégrale
 
-```{r plot-heatmap, fig.width=14, fig.height=9}
+```{r plot-heatmap, fig.width=20, fig.height=9}
 heatmap_plot <- ggplot(df_corr, aes(x = Explicative, y = Response, fill = Correlation)) +
-  geom_tile(color = "grey30") +
-  geom_text(aes(label = label), size = 3, lineheight = 1, family = "mono") +
-  scale_fill_gradient2(low = "darkblue", mid = "white", high = "darkred", midpoint = 0,
-                       na.value = "grey90", limits = c(-1, 1), name = "Corrélation (r)") +
+  geom_tile(color = "grey50", linewidth = 0.4) +
+  geom_text(aes(label = label), size = 6, lineheight = 1) +
+  scale_fill_gradient2(
+    low = "darkblue", mid = "white", high = "darkred",
+    midpoint = 0, limits = c(-1, 1), na.value = "grey90",
+    guide = guide_colorbar(
+      barwidth = 5,     
+      barheight = 30    
+    )
+  ) +
+  scale_x_discrete(position = "top") +
+  coord_fixed(ratio = 0.6) +
   theme_minimal(base_size = 12) +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1)) +
+  theme(
+    axis.title.x = element_text(size = 35, face = "bold", color = "darkblue", margin = margin(t = 10)), 
+    axis.title.y = element_text(size = 35, face = "bold", color = "darkblue", margin = margin(r = 10)),
+    axis.text.x = element_text(size = 22, angle = 45, hjust = 0, vjust = 1, face = "bold"),
+    axis.text.y = element_text(size = 22, face = "bold"),
+    plot.title = element_text(size = 22, face = "bold"),
+    plot.subtitle = element_text(size = 22),
+    panel.grid = element_blank(),
+    legend.title = element_text(size = 30, face = "bold", color = "darkblue"),
+    legend.text = element_text(size = 16, face = "bold")
+  ) +
   labs(
-    title = "Heatmap des corrélations entre variables explicatives et réponses",
-    subtitle = "Valeurs : corrélation r, R² et significativité (* p<0.05)",
-    x = "Variables explicatives",
-    y = "Variables réponses"
+    title = "",
+    subtitle = "",
+    x = "Variable explicative (Ve)",
+    y = "Variable réponse (Vr)",
+    fill = "Corrélation (r)"
+  ) +
+  expand_limits(y = c(-1, NA)) +  
+  annotate("text",
+           x = length(unique(df_corr$Explicative)), 
+           y = -0.5,                               
+           label = paste0(
+             "Significativité :\n",
+             "*** : p < 0.001\n",
+             "**  : 0.001 =< p < 0.05\n",
+             "*   : 0.05 =< p < 0.10\n",
+             "NS  : p >= 0.10 ou non significatif"
+           ),
+           hjust = -2.5, vjust = -1,
+           size = 3.5,
+           fontface = "italic"
   )
 
 print(heatmap_plot)
+
+```
+
+```{r save-results}
+#ggsave("~/Latex_Project/Rapport_M1_irmb/Heatmap_Correlation_spearman.png",
+ #      heatmap_plot, width = 27, height = 22, dpi = 600)
+```
+# 7.2 Génération de la heatmap significative 
+
+```{r plot-heatmap-sign, fig.width=14, fig.height=9}
+df_sig <- df_corr %>% filter(signif != "NS"  & signif != "*")
+
+heatmap_plot_sign <- ggplot(df_sig,
+                       aes(x = Explicative, y = Response, fill = Correlation)) +
+  geom_tile(color = "grey50", linewidth = 0.4) +
+  geom_text(aes(label = label), size = 15, lineheight = 1) +
+  scale_fill_gradient2(
+    low = "darkblue", mid = "white", high = "darkred",
+    midpoint = 0, limits = c(-1, 1), na.value = "grey90",
+    guide = guide_colorbar(
+      barwidth = 6,     
+      barheight = 40    
+    )
+  ) +
+  scale_x_discrete(limits = unique(df_corr$Explicative), position = "top") +
+  scale_y_discrete(limits = rev(unique(df_corr$Response))) +
+  scale_x_discrete(drop = TRUE)+
+  scale_y_discrete(drop = TRUE)+
+  #coord_fixed(ratio = 0.6) +
+  theme_minimal(base_size = 12) +
+  theme(
+    axis.title.x = element_text(size = 40, face = "bold", color = "darkblue", margin = margin(t = 10)), 
+    axis.title.y = element_text(size = 40, face = "bold", color = "darkblue", margin = margin(r = 10)),
+    axis.text.x = element_text(size = 40, angle = 45, hjust = 0, vjust = 0, face = "bold"),
+    axis.text.y = element_text(size = 40, face = "bold"),
+    plot.title = element_text(size = 22, face = "bold"),
+    plot.subtitle = element_text(size = 22),
+    panel.grid = element_blank(),
+    legend.title = element_text(size = 30, face = "bold", color = "darkblue"),
+    legend.text = element_text(size = 16, face = "bold")
+  ) +
+  labs(
+    title = "",
+    subtitle = "",
+    x = "Variable explicative (Ve)",
+    y = "Variable réponse (Vr)",
+    fill = "Corrélation (r)"
+  ) +
+  expand_limits(y = c(1, NA))
+
+print(heatmap_plot_sign)
+
+```
+
+```{r save-resultsbis}
+#ggsave("~/Latex_Project/Rapport_M1_irmb/Heatmap_Correlation_spearman_sign.png",
+   #    heatmap_plot_sign, width = 27, height = 22, dpi = 600)
 ```
 
 # 8. Sauvegarde du graphique et du csv résultats
+# 9 . Complement d'enquete 
+Dans cette partie, pour mieux explorer visuellement les relations linéaires entre variables explicatives et variables réponses, je réalise des scatterplots avec une régression linéaire simple. Pour éviter de surcharger un seul graphique avec toutes les combinaisons, j’ai choisi de regrouper les combinaisons par groupes, chaque groupe correspondant à une figure distincte, et puis surtout je vais regarder uniquement les relations de corrélation ou une significativité intéressante sur la pente est identifié de la droite de regression. 
 
-```{r save-results}
-ggsave("Heatmap_Correlation.png", 
-       heatmap_plot, width = 14, height = 9, dpi = 300)
-ggsave("~/Latex_Project/Rapport_M1_irmb/Heatmap_Correlation_spearman.png",
-       heatmap_plot, width = 14, height = 9, dpi = 300)
+# Création des paires variables explicatives / variables réponses
+```{r comp}
+couples_sig <- df_corr %>%
+  filter(signif != "NS") %>%
+  arrange(Response, Explicative) %>%
+  select(Explicative, Response)
 
-write.csv(df_corr %>% select(Response, Explicative, Correlation, R2, pval, signif),
-          file = "Correlation_Results_numeric_only_spear.csv",
-          row.names = FALSE, fileEncoding = "UTF-8")
-```
+plots_per_fig <- 10
+couples_sig   <- couples_sig %>% mutate(fig_grp = ceiling(row_number() / plots_per_fig))
 
-#9 . Complement d'enquete 
-Dans cette partie, pour mieux explorer visuellement les relations linéaires entre variables explicatives et variables réponses, je réalise des scatterplots avec une régression linéaire simple. Pour éviter de surcharger un seul graphique avec toutes les combinaisons, j’ai choisi de regrouper les combinaisons par groupes de 10 plots, chaque groupe correspondant à une figure distincte.
+plot_lm_group <- function(g) {
+  sel <- filter(couples_sig, fig_grp == g)
 
-Cela permet de visualiser clairement chaque relation tout en respectant une lisibilité optimale des facettes.
-# Scatterplot simple avec ggplot2
+  df_long <- map2_df(sel$Explicative, sel$Response,
+                     ~ df_raw %>%
+                       select(all_of(c(.x, .y))) %>%
+                       rename(x = .x, y = .y) %>%
+                       mutate(Explicative = .x,
+                              Response    = .y))
 
-```{r Complement}
-
-# Création des combinaisons x/y avec groupement par paquets de 10
-combinaisons <- expand.grid(x_var = vars_exp_num, y_var = vars_resp_num, stringsAsFactors = FALSE) %>%
-  mutate(group = ceiling(row_number() / 10))  # regroupe par 10 combinaisons
-
-# Fonction pour créer un graphique de scatterplots avec régression par groupe
-plot_group <- function(group_num, df, comb_df) {
-  comb_subset <- comb_df %>% filter(group == group_num)
-  
-  # Création du dataframe long pour ggplot
-  df_long <- purrr::map2_df(comb_subset$x_var, comb_subset$y_var, function(x, y) {
-    df %>%
-      select(all_of(c(x, y))) %>%
-      rename(x = !!x, y = !!y) %>%
-      mutate(x_var = x, y_var = y)
-  })
-  
   ggplot(df_long, aes(x = x, y = y)) +
-    geom_point(size = 1.5, alpha = 0.6, color = "#0072B2") +
-    geom_smooth(method = "lm", se = TRUE, color = "darkred", linewidth = 0.7) +
-    facet_wrap(~ paste0("Y: ", y_var, "\nX: ", x_var), scales = "free", ncol = 2) +
-    labs(
-      title = paste("Régressions linéaires (Groupe", group_num, ")"),
-      x = "Variable explicative",
-      y = "Variable réponse",
-      caption = "Modèle : lm (régression linéaire simple)"
-    ) +
-    theme_minimal(base_size = 11) +
-    theme(strip.text = element_text(size = 10))
+    geom_point(alpha = 0.6, colour = "steelblue") +
+    geom_smooth(method = "lm", se = TRUE, colour = "firebrick") +
+    facet_wrap(~ paste0("Y: ", Response, " | X: ", Explicative), scales = "free", ncol = 2) +
+    theme_minimal() +
+    labs(title = paste("Régressions linéaires – groupe", g), x = NULL, y = NULL)
 }
 
-# Nombre total de groupes
-n_groups <- max(combinaisons$group)
+n_figs <- max(couples_sig$fig_grp)
 
-# Génération et sauvegarde des graphiques pour chaque groupe
-for (i in seq_len(n_groups)) {
-  p <- plot_group(i, df_raw, combinaisons)
-  print(p)  # Affiche dans le document
-  
-  # Sauvegarde
-  filename <- paste0("Scatterplots_Group_", i, ".png")
-  ggsave(filename, p, width = 10, height = 12, dpi = 300)
+for (g in seq_len(n_figs)) {
+  p <- plot_lm_group(g)
+  print(p)
+  ggsave(sprintf("~/Latex_Project/Rapport_M1_irmb/Scat_noLog.pdf", g), p, width = 10, height = 12, dpi = 300)
 }
-
 ```
