@@ -1,0 +1,447 @@
+---
+title: "Analyse comparative des méthodes de normalisation RNA Seq cible SLA"
+author: "Mickael Coquerelle"
+date: "`r Sys.Date()`"
+output:
+  pdf_document:
+    number_sections: true
+    toc: true
+highlight: tango
+fig_caption: true
+latex_engine: pdflatex
+fontsize: 11pt
+mainfont: "Helvetica"
+geometry: "left=1cm,right=1cm,top=1cm,bottom=1cm"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo        = TRUE,   
+  warning     = FALSE,  
+  message     = FALSE,  
+  fig.width   = 8.5,   
+  fig.height  = 5,
+  dpi         = 600
+)
+```
+
+# Avant-propos et objectifs
+
+Ce rapport sert de synthèse a mes différentes investigations et scripts/essais que j'ai pu effectuer en \texttt{R}, pour générer/évaluer mes données de comptages et surtout à mes investigations sur les méthodes de normalisation pour faire de l'analyse quantitative dans le périmètre du RNA-Seq ciblé sur le panel de 56 gènes et tout ce que cela implique en terme de contraintes et de limites, comme détaillé dans mes anciennes réalisations. 
+
+Ici je traite de **TPM** (intègre la longueur des genes), **TMM** (concu au départ pour le transcriptome complet) et **RLE** (hypothèse d'une médiane stable). Je tiens à rappeler également que les approches classiques dans notre contexte de faible nombre de gènes sont relativements fragiles (cf. mon travail bibliographique sur les méthodes de normalisation).
+
+# Préparation/mise en forme du dataset
+
+```{r lib, include=TRUE}
+#  Charger les librairies nécessaires.
+#  edgeR : pour calcNormFactors (TMM, RLE) + cpm()
+#  purrr : fusion propre des dataframes
+library(readr)      # Import TSV
+library(dplyr)      # Manipulations de données
+library(tidyr)      # pivot_longer / separate
+library(ggplot2)    # Visualisations
+library(edgeR)      # Normalisation TMM & RLE
+library(purrr)      # reduce pour fusion
+library(broom)      
+library(kableExtra) 
+library(patchwork)  # pour juxtaposer graphiques
+library(ggrepel)
+library(tibble)     # rownames_to_column
+```
+
+# Import/préparation de la matrice de comptages
+
+```{r dataset}
+# Lecture du fichier de comptages généré par featureCounts (-f).
+# Colonnes attendues : Geneid | gene_name | Chr | Length | échantillons...
+
+tableau_comptages_bruts <- read_tsv("~/Final_counts_56genes.tsv", show_col_types = FALSE)
+
+# Renommage pour uniformiser la colonne gene_name en nom_gene
+tableau_comptages_bruts <- tableau_comptages_bruts %>% rename(nom_gene = gene_name, Longueur = Length)
+
+#filtre_gene <- c("DPYSL3")
+filtre_gene <- c("")
+#filtre_pat <- c("202505S14-C01P092-SLA","202501b-C01P269-SLA","202312-2106212448-SLA")
+filtre_pat  <- c("")
+# Passage au format long pour faciliter les transformations ultérieures.
+
+comptages_long <- tableau_comptages_bruts %>%
+  pivot_longer(
+    cols      = -c(Geneid, nom_gene, Chr, Longueur),
+    names_to  = "ID_complet",
+    values_to = "lectures_brutes"
+  ) %>%
+  separate(
+    col     = "ID_complet",
+    into    = c("run", "echantillon", "condition"),
+    sep     = "-",  
+    extra   = "merge",    
+    remove  = TRUE
+  )
+comptages_long <- comptages_long %>% filter(!echantillon %in% filtre_pat) %>%  filter(!nom_gene %in% filtre_gene)
+
+# Appliquer un seuil de comptage brut : garder les gènes exprimés à au moins 1000 dans au moins un échantillon
+genes_conserves <- comptages_long %>%
+  group_by(Geneid) %>%
+  summarise(max_comptage = max(lectures_brutes, na.rm = TRUE)) %>%
+  filter(max_comptage >= 100) %>%
+  pull(Geneid)
+
+# Filtrer le tableau long pour ne garder que ces gènes
+comptages_long <- comptages_long %>%
+  filter(Geneid %in% genes_conserves)
+
+```
+
+# Récuperer l'expression théorique dans le sang pr les gènes étudiés
+Avec ce chunk, je cherche a récupérer l'expression théorique sanguine sur gtex, pour voir si j'ai une cohérence globale entre les comptes empiriques (normalisés TPM) et l'expression documenté sur ensembl, mon idée générale c'est de voir si retrouve une cohérence entre mes valeurs expérimentales et les valeurs théoriques
+
+```{r expression}
+genes_sla <- c("ALS2", "ANG", "ANO6", "APOE", "APP", "C21orf2","C9orf72","CAPRIN1", "CCNF","CHCHD10","CHMP2B","CSF1R","DAO","DCTN1","DPYSL3","ELP3","EPHA4", "ERBB4", "EWSR1", "FAS", "FIG4", "FUS", "GC", "GRN", "HNRNPA1", "HNRNPA2B1", "KIF5A", "LMNB1", "MAPT", "MATR3", "NEFH", "NEK1", "NR1H2", "NR1H3", "OPTN", "PFN1", "PRPH", "PSEN1", "PSEN2", "SETX", "SIGMAR1", "SOD1", "SPAST", "SPG11", "SPTLC1", "SQSTM1", "TAF15", "TARDBP", "TBK1", "TIA1", "TREM2", "TUBA4A", "UBQLN2", "UNC13A", "VAPB", "VCP" )
+```
+
+# Analyse exploratoires des données brutes
+```{r exploration}
+# Somme des lectures par échantillon, vérification de la taille des lib
+taille_bibliotheque <- comptages_long |> group_by(echantillon) |> summarise(somme_lectures =sum(lectures_brutes)) |> arrange(desc(somme_lectures))
+print(taille_bibliotheque)
+```
+
+# Histogramme des tailles de bibliothèques
+```{r lib_taille}
+ggplot(taille_bibliotheque, aes(x = somme_lectures)) +
+  geom_histogram(bins = 20, fill = "steelblue", color = "black") +
+  labs(title = "Distribution des tailles de bibliothèques (lectures brutes)",
+       x = "Nombre de lectures",
+       y = "Nombre d'échantillons") +
+  theme_minimal()
+```
+# Normalisations
+
+```{r matricecomptes}
+  # On créer une matrice ge pour edgeR
+comptages_larges <- comptages_long |> group_by(nom_gene, echantillon) |> summarise(total_lectures = sum(lectures_brutes), .groups= "drop") |> pivot_wider(names_from = echantillon, values_from = total_lectures) |> column_to_rownames("nom_gene")
+```
+
+## TPM
+```{r tpm}
+tpm_long <- comptages_long |> group_by(echantillon) |> mutate(
+  taux_expression = lectures_brutes / Longueur,
+  TPM_transcrits_par_M = taux_expression / sum(taux_expression) * 1e6) |> ungroup ()
+```
+
+```{r tpm_sum}
+# La somme des TPM est bien de 1M pour chaque patient:
+verif_tpm <- tpm_long |> group_by(echantillon) |> 
+  summarise(somme_tpm = sum(TPM_transcrits_par_M)) |> arrange(somme_tpm)
+#Sortie
+verif_tpm |> knitr::kable(digits = 1, col.names = c("Échantillon", "Somme des TPM")) |> 
+  kableExtra::kable_styling(full_width = FALSE, position = "center")
+```
+
+## TMM (Trimmed Mean of M-values)
+```{r TMM}
+objet_tmm_edge <- DGEList(counts = as.matrix(comptages_larges))
+objet_tmm_edge <- calcNormFactors(objet_tmm_edge, method ="TMM")
+
+matrice_cpm_tmm <- cpm(objet_tmm_edge, normalized.lib.sizes = TRUE)
+
+```
+
+## RLE (Relative Log expression)
+```{r RLE}
+objet_rle_edge <- DGEList(counts = as.matrix(comptages_larges))
+objet_rle_edge <- calcNormFactors(objet_rle_edge, method ="RLE")
+
+matrice_cpm_rle <- cpm(objet_rle_edge, normalized.lib.sizes = TRUE)
+```
+
+## Création d'un tibble global des comptes normalisés 
+```{r tibble}
+tpm_tb <- tpm_long |> select(echantillon, nom_gene, TPM_transcrits_par_M)
+
+tmm_tb <- matrice_cpm_tmm |> as.data.frame() |> rownames_to_column("nom_gene") |> pivot_longer(-nom_gene, names_to = "echantillon", values_to ="TMM_cpm")
+
+rle_tb <- matrice_cpm_rle |> as.data.frame() |> rownames_to_column("nom_gene") |> pivot_longer(-nom_gene,
+names_to = "echantillon", values_to = "RLE_cpm")
+
+bruts_tb <- comptages_long %>%   
+  group_by(echantillon, nom_gene) %>%                     
+  summarise(total_lectures = sum(lectures_brutes), .groups="drop")
+
+donnees_normalisees <- reduce(list(tpm_tb, tmm_tb, rle_tb,bruts_tb), full_join, by = c("echantillon","nom_gene")) |> 
+  left_join (comptages_long |> distinct(echantillon,run,condition), by ="echantillon")
+```
+
+
+```{r diff}
+# Création d'une table de design
+condition <- donnees_normalisees %>%
+  distinct(echantillon, condition) %>%
+  arrange(match(echantillon, colnames(comptages_larges))) %>% pull(condition)
+
+# Vérification des niveaux
+condition <- factor(condition, levels = c("Control", "SLA"))
+
+# Création d'un objet DGEList + normalisation
+dge <- DGEList(counts = as.matrix(comptages_larges))
+dge <- calcNormFactors(dge, method = "TMM")
+
+# Design matrix
+design <- model.matrix(~ condition)
+
+# Estimation dispersion + modélisation
+dge <- estimateDisp(dge, design)
+fit <- glmFit(dge, design)
+
+# Test du coefficient lié à la condition SLA
+lrt <- glmLRT(fit, coef = 2)
+
+# Extraction des résultats
+resultats_diff_expr <- topTags(lrt, n = Inf)$table
+
+# Ajout du statut significatif
+resultats_diff_expr$significatif <- resultats_diff_expr$FDR < 0.05
+
+# Affichage
+resultats_diff_expr |> filter(significatif) |> arrange(FDR) |> head()
+
+ggplot(resultats_diff_expr, aes(x = logFC, y = -log10(FDR), color = significatif)) +
+  geom_point(alpha = 0.8) +
+  scale_color_manual(values = c("gray60", "blue")) +
+  labs(title = "Volcano plot - SLA vs Control",
+       x = "log2 Fold Change",
+       y = "-log10(FDR)") +
+  theme_minimal()
+
+```
+
+## Visualisation des comptes normalisés
+
+On regarde a premiere vue comment les comptes normalisés ce répartissent par gènes, avec une facet par gène pour les trois approches. L'idée étant surtout ici d'observer si il y'a des différences excessives entre les approches et comprendre dérrière à quoi elles peuvent êtres dues ... 
+
+```{r graph_gene}
+liste_genes <- unique(donnees_normalisees$nom_gene)
+groupes_genes <- split(liste_genes, ceiling(seq_along(liste_genes) / 12))
+
+donnees_normalisees$condition <- factor(donnees_normalisees$condition, levels = c("Control", "SLA"))
+
+for (indice_pan in seq_along(groupes_genes)) {
+  sous_ensemble <- donnees_normalisees %>% filter(nom_gene %in% groupes_genes[[indice_pan]])
+  
+  p <- ggplot(sous_ensemble, aes(x = echantillon)) +
+    geom_line(aes(y = TPM_transcrits_par_M, color = condition,
+                  group = interaction(condition, "TPM")), linewidth = 0.7) +
+    geom_line(aes(y = TMM_cpm, color = condition,
+                  group = interaction(condition, "TMM")), linewidth = 0.7, linetype = "dashed") +
+    geom_line(aes(y = RLE_cpm, color = condition,
+                  group = interaction(condition, "RLE")), linewidth = 0.7, linetype = "dotted") +
+    facet_wrap(~ nom_gene, scales = "free_y") +
+    theme_minimal(base_size = 10) +
+    theme(axis.text.x = element_blank(), legend.position = "top") +
+    scale_color_manual(values = c("Control" = "steelblue", "SLA" = "darkgray")) +
+    labs(title = sprintf("Comparaison TPM / TMM / RLE par condition – Panel %d", indice_pan),
+         y = "Expression normalisée", x = NULL)
+  
+  print(p)
+}
+```
+
+## Comparaison visuelle des normalisations
+
+```{r Compa_norm, include= FALSE}
+
+donnees_long <-donnees_normalisees %>%
+  pivot_longer(cols = c(TPM_transcrits_par_M, TMM_cpm, RLE_cpm),
+               names_to = "methode",
+               values_to = "expression_norm")
+
+donnees_long$methode <- factor(donnees_long$methode,
+                              levels = c("TPM_transcrits_par_M", "TMM_cpm", "RLE_cpm"),
+                              labels = c("TPM", "TMM", "RLE"))
+
+p_tpm <- ggplot(donnees_long %>% filter(methode == "TPM"), aes(x = expression_norm)) +
+  geom_histogram(bins = 50, fill = "skyblue", color = "black") +
+  labs(title = "Distribution TPM") +
+  theme_minimal()
+
+p_tmm <- ggplot(donnees_long %>% filter(methode == "TMM"), aes(x = expression_norm)) +
+  geom_histogram(bins = 50, fill = "orange", color = "black") +
+  labs(title = "Distribution TMM") +
+  theme_minimal()
+
+p_rle <- ggplot(donnees_long %>% filter(methode == "RLE"), aes(x = expression_norm)) +
+  geom_histogram(bins = 50, fill = "green", color = "black") +
+  labs(title = "Distribution RLE") +
+  theme_minimal()
+
+(p_tpm / p_tmm / p_rle) + patchwork::plot_layout(ncol = 1)
+```
+
+```{r boxnorm}
+ggplot(donnees_long, aes(x = methode, y = expression_norm, fill = condition)) +
+  geom_boxplot(outlier.size = 0.5) +
+  facet_wrap(~ nom_gene, scales = "free_y") +
+  theme_minimal() +
+  labs(title = "Distribution normalisée par méthode et condition",
+       x = "Méthode de normalisation",
+       y = "Expression normalisée") +
+  scale_fill_manual(values = c("Control" = "steelblue", "SLA" = "darkgray"))
+```
+
+### 1. MA‑plot TPM ---------------------------------------------------------
+
+```{r maplotTPM}
+tpm_ma <- tpm_long %>%                                   
+  group_by(nom_gene, condition) %>%                      
+  summarise(expr = mean(TPM_transcrits_par_M), .groups="drop") %>%
+  pivot_wider(names_from = condition, values_from = expr) %>%
+  mutate(
+    aveExpr = log2((Control + SLA)/2 + 1),
+    logFC   = log2(SLA + 1) - log2(Control + 1),
+    significatif = abs(logFC) > 1               
+  )
+```
+
+### 2. MA‑plot TMM ---------------------------------------------------------
+# LRT déjà calculé → lrt
+```{r mapplotTMM}
+tmm_res <- as_tibble(resultats_diff_expr, rownames = "nom_gene") %>%
+  select(nom_gene, logFC, logCPM, FDR) %>%
+  mutate(
+    aveExpr = logCPM,            # déjà en log2 CPM moyens
+    significatif = FDR < 0.05
+  )
+```
+
+### 3. MA‑plot RLE ---------------------------------------------------------
+```{r maplot RLE}
+dge_rle <- DGEList(counts = as.matrix(comptages_larges))
+dge_rle <- calcNormFactors(dge_rle, method = "RLE")
+dge_rle <- estimateDisp(dge_rle, design)
+fit_rle <- glmFit(dge_rle, design)
+lrt_rle <- glmLRT(fit_rle, coef = 2)
+rle_res <- topTags(lrt_rle, n = Inf)$table %>%
+  as_tibble(rownames = "nom_gene") %>%
+  mutate(
+    aveExpr = logCPM,
+    significatif = FDR < 0.05
+  )
+```
+
+
+### 4. Fonction générique de tracé -----------------------------------------
+
+Dans les MA-plot ci dessous je cherche à regarde l'expression moyenne des gènes par la moyenne des comptages en face de la variation relative d'expression du dit gène entre ces deux conditions. 
+
+x : Représente le niveau moyen d'expression normalisée (log2) d'un gène dans les deux conditions comparées (sla et controle).
+
+```{r Trace }
+trace_ma <- function(df, titre) {
+  ggplot(df, aes(x = aveExpr, y = logFC, colour = significatif)) +
+    geom_hline(yintercept = 0, linetype = "dashed") +
+    geom_point(size = 2, alpha = 0.8) +
+    scale_colour_manual(values = c(`TRUE` = "darkblue", `FALSE` = "grey60")) +
+    coord_cartesian(ylim = c(min(df$logFC), max(df$logFC))) +
+    
+    geom_text_repel(
+      data = df %>% filter(significatif),       # que les points significatifs
+      aes(label = nom_gene),
+      size = 3,
+      box.padding = 0.3,
+      point.padding = 0.5,
+      max.overlaps = Inf                         # pour afficher tous les labels
+    ) +
+    labs(title = titre,
+         x = "log2 comptages moyens",
+         y = "log2 FC",
+         colour = "Significatif") +
+    theme_minimal(base_size = 11) 
+}
+
+p_tpm <- trace_ma(tpm_ma, "MA‑plot TPM")
+p_tmm <- trace_ma(tmm_res, "MA‑plot TMM")
+p_rle <- trace_ma(rle_res, "MA‑plot RLE")
+
+(p_tpm / p_tmm / p_rle) +                          
+  plot_annotation(tag_levels = "A")                  # tags A/B/C optionnels
+```
+
+
+# Comptes normalisés et bruts par gène, méthode et patient
+
+```{r comptegenes, warning=FALSE, message = FALSE}
+vars_y        <- c("TPM_transcrits_par_M", "TMM_cpm", "RLE_cpm", "total_lectures")
+ncol_facets   <- 1                        
+genes_par_fig <- 1 
+genes_par_row <- 1                         
+
+donnees_longues <- donnees_normalisees %>%
+  select(echantillon, nom_gene, condition, all_of(vars_y)) %>%
+  pivot_longer(cols = all_of(vars_y), names_to = "methode", values_to = "expr") %>%
+  mutate(methode = recode(methode,
+                          "TPM_transcrits_par_M" = "TPM",
+                          "TMM_cpm"              = "TMM",
+                          "RLE_cpm"              = "RLE",
+                          "total_lectures"       = "Bruts"))
+
+# 3) Découpage en groupes de gènes pour paginer ------------------------------
+cut_genes <- split(unique(donnees_longues$nom_gene),
+                   ceiling(seq_along(unique(donnees_longues$nom_gene)) / genes_par_fig))
+
+# 4) Boucle de génération des graphiques --------------------------------------
+for (i in seq_along(cut_genes)) {
+  
+  p <- donnees_longues %>%
+    filter(nom_gene %in% cut_genes[[i]]) %>%
+    ggplot(aes(x = echantillon, y = expr, fill = condition)) +
+    geom_col(position = "dodge") +
+    facet_grid(rows = vars(nom_gene), cols = vars(methode), scales = "free_y") +
+    theme_minimal(base_size = 15) +
+    theme(axis.text.x = element_text(angle = 90, hjust = 1, size = 5),
+          strip.text = element_text(size = 12),
+          legend.position = "top") +
+    labs(title = sprintf("Expression génique — Panel %d (%d gènes × %d méthodes)", 
+                         i, genes_par_fig, ncol_facets),
+         x = "Échantillons",
+         y = "Valeurs de comptage (normalisées ou brutes)",
+         fill = "Condition")
+  print(p)
+}
+```
+
+
+
+```{r export mat_norm}
+# Montage de la matrice des données normalisées pour l'export 
+
+matrice_finale_export <- donnees_normalisees %>%
+  mutate(TPM_transcrits_par_M = round(TPM_transcrits_par_M, digit=0),
+         TMM_cpm = round(TMM_cpm, digit = 0),
+         RLE_cpm = round(RLE_cpm, digit = 0)) %>%
+  select(echantillon,nom_gene, total_lectures, TPM_transcrits_par_M, TMM_cpm, RLE_cpm) %>%
+  arrange(nom_gene, echantillon)
+
+matrice_finale_export <- matrice_finale_export %>%
+  rename(patient     = echantillon,
+    gene        = nom_gene,
+    BRUTES      = total_lectures,
+    TPM         = TPM_transcrits_par_M,
+    TMM_CPM     = TMM_cpm,
+    RLE_CPM     = RLE_cpm
+  )
+# Export au format CSV
+write_csv(matrice_finale_export, file = "~/Matrice_TPM_TMM_RLE.csv")
+
+# Confirmation dans le log
+cat("Matrice de comptages normalisés exportée dans 'Matrice_comptages_normalisés_TPM_TMM_RLE.csv'\n")
+```
+
+# Références
+*Robinson, M.D., & Oshlack, A. (2010). A scaling normalization method for differential expression analysis of RNA‑seq data. Genome Biology.*
+
+*Li, B., & Dewey, C.N. (2011). RSEM: accurate transcript quantification from RNA‑Seq data. BMC Bioinformatics.*
+
+*Risso, D., etal. (2014). Normalization of RNA‑seq data using factor analysis of control genes or samples. Nature Biotechnology.*
